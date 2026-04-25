@@ -11,34 +11,54 @@
 <title>CámaraControl</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1923;--sf:#162030;--sf2:#1d2d40;--sf3:#243548;--bd:rgba(200,169,110,.18);--bd2:rgba(255,255,255,.06);--gold:#c8a96e;--goldl:#e8c98a;--goldd:rgba(200,169,110,.12);--red:#e05c5c;--redd:rgba(224,92,92,.12);--green:#5cb87a;--greend:rgba(92,184,122,.12);--blue:#5b9bd5;--blued:rgba(91,155,213,.12);--tx:#eef2f7;--txm:#7a90a8;--txd:#3a5068;--r:16px;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px)}
+:root{
+  --bg:#0f1923;--sf:#162030;--sf2:#1d2d40;
+  --bd:rgba(200,169,110,.18);--bd2:rgba(255,255,255,.07);
+  --gold:#c8a96e;--goldl:#e8c98a;--goldd:rgba(200,169,110,.12);
+  --red:#e05c5c;--redd:rgba(224,92,92,.12);
+  --green:#5cb87a;--greend:rgba(92,184,122,.12);
+  --blue:#5b9bd5;--blued:rgba(91,155,213,.12);
+  --orange:#e09a3a;--oranged:rgba(224,154,58,.12);
+  --tx:#eef2f7;--txm:#7a90a8;--txd:#3a5068;
+  --r:16px;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px)
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100dvh;overflow-x:hidden;padding-bottom:calc(74px + var(--sb))}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100dvh;overflow-x:hidden;padding-bottom:calc(76px + var(--sb))}
 
 /* HEADER */
-.hdr{background:var(--sf);border-bottom:1px solid var(--bd);padding:calc(var(--st) + 12px) 16px 12px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
+.hdr{background:var(--sf);border-bottom:1px solid var(--bd);padding:calc(var(--st)+12px) 16px 12px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
 .hdr-l{display:flex;align-items:center;gap:10px}
-.hdr-icon{font-size:24px}
-.hdr-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--gold)}
-.hdr-sub{font-size:10px;color:var(--txm);margin-top:1px}
+.hdr-ic{font-size:23px}
+.hdr-tt{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--gold)}
+.hdr-sb{font-size:10px;color:var(--txm);margin-top:1px}
 .hdr-r{display:flex;align-items:center;gap:8px}
 .rbadge{padding:4px 11px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
-.r-admin{background:var(--goldd);color:var(--gold)}
+.r-adm{background:var(--goldd);color:var(--gold)}
 .r-bod{background:var(--blued);color:var(--blue)}
-.hdr-time{font-size:10px;color:var(--txd);text-align:right;line-height:1.5}
+.hdr-tm{font-size:10px;color:var(--txd);text-align:right;line-height:1.5}
 
 /* NAV */
 .nav{position:fixed;bottom:0;left:0;right:0;background:var(--sf);border-top:1px solid var(--bd);display:flex;padding-bottom:var(--sb);z-index:200}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 2px 7px;background:none;border:none;color:var(--txd);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;cursor:pointer;transition:color .2s;gap:3px;text-transform:uppercase;letter-spacing:.5px}
-.nb svg{width:20px;height:20px;stroke-width:1.8}
-.nb.on{color:var(--gold)}
-.nb.on svg{stroke-width:2.5}
+.nb svg{width:20px;height:20px;stroke-width:1.8}.nb.on{color:var(--gold)}.nb.on svg{stroke-width:2.5}
 
 /* PAGES */
-.pg{display:none;padding:16px}
-.pg.on{display:block}
+.pg{display:none;padding:16px}.pg.on{display:block}
 .pgt{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;margin-top:4px}
 .pgs{font-size:12px;color:var(--txm);margin-top:3px;margin-bottom:16px}
+
+/* FLUJO VISUAL */
+.flujo{display:flex;align-items:center;gap:0;overflow-x:auto;padding:4px 0 6px}
+.fp{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:72px}
+.fp-ic{font-size:22px}
+.fp-lb{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;text-align:center;line-height:1.2}
+.fp-vl{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;line-height:1}
+.fp-un{font-size:9px;color:var(--txm);text-align:center}
+.fp-ar{color:var(--txd);font-size:20px;flex-shrink:0;padding:0 3px;margin-top:-10px}
+.c-gold .fp-lb{color:var(--gold)}.c-gold .fp-vl{color:var(--gold)}
+.c-orange .fp-lb{color:var(--orange)}.c-orange .fp-vl{color:var(--orange)}
+.c-blue .fp-lb{color:var(--blue)}.c-blue .fp-vl{color:var(--blue)}
+.c-green .fp-lb{color:var(--green)}.c-green .fp-vl{color:var(--green)}
 
 /* CARDS */
 .card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:15px;margin-bottom:11px}
@@ -47,32 +67,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 /* STATS */
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:11px}
 .st{background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:13px 11px;display:flex;flex-direction:column;gap:3px}
-.st.full{grid-column:1/-1}
-.st.ac{border-color:rgba(200,169,110,.35);background:rgba(200,169,110,.04)}
+.st.full{grid-column:1/-1}.st.ac{border-color:rgba(200,169,110,.35);background:rgba(200,169,110,.04)}
+.st.ac-or{border-color:rgba(224,154,58,.35);background:rgba(224,154,58,.04)}
 .sl{font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.8px;font-weight:600}
-.sv{font-family:'Syne',sans-serif;font-size:27px;font-weight:800;line-height:1;letter-spacing:-.5px}
+.sv{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;line-height:1;letter-spacing:-.5px}
 .su{font-size:11px;color:var(--txm)}
-.gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}
+.gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}.orange{color:var(--orange)}
 .prog{background:var(--sf2);border-radius:4px;height:4px;overflow:hidden;margin-top:8px}
 .pb{height:100%;border-radius:4px;background:var(--gold);transition:width .6s}
 
 /* QUICK ACTIONS */
 .qag{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:11px}
-.qab{background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:all .15s}
+.qab{background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:13px 10px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:all .15s}
 .qab:active{transform:scale(.96);background:var(--sf2)}
-.qi{font-size:28px}
-.ql{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--tx);text-align:center}
+.qi{font-size:26px}.ql{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--tx);text-align:center}
 .qs{font-size:9px;color:var(--txm);text-align:center}
 
 /* LIST */
 .li{background:var(--sf2);border:1px solid var(--bd2);border-radius:11px;padding:11px 12px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.lt{font-weight:600;font-size:13px;color:var(--tx)}
-.ls{font-size:11px;color:var(--txm);margin-top:3px;line-height:1.4}
+.lt{font-weight:600;font-size:13px;color:var(--tx)}.ls{font-size:11px;color:var(--txm);margin-top:3px;line-height:1.4}
 .badge{font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;flex-shrink:0}
-.bg{background:var(--goldd);color:var(--gold)}
-.bgn{background:var(--greend);color:var(--green)}
-.bb{background:var(--blued);color:var(--blue)}
-.br{background:var(--redd);color:var(--red)}
+.bg{background:var(--goldd);color:var(--gold)}.bgn{background:var(--greend);color:var(--green)}
+.bb{background:var(--blued);color:var(--blue)}.br{background:var(--redd);color:var(--red)}
+.bor{background:var(--oranged);color:var(--orange)}
 
 /* FORMS */
 .fg{margin-bottom:11px}
@@ -94,8 +111,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 
 /* BUTTONS */
 .btn{width:100%;padding:13px;border-radius:11px;border:none;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:7px}
-.btn+.btn{margin-top:8px}
-.btn svg{width:17px;height:17px;flex-shrink:0}
+.btn+.btn{margin-top:8px}.btn svg{width:17px;height:17px;flex-shrink:0}
 .bg-gold{background:var(--gold);color:var(--bg)}.bg-gold:active{background:var(--goldl);transform:scale(.98)}
 .bg-green{background:var(--green);color:#0f1923}.bg-green:active{transform:scale(.98)}
 .bg-blue{background:var(--blue);color:#fff}.bg-blue:active{transform:scale(.98)}
@@ -109,44 +125,34 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 @keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .mh{width:34px;height:3px;background:var(--bd);border-radius:2px;margin:0 auto 14px}
 .mt{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--gold);margin-bottom:15px}
-.div{height:1px;background:var(--bd2);margin:13px 0}
+.divl{height:1px;background:var(--bd2);margin:13px 0}
+.av{display:none;margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px}
 
 /* TOAST */
-.toast{position:fixed;top:calc(var(--st) + 70px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--green);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;font-weight:700;z-index:1000;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;max-width:86vw;text-align:center}
-.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast.err{background:var(--red)}
-.toast.warn{background:#d4903a}
+.toast{position:fixed;top:calc(var(--st)+70px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--green);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;font-weight:700;z-index:1000;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;max-width:86vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}.toast.err{background:var(--red)}.toast.warn{background:var(--orange)}
 
 /* EMPTY */
 .empty{text-align:center;padding:32px 16px;color:var(--txd)}
-.ei{font-size:40px;margin-bottom:9px}
-.et{font-size:13px}
-
-/* AVISO STOCK */
-.av{display:none;margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px}
+.ei{font-size:40px;margin-bottom:9px}.et{font-size:13px}
 
 /* REPORT */
 .rb{background:var(--sf2);border:1px solid var(--bd2);border-radius:11px;padding:13px;margin-bottom:10px}
 .rr{display:flex;justify-content:space-between;align-items:center;padding:4px 0}
 .rr+.rr{border-top:1px solid rgba(255,255,255,.04)}
-.rk{font-size:12px;color:var(--txm)}
-.rv{font-size:13px;font-weight:600;color:var(--tx)}
-
-/* DELETE */
-.dbtn{background:none;border:none;color:var(--red);font-size:15px;cursor:pointer;padding:4px 6px;border-radius:6px;transition:background .15s;flex-shrink:0}
+.rk{font-size:12px;color:var(--txm)}.rv{font-size:13px;font-weight:600;color:var(--tx)}
+.dbtn{background:none;border:none;color:var(--red);font-size:15px;cursor:pointer;padding:4px 6px;border-radius:6px;flex-shrink:0}
 .dbtn:active{background:var(--redd)}
 
-/* ─── LOGIN ─── */
+/* LOGIN */
 .lw{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100dvh;padding:28px 20px}
 .logo{font-size:54px;margin-bottom:14px}
 .ltitle{font-family:'Syne',sans-serif;font-size:25px;font-weight:800;color:var(--gold);margin-bottom:5px}
 .lsub{font-size:13px;color:var(--txm);margin-bottom:30px;text-align:center}
 .rcards{display:grid;gap:11px;width:100%;max-width:330px}
 .rcard{background:var(--sf);border:2px solid var(--bd);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;text-align:left}
-.rcard:active{transform:scale(.97)}
-.rcard.on{border-color:var(--gold);background:var(--goldd)}
-.rci{font-size:30px;margin-bottom:7px}
-.rcn{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--tx)}
+.rcard:active{transform:scale(.97)}.rcard.on{border-color:var(--gold);background:var(--goldd)}
+.rci{font-size:30px;margin-bottom:7px}.rcn{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--tx)}
 .rcd{font-size:11px;color:var(--txm);margin-top:3px}
 .pinw{width:100%;max-width:330px;margin-top:18px}
 .pdots{display:flex;justify-content:center;gap:12px;margin:14px 0}
@@ -154,8 +160,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 .pd.f{background:var(--gold);border-color:var(--gold)}
 .ppad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .pk{background:var(--sf);border:1px solid var(--bd2);border-radius:11px;padding:14px;font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--tx);cursor:pointer;text-align:center;transition:all .15s}
-.pk:active{background:var(--sf2);transform:scale(.93)}
-.pk.del{font-size:15px;color:var(--txm)}
+.pk:active{background:var(--sf2);transform:scale(.93)}.pk.del{font-size:15px;color:var(--txm)}
+
+/* INFO BOX */
+.info-box{background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:12px;color:var(--txm);line-height:1.5}
+.info-box strong{color:var(--tx)}
 </style>
 </head>
 <body>
@@ -169,7 +178,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <div class="rcard" id="rc-bod" onclick="selRole('bodeguero')">
       <div class="rci">📦</div>
       <div class="rcn">Bodeguero</div>
-      <div class="rcd">Registrar ingresos · Procesar · Despachar a cocina</div>
+      <div class="rcd">Registrar ingreso · Procesar carne · Despachar a cocina</div>
     </div>
     <div class="rcard" id="rc-adm" onclick="selRole('admin')">
       <div class="rci">👑</div>
@@ -187,7 +196,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
       <div class="pk" onclick="pi(1)">1</div><div class="pk" onclick="pi(2)">2</div><div class="pk" onclick="pi(3)">3</div>
       <div class="pk" onclick="pi(4)">4</div><div class="pk" onclick="pi(5)">5</div><div class="pk" onclick="pi(6)">6</div>
       <div class="pk" onclick="pi(7)">7</div><div class="pk" onclick="pi(8)">8</div><div class="pk" onclick="pi(9)">9</div>
-      <div class="pk del" onclick="pb()">⌫</div><div class="pk" onclick="pi(0)">0</div>
+      <div class="pk del" onclick="pb2()">⌫</div><div class="pk" onclick="pi(0)">0</div>
       <div class="pk del" onclick="cancelPin()" style="font-size:11px">✕</div>
     </div>
   </div>
@@ -198,53 +207,145 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 
 <div class="hdr">
   <div class="hdr-l">
-    <div class="hdr-icon">🥩</div>
+    <div class="hdr-ic">🥩</div>
     <div>
-      <div class="hdr-title">CámaraControl</div>
-      <div class="hdr-sub" id="hdsub">—</div>
+      <div class="hdr-tt">CámaraControl</div>
+      <div class="hdr-sb" id="hdsub">—</div>
     </div>
   </div>
   <div class="hdr-r">
-    <div class="hdr-time" id="hdtime"></div>
+    <div class="hdr-tm" id="hdtm"></div>
     <button class="rbadge" id="rbadge" onclick="logout()">—</button>
   </div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- ── DASHBOARD ── -->
 <div class="pg on" id="pg-dash">
   <div class="pgt">Resumen del día</div>
-  <div class="pgs" id="dd">—</div>
-  <div class="sg">
-    <div class="st"><div class="sl">Kg ingresados</div><div class="sv gold" id="si">0.0</div><div class="su">kg brutos</div></div>
-    <div class="st"><div class="sl">Merma del día</div><div class="sv red" id="sm">0.0</div><div class="su">kg</div></div>
-    <div class="st"><div class="sl">Bolsas procesadas</div><div class="sv blue" id="sb2">0</div><div class="su">bolsas · 20 cortes c/u</div></div>
-    <div class="st"><div class="sl">Kg netos</div><div class="sv green" id="sn">0.0</div><div class="su">procesados</div></div>
-    <div class="st full ac"><div class="sl">❄️ Stock en cámara</div><div class="sv gold" id="sc">0</div><div class="su" id="scs">bolsas</div><div class="prog"><div class="pb" id="sp" style="width:0%"></div></div></div>
+  <div class="pgs" id="dashd">—</div>
+
+  <!-- FLUJO VISUAL -->
+  <div class="card" style="padding:14px 12px">
+    <div class="ct" style="margin-bottom:10px">🔄 Flujo de carne hoy</div>
+    <div class="flujo">
+      <div class="fp c-gold">
+        <div class="fp-ic">📥</div>
+        <div class="fp-lb">Ingresó</div>
+        <div class="fp-vl" id="fl-ing">0,0</div>
+        <div class="fp-un">kg brutos</div>
+      </div>
+      <div class="fp-ar">›</div>
+      <div class="fp c-orange">
+        <div class="fp-ic">⚙️</div>
+        <div class="fp-lb">Procesado</div>
+        <div class="fp-vl" id="fl-pro">0,0</div>
+        <div class="fp-un">kg netos</div>
+      </div>
+      <div class="fp-ar">›</div>
+      <div class="fp c-blue">
+        <div class="fp-ic">❄️</div>
+        <div class="fp-lb">En cámara</div>
+        <div class="fp-vl" id="fl-cam">0</div>
+        <div class="fp-un">bolsas</div>
+      </div>
+      <div class="fp-ar">›</div>
+      <div class="fp c-green">
+        <div class="fp-ic">🍳</div>
+        <div class="fp-lb">A cocina</div>
+        <div class="fp-vl" id="fl-coc">0</div>
+        <div class="fp-un">bolsas</div>
+      </div>
+    </div>
   </div>
+
+  <div class="sg">
+    <div class="st">
+      <div class="sl">Kg brutos ingresados</div>
+      <div class="sv gold" id="s-ing">0,0</div>
+      <div class="su">kg</div>
+    </div>
+    <div class="st">
+      <div class="sl">Pendiente por procesar</div>
+      <div class="sv orange" id="s-pend">0,0</div>
+      <div class="su">kg brutos sin procesar</div>
+    </div>
+    <div class="st">
+      <div class="sl">Merma del día</div>
+      <div class="sv red" id="s-mer">0,0</div>
+      <div class="su">kg</div>
+    </div>
+    <div class="st">
+      <div class="sl">Kg netos procesados</div>
+      <div class="sv green" id="s-net">0,0</div>
+      <div class="su">kg</div>
+    </div>
+    <div class="st full ac">
+      <div class="sl">❄️ Bolsas disponibles en cámara</div>
+      <div class="sv gold" id="s-cam">0</div>
+      <div class="su" id="s-cams">bolsas · 0 cortes</div>
+      <div class="prog"><div class="pb" id="s-prog" style="width:0%"></div></div>
+    </div>
+  </div>
+
   <div class="ct" style="margin-bottom:9px">Acciones rápidas</div>
   <div class="qag">
-    <div class="qab" onclick="openM('mo-ing')"><div class="qi">📥</div><div class="ql">Registrar Ingreso</div><div class="qs">Carne que llega hoy</div></div>
-    <div class="qab" onclick="openM('mo-pro')"><div class="qi">⚙️</div><div class="ql">Procesar Carne</div><div class="qs">Cortar y bolsear</div></div>
-    <div class="qab" onclick="openM('mo-des')"><div class="qi">🚪</div><div class="ql">Despachar</div><div class="qs">Entregar a cocina</div></div>
-    <div class="qab adm" onclick="goTo('pg-rep')" style="display:none"><div class="qi">📊</div><div class="ql">Ver Reporte</div><div class="qs">Resumen y WhatsApp</div></div>
+    <div class="qab" onclick="openM('mo-ing')">
+      <div class="qi">📥</div><div class="ql">Registrar Ingreso</div><div class="qs">Carne bruta que llega</div>
+    </div>
+    <div class="qab" onclick="openM('mo-pro')">
+      <div class="qi">⚙️</div><div class="ql">Registrar Proceso</div><div class="qs">Cortar, bolsear → cámara</div>
+    </div>
+    <div class="qab" onclick="openM('mo-des')">
+      <div class="qi">🍳</div><div class="ql">Despachar a Cocina</div><div class="qs">Salida de cámara</div>
+    </div>
+    <div class="qab adm" id="qa-rep" onclick="goTo('pg-rep')" style="display:none">
+      <div class="qi">📊</div><div class="ql">Ver Reporte</div><div class="qs">Resumen y WhatsApp</div>
+    </div>
   </div>
-  <div class="card"><div class="ct">⏱ Últimos movimientos</div><div id="lmovs"><div class="empty"><div class="ei">📦</div><div class="et">Sin movimientos aún</div></div></div></div>
+
+  <div class="card">
+    <div class="ct">⏱ Últimos movimientos</div>
+    <div id="lmovs"><div class="empty"><div class="ei">📦</div><div class="et">Sin movimientos aún</div></div></div>
+  </div>
 </div>
 
-<!-- CÁMARA -->
+<!-- ── CÁMARA ── -->
 <div class="pg" id="pg-cam">
   <div class="pgt">Cámara de Frío</div>
-  <div class="pgs">Stock actual por tipo de corte</div>
+  <div class="pgs">Stock actual de bolsas procesadas</div>
   <div class="sg">
-    <div class="st full ac"><div class="sl">Total en cámara</div><div class="sv gold" id="ct2">0</div><div class="su" id="cts">bolsas</div></div>
-    <div class="st"><div class="sl">Despachado hoy</div><div class="sv green" id="cd">0</div><div class="su">bolsas</div></div>
-    <div class="st"><div class="sl">Kg estimados</div><div class="sv blue" id="ckg">0.0</div><div class="su">en cámara</div></div>
+    <div class="st full ac">
+      <div class="sl">Total disponible en cámara</div>
+      <div class="sv gold" id="cam-tot">0</div>
+      <div class="su" id="cam-sub">bolsas · 0 cortes</div>
+    </div>
+    <div class="st">
+      <div class="sl">Despachado a cocina hoy</div>
+      <div class="sv green" id="cam-des">0</div>
+      <div class="su">bolsas</div>
+    </div>
+    <div class="st">
+      <div class="sl">Kg estimados en cámara</div>
+      <div class="sv blue" id="cam-kg">0,0</div>
+      <div class="su">kg</div>
+    </div>
+    <div class="st full ac-or">
+      <div class="sl">⚙️ Pendiente por procesar</div>
+      <div class="sv orange" id="cam-pend">0,0</div>
+      <div class="su">kg brutos aún sin procesar</div>
+    </div>
   </div>
-  <div class="card"><div class="ct">📦 Por tipo de corte</div><div id="cbyt"><div class="empty"><div class="ei">❄️</div><div class="et">Cámara vacía</div></div></div></div>
-  <div class="card"><div class="ct">🚚 Despachos de hoy</div><div id="cdes"><div class="empty"><div class="ei">🚪</div><div class="et">Sin despachos hoy</div></div></div></div>
+  <div class="card">
+    <div class="ct">📦 Bolsas por tipo de corte</div>
+    <div id="cam-byt"><div class="empty"><div class="ei">❄️</div><div class="et">Cámara vacía</div></div></div>
+  </div>
+  <div class="card">
+    <div class="ct">🍳 Despachos a cocina hoy</div>
+    <div id="cam-dcoc"><div class="empty"><div class="ei">🍳</div><div class="et">Sin despachos hoy</div></div></div>
+  </div>
 </div>
 
-<!-- HISTORIAL -->
+<!-- ── HISTORIAL ── -->
 <div class="pg" id="pg-hist">
   <div class="pgt">Historial</div>
   <div class="pgs">Todos los registros</div>
@@ -252,17 +353,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <button class="chip on" onclick="sf('todo',this)">Todos</button>
     <button class="chip" onclick="sf('ingreso',this)">📥 Ingreso</button>
     <button class="chip" onclick="sf('proceso',this)">⚙️ Proceso</button>
-    <button class="chip" onclick="sf('despacho',this)">🚪 Despacho</button>
+    <button class="chip" onclick="sf('despacho',this)">🍳 Despacho</button>
   </div>
   <div id="hlist"><div class="empty"><div class="ei">📋</div><div class="et">Sin registros aún</div></div></div>
 </div>
 
-<!-- REPORTE (admin) -->
+<!-- ── REPORTE (admin) ── -->
 <div class="pg adm" id="pg-rep" style="display:none">
   <div class="pgt">Reporte Diario</div>
   <div class="pgs" id="repd">—</div>
   <div id="repc"><div class="empty"><div class="ei">📊</div><div class="et">Sin datos aún</div></div></div>
-  <div style="margin-top:15px;display:flex;flex-direction:column;gap:8px" id="repbtns" class="adm" style="display:none">
+  <div id="repbtns" class="adm" style="display:none;margin-top:15px;flex-direction:column;gap:8px">
     <button class="btn bg-green" onclick="sendWA()">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12.004 2C6.468 2 2 6.478 2 12.004c0 1.773.463 3.521 1.34 5.064L2 22l5.083-1.323A9.924 9.924 0 0012.004 22C17.532 22 22 17.522 22 11.996 22 6.48 17.532 2 12.004 2zm0 18.215a8.18 8.18 0 01-4.162-1.136l-.298-.178-3.097.807.825-3.01-.195-.308A8.23 8.23 0 013.79 12.004c0-4.527 3.686-8.212 8.215-8.212 4.52 0 8.206 3.686 8.206 8.212 0 4.527-3.686 8.211-8.207 8.211z"/></svg>
       Enviar por WhatsApp
@@ -292,74 +393,116 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 
 <!-- ═══ MODALS ═══ -->
 
-<!-- INGRESO -->
+<!-- 1. INGRESO DE CARNE BRUTA -->
 <div class="ovl" id="mo-ing">
   <div class="modal">
     <div class="mh"></div>
     <div class="mt">📥 Registrar Ingreso</div>
+    <div class="info-box">Registra la carne bruta que llega. El kg ingresado quedará <strong>pendiente por procesar</strong> hasta que el bodeguero corte y bolsee.</div>
     <div class="fg">
       <label class="fl">Tipo de corte</label>
       <div class="chips" id="ic"></div>
-      <input class="fi" id="iti" placeholder="O escribe el nombre..." type="text">
+      <input class="fi" id="iti" placeholder="O escribe el tipo..." type="text">
     </div>
     <div class="fr">
-      <div class="fg"><label class="fl">Peso total bruto (kg)</label><input class="fi" id="ipe" placeholder="Ej: 25.0" type="number" inputmode="decimal" step="0.1"></div>
-      <div class="fg"><label class="fl">N° bolsas recibidas</label><input class="fi" id="ibol" placeholder="Ej: 5" type="number" inputmode="numeric"></div>
+      <div class="fg">
+        <label class="fl">Peso total bruto (kg)</label>
+        <input class="fi" id="ipe" placeholder="Ej: 25,5" type="text" inputmode="decimal">
+      </div>
+      <div class="fg">
+        <label class="fl">N° bolsas recibidas</label>
+        <input class="fi" id="ibol" placeholder="Ej: 5" type="text" inputmode="numeric">
+      </div>
     </div>
-    <div class="fg"><label class="fl">Observaciones (opcional)</label><input class="fi" id="inot" placeholder="Ej: llegó a las 9am..." type="text"></div>
+    <div class="fg">
+      <label class="fl">Observaciones (opcional)</label>
+      <input class="fi" id="inot" placeholder="Ej: llegó a las 9am..." type="text">
+    </div>
     <button class="btn bg-gold" onclick="doIng()">✓ Registrar ingreso</button>
     <button class="btn bg-ghost" onclick="closeM('mo-ing')">Cancelar</button>
   </div>
 </div>
 
-<!-- PROCESO -->
+<!-- 2. PROCESO: bodeguero corta y bolsea → cámara -->
 <div class="ovl" id="mo-pro">
   <div class="modal">
     <div class="mh"></div>
     <div class="mt">⚙️ Registrar Procesamiento</div>
+    <div class="info-box">El bodeguero cortó y bolseó la carne. Los kg brutos se <strong>descuentan del pendiente</strong> y las bolsas producidas <strong>ingresan a cámara</strong>.</div>
     <div class="fg">
       <label class="fl">Tipo de corte procesado</label>
       <div class="chips" id="pc"></div>
-      <input class="fi" id="pti" placeholder="O escribe el nombre..." type="text">
+      <input class="fi" id="pti" placeholder="O escribe el tipo..." type="text">
     </div>
     <div class="fr">
-      <div class="fg"><label class="fl">Kg brutos al proceso</label><input class="fi" id="pbr" placeholder="Ej: 10.0" type="number" inputmode="decimal" step="0.1" oninput="calcN()"></div>
-      <div class="fg"><label class="fl">Kg merma / grasa</label><input class="fi" id="pme" placeholder="Ej: 1.5" type="number" inputmode="decimal" step="0.1" oninput="calcN()"></div>
+      <div class="fg">
+        <label class="fl">Kg brutos procesados</label>
+        <input class="fi" id="pbr" placeholder="Ej: 10,5" type="text" inputmode="decimal" oninput="calcN()">
+      </div>
+      <div class="fg">
+        <label class="fl">Kg merma / grasa</label>
+        <input class="fi" id="pme" placeholder="Ej: 1,5" type="text" inputmode="decimal" oninput="calcN()">
+      </div>
     </div>
-    <div class="cb" id="cbox"><div class="cbl">Kg netos estimados</div><div class="cbv" id="cnv">—</div></div>
+    <div class="cb" id="cbox">
+      <div class="cbl">Kg netos estimados</div>
+      <div class="cbv" id="cnv">—</div>
+    </div>
     <div class="fr">
-      <div class="fg"><label class="fl">Bolsas producidas</label><input class="fi" id="pbo" placeholder="Ej: 3" type="number" inputmode="numeric"></div>
-      <div class="fg"><label class="fl">Peso por bolsa (kg)</label><input class="fi" id="ppb" placeholder="Ej: 2.6" type="number" inputmode="decimal" step="0.01"></div>
+      <div class="fg">
+        <label class="fl">Bolsas producidas</label>
+        <input class="fi" id="pbo" placeholder="Ej: 3" type="text" inputmode="numeric">
+      </div>
+      <div class="fg">
+        <label class="fl">Peso por bolsa (kg)</label>
+        <input class="fi" id="ppb" placeholder="Ej: 2,6" type="text" inputmode="decimal">
+      </div>
     </div>
-    <div class="fg"><label class="fl">Empleado responsable</label><input class="fi" id="pem" placeholder="Nombre..." type="text"></div>
-    <button class="btn bg-blue" onclick="doPro()">✓ Enviar a cámara</button>
+    <div class="fg">
+      <label class="fl">Empleado responsable</label>
+      <input class="fi" id="pem" placeholder="Nombre..." type="text">
+    </div>
+    <button class="btn bg-blue" onclick="doPro()">✓ Ingresar bolsas a cámara</button>
     <button class="btn bg-ghost" onclick="closeM('mo-pro')">Cancelar</button>
   </div>
 </div>
 
-<!-- DESPACHO -->
+<!-- 3. DESPACHO: cámara → cocina para servir -->
 <div class="ovl" id="mo-des">
   <div class="modal">
     <div class="mh"></div>
-    <div class="mt">🚪 Despachar a Cocina</div>
+    <div class="mt">🍳 Despachar a Cocina</div>
+    <div class="info-box">Las bolsas salen de cámara hacia cocina para ser servidas. El stock de cámara se <strong>descuenta automáticamente</strong>.</div>
     <div class="fg">
-      <label class="fl">Tipo de corte a despachar</label>
+      <label class="fl">Tipo de corte</label>
       <div class="chips" id="dc"></div>
-      <input class="fi" id="dti" placeholder="O escribe el nombre..." type="text" oninput="chkStk()">
+      <input class="fi" id="dti" placeholder="O escribe el tipo..." type="text" oninput="chkStk()">
     </div>
     <div class="fr">
-      <div class="fg"><label class="fl">Bolsas a despachar</label><input class="fi" id="dbo" placeholder="Ej: 2" type="number" inputmode="numeric" oninput="chkStk()"></div>
-      <div class="fg"><label class="fl">Cortes sueltos</label><input class="fi" id="dco" placeholder="Ej: 5" type="number" inputmode="numeric"></div>
+      <div class="fg">
+        <label class="fl">Bolsas a despachar</label>
+        <input class="fi" id="dbo" placeholder="Ej: 2" type="text" inputmode="numeric" oninput="chkStk()">
+      </div>
+      <div class="fg">
+        <label class="fl">Cortes sueltos (si aplica)</label>
+        <input class="fi" id="dco" placeholder="Ej: 5" type="text" inputmode="numeric">
+      </div>
     </div>
     <div class="av" id="dav"></div>
-    <div class="fg"><label class="fl">Recibe en cocina</label><input class="fi" id="dre" placeholder="Nombre del cocinero" type="text"></div>
-    <div class="fg"><label class="fl">Observaciones</label><input class="fi" id="dno" placeholder="Opcional..." type="text"></div>
+    <div class="fg">
+      <label class="fl">Recibe en cocina</label>
+      <input class="fi" id="dre" placeholder="Nombre del cocinero" type="text">
+    </div>
+    <div class="fg">
+      <label class="fl">Observaciones</label>
+      <input class="fi" id="dno" placeholder="Opcional..." type="text">
+    </div>
     <button class="btn bg-green" onclick="doDes()">✓ Confirmar despacho</button>
     <button class="btn bg-ghost" onclick="closeM('mo-des')">Cancelar</button>
   </div>
 </div>
 
-<!-- CONFIG (admin) -->
+<!-- CONFIG -->
 <div class="ovl" id="mo-cfg">
   <div class="modal">
     <div class="mh"></div>
@@ -370,13 +513,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
       <input class="fi" id="cfgnm" placeholder="Nuevo corte..." type="text">
       <button class="btn bg-gold" style="width:auto;padding:11px 13px;font-size:12px;border-radius:9px" onclick="addMt()">+ Agregar</button>
     </div>
-    <div class="div"></div>
+    <div class="divl"></div>
     <div class="ct">Cambiar PIN Admin</div>
     <div class="fr">
       <div class="fg"><label class="fl">Nuevo PIN (4 dígitos)</label><input class="fi" id="cfgpin" placeholder="0000" type="password" inputmode="numeric" maxlength="4"></div>
       <div class="fg" style="display:flex;align-items:flex-end"><button class="btn bg-ghost" style="padding:11px" onclick="chgPin()">Cambiar</button></div>
     </div>
-    <div class="div"></div>
+    <div class="divl"></div>
     <button class="btn bg-red" onclick="clearAll()">🗑 Borrar todos los datos</button>
     <button class="btn bg-ghost" style="margin-top:8px" onclick="closeM('mo-cfg')">Cerrar</button>
   </div>
@@ -386,8 +529,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 
 <script>
 // ── STORAGE ──
-const S={g:(k,d)=>{try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}},s:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
-const TK=()=>new Date().toISOString().slice(0,10);
+const S={
+  g:(k,d)=>{try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}},
+  s:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+};
 const gM=()=>S.g('movs',[]);const sM=m=>S.s('movs',m);
 const gC=()=>S.g('cam',[]);const sC=c=>S.s('cam',c);
 const gMt=()=>S.g('meats',['Pollo','Lomo Liso','Lomo Vetado']);
@@ -397,6 +542,20 @@ const gPin=()=>S.g('pin','1234');const sPin=p=>S.s('pin',p);
 // ── STATE ──
 let role=null,pbuf='',hf='todo';
 
+// ─────────────────────────────────
+//  PARSE: acepta coma O punto
+// ─────────────────────────────────
+function pNum(v){
+  if(v===undefined||v===null||String(v).trim()==='')return NaN;
+  return parseFloat(String(v).replace(',','.').trim());
+}
+function pInt(v){
+  if(v===undefined||v===null||String(v).trim()==='')return NaN;
+  return parseInt(String(v).trim(),10);
+}
+// Formatear para mostrar (usa coma como separador decimal)
+const fN=(n,d=1)=>isNaN(n)||n===null?'0,0':parseFloat(n).toFixed(d).replace('.',',');
+
 // ── LOGIN ──
 function selRole(r){
   document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('on'));
@@ -404,8 +563,14 @@ function selRole(r){
   if(r==='admin'){pbuf='';document.getElementById('pinw').style.display='block';updPD();}
   else enterApp('bodeguero');
 }
-function pi(d){if(pbuf.length>=4)return;pbuf+=d;updPD();if(pbuf.length===4)setTimeout(()=>{if(pbuf===gPin())enterApp('admin');else{toast('PIN incorrecto','err');pbuf='';updPD();}},150);}
-function pb(){pbuf=pbuf.slice(0,-1);updPD();}
+function pi(d){
+  if(pbuf.length>=4)return;pbuf+=d;updPD();
+  if(pbuf.length===4)setTimeout(()=>{
+    if(pbuf===gPin())enterApp('admin');
+    else{toast('PIN incorrecto','err');pbuf='';updPD();}
+  },150);
+}
+function pb2(){pbuf=pbuf.slice(0,-1);updPD();}
 function cancelPin(){document.getElementById('pinw').style.display='none';pbuf='';document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('on'));}
 function updPD(){for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.toggle('f',i<pbuf.length);}
 
@@ -415,15 +580,30 @@ function enterApp(r){
   document.getElementById('app').style.display='block';
   const rb=document.getElementById('rbadge');
   rb.textContent=r==='admin'?'👑 Admin':'📦 Bodeguero';
-  rb.className='rbadge '+(r==='admin'?'r-admin':'r-bod');
+  rb.className='rbadge '+(r==='admin'?'r-adm':'r-bod');
   document.querySelectorAll('.adm').forEach(el=>el.style.display=r==='admin'?'':'none');
-  document.getElementById('hdsub').innerHTML=r==='admin'?'<span style="cursor:pointer;color:var(--gold)" onclick="openM(\'mo-cfg\')">⚙ Configuración</span>':'Gestión de cámara';
+  document.getElementById('hdsub').innerHTML=r==='admin'
+    ?'<span style="cursor:pointer;color:var(--gold)" onclick="openM(\'mo-cfg\')">⚙ Configuración</span>'
+    :'Gestión de cámara';
   clk();renderDash();
 }
-function logout(){if(!confirm('¿Cerrar sesión?'))return;role=null;document.getElementById('lscreen').style.display='flex';document.getElementById('app').style.display='none';document.getElementById('pinw').style.display='none';document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('on'));pbuf='';}
+function logout(){
+  if(!confirm('¿Cerrar sesión?'))return;
+  role=null;
+  document.getElementById('lscreen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('pinw').style.display='none';
+  document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('on'));
+  pbuf='';
+}
 
 // ── CLOCK ──
-function clk(){const d=new Date();document.getElementById('hdtime').innerHTML=d.toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit'})+'<br>'+d.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});document.getElementById('dd').textContent=d.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});document.getElementById('repd').textContent=d.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function clk(){
+  const d=new Date();
+  document.getElementById('hdtm').innerHTML=d.toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit'})+'<br>'+d.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('dashd').textContent=d.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('repd').textContent=d.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
 setInterval(clk,30000);
 
 // ── NAV ──
@@ -440,11 +620,10 @@ function goTo(id){
 }
 
 // ── MODALS ──
+const CMAP={'mo-ing':['ic','iti'],'mo-pro':['pc','pti'],'mo-des':['dc','dti']};
 function openM(id){
   document.getElementById(id).classList.add('on');
-  const map={'mo-ing':'ic','mo-pro':'pc','mo-des':'dc'};
-  const imap={'mo-ing':'iti','mo-pro':'pti','mo-des':'dti'};
-  if(map[id])bldChips(map[id],imap[id]);
+  if(CMAP[id])bldChips(...CMAP[id]);
   if(id==='mo-cfg')renderCfg();
 }
 function closeM(id){document.getElementById(id).classList.remove('on');}
@@ -463,52 +642,83 @@ function selMt(cid,iid,m){
 }
 
 // ── TOAST ──
-function toast(msg,t=''){const el=document.getElementById('toast');el.textContent=msg;el.className='toast on'+(t?' '+t:'');setTimeout(()=>el.classList.remove('on'),2500);}
+function toast(msg,t=''){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.className='toast on'+(t?' '+t:'');
+  setTimeout(()=>el.classList.remove('on'),2500);
+}
 
 // ── UTILS ──
-const f=(n,d=1)=>parseFloat(n||0).toFixed(d);
 const fdt=iso=>new Date(iso).toLocaleString('es-CL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
 const fdate=iso=>{const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`;};
+const TK=()=>new Date().toISOString().slice(0,10);
 
-// ── INGRESO ──
+// ─────────────────────────────────
+//  CÁLCULO PENDIENTE POR TIPO
+//  ingresado - procesado = pendiente
+// ─────────────────────────────────
+function calcPendiente(ms, tipo){
+  const filtro = tipo ? ms.filter(m=>m.tipoCarne===tipo) : ms;
+  const kgIng  = filtro.filter(m=>m.tipo==='ingreso').reduce((s,m)=>s+(m.pesoBruto||0),0);
+  const kgPro  = filtro.filter(m=>m.tipo==='proceso').reduce((s,m)=>s+(m.pesoBruto||0),0);
+  return Math.max(0, kgIng - kgPro);
+}
+
+// ─────────────────────────────────
+//  1. REGISTRAR INGRESO
+// ─────────────────────────────────
 function doIng(){
   const tipo=document.getElementById('iti').value.trim();
-  const peso=parseFloat(document.getElementById('ipe').value);
-  const bols=parseInt(document.getElementById('ibol').value);
+  const peso=pNum(document.getElementById('ipe').value);
+  const bols=pInt(document.getElementById('ibol').value);
   if(!tipo){toast('Selecciona o escribe el tipo de corte','err');return;}
-  if(!peso||peso<=0){toast('Ingresa el peso total','err');return;}
-  if(!bols||bols<=0){toast('Ingresa la cantidad de bolsas','err');return;}
+  if(isNaN(peso)||peso<=0){toast('Ingresa el peso (ej: 25,5)','err');return;}
+  if(isNaN(bols)||bols<=0){toast('Ingresa la cantidad de bolsas','err');return;}
   const mov={id:Date.now(),tipo:'ingreso',fecha:new Date().toISOString(),tipoCarne:tipo,pesoBruto:peso,bolsas:bols,notas:document.getElementById('inot').value.trim()};
-  const m=gM();m.unshift(mov);sM(m);
+  const ms=gM();ms.unshift(mov);sM(ms);
   ['iti','ipe','ibol','inot'].forEach(i=>document.getElementById(i).value='');
   document.querySelectorAll('#ic .mchip').forEach(c=>c.classList.remove('on'));
-  closeM('mo-ing');toast(`✓ Ingreso: ${f(peso)} kg de ${tipo}`);renderDash();
+  closeM('mo-ing');toast(`✓ Ingreso: ${fN(peso)} kg de ${tipo}`);renderDash();
 }
 
-// ── CALC NETO ──
+// ─────────────────────────────────
+//  2. REGISTRAR PROCESO → CÁMARA
+// ─────────────────────────────────
 function calcN(){
-  const br=parseFloat(document.getElementById('pbr').value)||0;
-  const me=parseFloat(document.getElementById('pme').value)||0;
-  const ne=Math.max(0,br-me);
+  const br=pNum(document.getElementById('pbr').value);
+  const me=pNum(document.getElementById('pme').value)||0;
+  const ne=Math.max(0,(isNaN(br)?0:br)-me);
   const box=document.getElementById('cbox');
-  if(br>0){box.style.display='block';const p=br>0?((me/br)*100).toFixed(1):0;document.getElementById('cnv').textContent=`${f(ne,2)} kg  (merma ${p}%)`;}
-  else box.style.display='none';
+  if(!isNaN(br)&&br>0){
+    box.style.display='block';
+    const p=br>0?((me/br)*100).toFixed(1):0;
+    document.getElementById('cnv').textContent=`${fN(ne,2)} kg  (merma ${p}%)`;
+  }else box.style.display='none';
 }
 
-// ── PROCESO ──
 function doPro(){
   const tipo=document.getElementById('pti').value.trim();
-  const br=parseFloat(document.getElementById('pbr').value);
-  const me=parseFloat(document.getElementById('pme').value)||0;
-  const bo=parseInt(document.getElementById('pbo').value);
-  const pb=parseFloat(document.getElementById('ppb').value)||null;
+  const br=pNum(document.getElementById('pbr').value);
+  const me=pNum(document.getElementById('pme').value)||0;
+  const bo=pInt(document.getElementById('pbo').value);
+  const pb=pNum(document.getElementById('ppb').value)||null;
   const em=document.getElementById('pem').value.trim();
   if(!tipo){toast('Selecciona o escribe el tipo de corte','err');return;}
-  if(!br||br<=0){toast('Ingresa los kg brutos','err');return;}
-  if(!bo||bo<=0){toast('Ingresa las bolsas producidas','err');return;}
-  const ne=Math.max(0,br-me);const ts=new Date().toISOString();
+  if(isNaN(br)||br<=0){toast('Ingresa los kg brutos procesados (ej: 10,5)','err');return;}
+  if(isNaN(bo)||bo<=0){toast('Ingresa las bolsas producidas','err');return;}
+
+  // Validar que no se procese más de lo que hay pendiente
+  const ms=gM();
+  const pend=calcPendiente(ms,tipo);
+  if(br>pend+0.001){
+    toast(`Solo hay ${fN(pend)} kg pendientes de ${tipo}`,'err');return;
+  }
+
+  const ne=Math.max(0,br-me);
+  const ts=new Date().toISOString();
   const mov={id:Date.now(),tipo:'proceso',fecha:ts,tipoCarne:tipo,pesoBruto:br,merma:me,pesoNeto:ne,bolsas:bo,pesoPorBolsa:pb,empleado:em};
-  const ms=gM();ms.unshift(mov);sM(ms);
+  ms.unshift(mov);sM(ms);
+  // Agregar bolsas a cámara
   const cam=gC();
   for(let i=0;i<bo;i++)cam.push({id:ts+'_'+i,tipoCarne:tipo,fecha:ts,pesoBolsa:pb||(ne/bo),cortes:20});
   sC(cam);
@@ -518,164 +728,255 @@ function doPro(){
   closeM('mo-pro');toast(`✓ ${bo} bolsas de ${tipo} en cámara`);renderDash();
 }
 
-// ── STOCK CHECK ──
+// ─────────────────────────────────
+//  3. DESPACHAR A COCINA
+// ─────────────────────────────────
 function chkStk(){
   const tipo=document.getElementById('dti').value.trim().toLowerCase();
-  const bo=parseInt(document.getElementById('dbo').value)||0;
+  const bo=pInt(document.getElementById('dbo').value)||0;
   const av=document.getElementById('dav');
   if(!tipo){av.style.display='none';return;}
   const disp=gC().filter(b=>b.tipoCarne.toLowerCase().includes(tipo)).length;
   av.style.display='block';
-  if(bo>disp){av.style.background='var(--redd)';av.style.border='1px solid rgba(224,92,92,.3)';av.style.color='var(--red)';av.textContent=`⚠️ Solo hay ${disp} bolsa(s) de ese corte en cámara`;}
-  else{av.style.background='var(--greend)';av.style.border='1px solid rgba(92,184,122,.3)';av.style.color='var(--green)';av.textContent=`✓ ${disp} bolsa(s) disponibles`;}
+  if(bo>disp){
+    av.style.cssText='display:block;background:var(--redd);border:1px solid rgba(224,92,92,.3);color:var(--red);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
+    av.textContent=`⚠️ Solo hay ${disp} bolsa(s) disponibles en cámara`;
+  }else{
+    av.style.cssText='display:block;background:var(--greend);border:1px solid rgba(92,184,122,.3);color:var(--green);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
+    av.textContent=`✓ ${disp} bolsa(s) disponibles en cámara`;
+  }
 }
 
-// ── DESPACHO ──
 function doDes(){
   const tipo=document.getElementById('dti').value.trim();
-  const bo=parseInt(document.getElementById('dbo').value)||0;
-  const cs=parseInt(document.getElementById('dco').value)||0;
+  const bo=pInt(document.getElementById('dbo').value)||0;
+  const cs=pInt(document.getElementById('dco').value)||0;
   const re=document.getElementById('dre').value.trim();
   if(!tipo){toast('Selecciona o escribe el tipo de corte','err');return;}
   if(bo<=0&&cs<=0){toast('Ingresa bolsas o cortes a despachar','err');return;}
   const cam=gC();
   const disp=cam.filter(b=>b.tipoCarne.toLowerCase().includes(tipo.toLowerCase()));
-  if(bo>disp.length){toast(`Solo hay ${disp.length} bolsa(s) de ese tipo`,'err');return;}
-  let rem=0;const nCam=cam.filter(b=>{if(b.tipoCarne.toLowerCase().includes(tipo.toLowerCase())&&rem<bo){rem++;return false;}return true;});
+  if(bo>disp.length){toast(`Solo hay ${disp.length} bolsa(s) de ese tipo en cámara`,'err');return;}
+  let rem=0;
+  const nCam=cam.filter(b=>{
+    if(b.tipoCarne.toLowerCase().includes(tipo.toLowerCase())&&rem<bo){rem++;return false;}
+    return true;
+  });
   sC(nCam);
   const mov={id:Date.now(),tipo:'despacho',fecha:new Date().toISOString(),tipoCarne:tipo,bolsas:bo,cortesSueltos:cs,recibe:re,notas:document.getElementById('dno').value.trim()};
   const ms=gM();ms.unshift(mov);sM(ms);
   ['dti','dbo','dco','dre','dno'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('dav').style.display='none';
   document.querySelectorAll('#dc .mchip').forEach(c=>c.classList.remove('on'));
-  closeM('mo-des');toast(`✓ ${bo} bolsas despachadas a cocina`);renderDash();
+  closeM('mo-des');toast(`✓ ${bo} bolsas de ${tipo} despachadas a cocina`);renderDash();
 }
 
-// ── RENDER DASH ──
+// ─────────────────────────────────
+//  RENDER DASHBOARD
+// ─────────────────────────────────
 function renderDash(){
-  const td=TK(),ms=gM().filter(m=>m.fecha.startsWith(td));
-  const ing=ms.filter(m=>m.tipo==='ingreso'),pro=ms.filter(m=>m.tipo==='proceso');
-  const kgI=ing.reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgMe=pro.reduce((s,m)=>s+(m.merma||0),0);
-  const kgNe=pro.reduce((s,m)=>s+(m.pesoNeto||0),0);
+  const ms=gM();
+  const ing=ms.filter(m=>m.tipo==='ingreso');
+  const pro=ms.filter(m=>m.tipo==='proceso');
+  const des=ms.filter(m=>m.tipo==='despacho');
+  const cam=gC();
+
+  const kgIng=ing.reduce((s,m)=>s+(m.pesoBruto||0),0);
+  const kgProBr=pro.reduce((s,m)=>s+(m.pesoBruto||0),0);
+  const kgPend=Math.max(0,kgIng-kgProBr);
+  const kgMer=pro.reduce((s,m)=>s+(m.merma||0),0);
+  const kgNet=pro.reduce((s,m)=>s+(m.pesoNeto||0),0);
   const bPro=pro.reduce((s,m)=>s+(m.bolsas||0),0);
-  const camT=gC().length;
-  document.getElementById('si').textContent=f(kgI);
-  document.getElementById('sm').textContent=f(kgMe);
-  document.getElementById('sb2').textContent=bPro;
-  document.getElementById('sn').textContent=f(kgNe);
-  document.getElementById('sc').textContent=camT;
-  document.getElementById('scs').textContent=`bolsas · ${camT*20} cortes`;
-  document.getElementById('sp').style.width=Math.min(100,bPro>0?(camT/bPro)*100:0)+'%';
-  const all=gM().slice(0,6);
+  const bDes=des.reduce((s,m)=>s+(m.bolsas||0),0);
+  const camT=cam.length;
+
+  // Flujo
+  document.getElementById('fl-ing').textContent=fN(kgIng);
+  document.getElementById('fl-pro').textContent=fN(kgNet);
+  document.getElementById('fl-cam').textContent=camT;
+  document.getElementById('fl-coc').textContent=bDes;
+
+  document.getElementById('s-ing').textContent=fN(kgIng);
+  document.getElementById('s-pend').textContent=fN(kgPend);
+  document.getElementById('s-mer').textContent=fN(kgMer);
+  document.getElementById('s-net').textContent=fN(kgNet);
+  document.getElementById('s-cam').textContent=camT;
+  document.getElementById('s-cams').textContent=`bolsas · ${camT*20} cortes`;
+  document.getElementById('s-prog').style.width=Math.min(100,bPro>0?(camT/bPro)*100:0)+'%';
+
+  const all=ms.slice(0,6);
   document.getElementById('lmovs').innerHTML=all.length?all.map(mCard).join(''):'<div class="empty"><div class="ei">📦</div><div class="et">Sin movimientos</div></div>';
 }
 
-// ── RENDER CÁMARA ──
+// ─────────────────────────────────
+//  RENDER CÁMARA
+// ─────────────────────────────────
 function renderCam(){
-  const cam=gC(),td=TK();
-  const des=gM().filter(m=>m.tipo==='despacho'&&m.fecha.startsWith(td));
-  document.getElementById('ct2').textContent=cam.length;
-  document.getElementById('cts').textContent=`bolsas · ${cam.length*20} cortes`;
-  document.getElementById('cd').textContent=des.reduce((s,m)=>s+(m.bolsas||0),0);
-  document.getElementById('ckg').textContent=f(cam.reduce((s,b)=>s+(b.pesoBolsa||2.6),0));
-  const cbt=document.getElementById('cbyt');
-  if(cam.length===0){cbt.innerHTML='<div class="empty"><div class="ei">❄️</div><div class="et">Cámara vacía</div></div>';}
+  const cam=gC(),ms=gM();
+  const des=ms.filter(m=>m.tipo==='despacho');
+  const ing=ms.filter(m=>m.tipo==='ingreso');
+  const pro=ms.filter(m=>m.tipo==='proceso');
+  const kgIng=ing.reduce((s,m)=>s+(m.pesoBruto||0),0);
+  const kgProBr=pro.reduce((s,m)=>s+(m.pesoBruto||0),0);
+  const kgPend=Math.max(0,kgIng-kgProBr);
+
+  document.getElementById('cam-tot').textContent=cam.length;
+  document.getElementById('cam-sub').textContent=`bolsas · ${cam.length*20} cortes`;
+  document.getElementById('cam-des').textContent=des.reduce((s,m)=>s+(m.bolsas||0),0);
+  document.getElementById('cam-kg').textContent=fN(cam.reduce((s,b)=>s+(b.pesoBolsa||2.6),0));
+  document.getElementById('cam-pend').textContent=fN(kgPend);
+
+  const cbt=document.getElementById('cam-byt');
+  if(!cam.length){cbt.innerHTML='<div class="empty"><div class="ei">❄️</div><div class="et">Cámara vacía</div></div>';}
   else{
-    const gr={};cam.forEach(b=>{if(!gr[b.tipoCarne])gr[b.tipoCarne]={bo:0,kg:0};gr[b.tipoCarne].bo++;gr[b.tipoCarne].kg+=b.pesoBolsa||2.6;});
-    cbt.innerHTML=Object.entries(gr).sort((a,b)=>b[1].bo-a[1].bo).map(([t,d])=>`<div class="li"><div><div class="lt">🥩 ${t}</div><div class="ls">${d.bo} bolsas · ${d.bo*20} cortes · ${f(d.kg)} kg est.</div></div><span class="badge bg">${d.bo}</span></div>`).join('');
+    const gr={};
+    cam.forEach(b=>{if(!gr[b.tipoCarne])gr[b.tipoCarne]={bo:0,kg:0};gr[b.tipoCarne].bo++;gr[b.tipoCarne].kg+=b.pesoBolsa||2.6;});
+    cbt.innerHTML=Object.entries(gr).sort((a,b)=>b[1].bo-a[1].bo).map(([t,d])=>
+      `<div class="li"><div><div class="lt">🥩 ${t}</div><div class="ls">${d.bo} bolsas · ${d.bo*20} cortes · ${fN(d.kg)} kg est.</div></div><span class="badge bg">${d.bo}</span></div>`
+    ).join('');
   }
-  const cd=document.getElementById('cdes');
-  cd.innerHTML=des.length?des.map(d=>`<div class="li"><div><div class="lt">🚚 ${d.tipoCarne}</div><div class="ls">${fdt(d.fecha)}${d.recibe?' · '+d.recibe:''}</div></div><span class="badge bgn">${d.bolsas} bolsas</span></div>`).join(''):'<div class="empty"><div class="ei">🚪</div><div class="et">Sin despachos hoy</div></div>';
+
+  const cdc=document.getElementById('cam-dcoc');
+  cdc.innerHTML=des.length?des.map(d=>
+    `<div class="li"><div><div class="lt">🍳 ${d.tipoCarne}</div><div class="ls">${fdt(d.fecha)}${d.recibe?' · '+d.recibe:''}</div></div><span class="badge bgn">${d.bolsas} bolsas</span></div>`
+  ).join(''):'<div class="empty"><div class="ei">🍳</div><div class="et">Sin despachos hoy</div></div>';
 }
 
-// ── RENDER HISTORIAL ──
+// ─────────────────────────────────
+//  RENDER HISTORIAL
+// ─────────────────────────────────
 function sf(f2,el){hf=f2;document.querySelectorAll('#hchips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');renderHist();}
 function renderHist(){
   let ms=gM();if(hf!=='todo')ms=ms.filter(m=>m.tipo===hf);
   const hl=document.getElementById('hlist');
-  if(ms.length===0){hl.innerHTML='<div class="empty"><div class="ei">📋</div><div class="et">Sin registros</div></div>';return;}
+  if(!ms.length){hl.innerHTML='<div class="empty"><div class="ei">📋</div><div class="et">Sin registros</div></div>';return;}
   hl.innerHTML=ms.map(m=>`<div style="position:relative">${mCard(m)}${role==='admin'?`<button class="dbtn" style="position:absolute;top:10px;right:10px" onclick="delM(${m.id})">🗑</button>`:''}</div>`).join('');
 }
 function delM(id){if(!confirm('¿Eliminar este registro?'))return;sM(gM().filter(m=>m.id!==id));renderHist();renderDash();toast('Registro eliminado');}
 
-// ── MOV CARD ──
+// ─────────────────────────────────
+//  MOV CARD
+// ─────────────────────────────────
 function mCard(m){
-  const icons={ingreso:'📥',proceso:'⚙️',despacho:'🚪'};
-  const bgs={ingreso:'bg',proceso:'bb',despacho:'bgn'};
-  const lbls={ingreso:'Ingreso',proceso:'Proceso',despacho:'Despacho'};
-  let sub='';
-  if(m.tipo==='ingreso')sub=`${f(m.pesoBruto)} kg brutos · ${m.bolsas} bolsas`;
-  if(m.tipo==='proceso')sub=`${m.bolsas} bolsas · merma ${f(m.merma)} kg · neto ${f(m.pesoNeto)} kg${m.empleado?' · '+m.empleado:''}`;
-  if(m.tipo==='despacho')sub=`${m.bolsas} bolsas${m.cortesSueltos?' + '+m.cortesSueltos+' sueltos':''}${m.recibe?' → '+m.recibe:''}`;
-  return`<div class="li"><div style="flex:1;padding-right:6px"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span>${icons[m.tipo]}</span><span class="lt">${m.tipoCarne||'—'}</span><span class="badge ${bgs[m.tipo]}">${lbls[m.tipo]}</span></div><div class="ls">${fdt(m.fecha)}</div><div class="ls">${sub}</div></div></div>`;
+  const cfg={
+    ingreso:{ico:'📥',cls:'bg',  lbl:'Ingreso', sub:`${fN(m.pesoBruto)} kg brutos · ${m.bolsas||0} bolsas`},
+    proceso:{ico:'⚙️',cls:'bb',  lbl:'Proceso',  sub:`${m.bolsas} bolsas · merma ${fN(m.merma)} kg · neto ${fN(m.pesoNeto)} kg${m.empleado?' · '+m.empleado:''}`},
+    despacho:{ico:'🍳',cls:'bgn',lbl:'Despacho', sub:`${m.bolsas} bolsas${m.cortesSueltos?' + '+m.cortesSueltos+' sueltos':''}${m.recibe?' → '+m.recibe:''}`}
+  };
+  const c=cfg[m.tipo]||{ico:'•',cls:'bg',lbl:m.tipo,sub:''};
+  return`<div class="li"><div style="flex:1;padding-right:6px"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span>${c.ico}</span><span class="lt">${m.tipoCarne||'—'}</span><span class="badge ${c.cls}">${c.lbl}</span></div><div class="ls">${fdt(m.fecha)}</div><div class="ls">${c.sub}</div></div></div>`;
 }
 
-// ── RENDER REPORTE ──
+// ─────────────────────────────────
+//  RENDER REPORTE
+// ─────────────────────────────────
 function renderRep(){
-  const td=TK(),ms=gM().filter(m=>m.fecha.startsWith(td));
-  const ing=ms.filter(m=>m.tipo==='ingreso'),pro=ms.filter(m=>m.tipo==='proceso'),des=ms.filter(m=>m.tipo==='despacho'),cam=gC();
+  const ms=gM();
+  const ing=ms.filter(m=>m.tipo==='ingreso');
+  const pro=ms.filter(m=>m.tipo==='proceso');
+  const des=ms.filter(m=>m.tipo==='despacho');
+  const cam=gC();
   const rc=document.getElementById('repc'),rb=document.getElementById('repbtns');
-  if(ms.length===0){rc.innerHTML='<div class="empty"><div class="ei">📊</div><div class="et">Sin datos aún</div></div>';if(rb)rb.style.display='none';return;}
-  if(rb)rb.style.display='';
-  const kgI=ing.reduce((s,m)=>s+(m.pesoBruto||0),0),kgMe=pro.reduce((s,m)=>s+(m.merma||0),0),kgNe=pro.reduce((s,m)=>s+(m.pesoNeto||0),0);
-  const bP=pro.reduce((s,m)=>s+(m.bolsas||0),0),bD=des.reduce((s,m)=>s+(m.bolsas||0),0);
-  const pct=kgI>0?((kgMe/kgI)*100).toFixed(1):'0.0';
+  if(!ms.length){rc.innerHTML='<div class="empty"><div class="ei">📊</div><div class="et">Sin datos aún</div></div>';rb.style.display='none';return;}
+  rb.style.display='flex';
+
+  const kgIng=ing.reduce((s,m)=>s+(m.pesoBruto||0),0);
+  const kgProBr=pro.reduce((s,m)=>s+(m.pesoBruto||0),0);
+  const kgPend=Math.max(0,kgIng-kgProBr);
+  const kgMer=pro.reduce((s,m)=>s+(m.merma||0),0);
+  const kgNet=pro.reduce((s,m)=>s+(m.pesoNeto||0),0);
+  const bP=pro.reduce((s,m)=>s+(m.bolsas||0),0);
+  const bD=des.reduce((s,m)=>s+(m.bolsas||0),0);
+  const pct=kgIng>0?((kgMer/kgIng)*100).toFixed(1):'0,0';
+
   rc.innerHTML=`
-    <div class="rb"><div class="ct">📥 Ingresos del día</div>
-      <div class="rr"><span class="rk">Kg brutos recibidos</span><span class="rv">${f(kgI)} kg</span></div>
+    <div class="rb"><div class="ct">📥 Ingresos</div>
+      <div class="rr"><span class="rk">Kg brutos recibidos</span><span class="rv">${fN(kgIng)} kg</span></div>
       <div class="rr"><span class="rk">Bolsas recibidas</span><span class="rv">${ing.reduce((s,m)=>s+(m.bolsas||0),0)}</span></div>
-      ${ing.map(i=>`<div class="rr"><span class="rk" style="font-size:11px">· ${i.tipoCarne}</span><span class="rv">${f(i.pesoBruto)} kg</span></div>`).join('')}
+      ${ing.map(i=>`<div class="rr"><span class="rk" style="font-size:11px">· ${i.tipoCarne}</span><span class="rv">${fN(i.pesoBruto)} kg</span></div>`).join('')}
     </div>
     <div class="rb"><div class="ct">⚙️ Procesamiento</div>
       <div class="rr"><span class="rk">Bolsas producidas</span><span class="rv">${bP}</span></div>
       <div class="rr"><span class="rk">Cortes producidos</span><span class="rv">${bP*20}</span></div>
-      <div class="rr"><span class="rk">Kg netos</span><span class="rv">${f(kgNe)} kg</span></div>
-      <div class="rr"><span class="rk">Merma total</span><span class="rv" style="color:var(--red)">${f(kgMe)} kg (${pct}%)</span></div>
+      <div class="rr"><span class="rk">Kg netos</span><span class="rv">${fN(kgNet)} kg</span></div>
+      <div class="rr"><span class="rk">Merma total</span><span class="rv" style="color:var(--red)">${fN(kgMer)} kg (${pct}%)</span></div>
+      <div class="rr"><span class="rk">Pendiente por procesar</span><span class="rv" style="color:var(--orange)">${fN(kgPend)} kg</span></div>
       ${pro.map(p=>`<div class="rr"><span class="rk" style="font-size:11px">· ${p.tipoCarne}${p.empleado?' – '+p.empleado:''}</span><span class="rv">${p.bolsas} bolsas</span></div>`).join('')}
     </div>
-    <div class="rb"><div class="ct">🚚 Despachos a cocina</div>
+    <div class="rb"><div class="ct">🍳 Despachos a cocina</div>
       <div class="rr"><span class="rk">Bolsas despachadas</span><span class="rv">${bD}</span></div>
       <div class="rr"><span class="rk">Cortes despachados</span><span class="rv">${bD*20}</span></div>
       ${des.map(d=>`<div class="rr"><span class="rk" style="font-size:11px">· ${fdt(d.fecha)} – ${d.tipoCarne}${d.recibe?' → '+d.recibe:''}</span><span class="rv">${d.bolsas} bolsas</span></div>`).join('')}
     </div>
-    <div class="rb" style="border-color:rgba(200,169,110,.35)"><div class="ct">❄️ Stock actual en cámara</div>
+    <div class="rb" style="border-color:rgba(200,169,110,.35)"><div class="ct">❄️ Stock en cámara</div>
       <div class="rr"><span class="rk">Bolsas disponibles</span><span class="rv" style="color:var(--gold)">${cam.length}</span></div>
       <div class="rr"><span class="rk">Cortes disponibles</span><span class="rv">${cam.length*20}</span></div>
-      <div class="rr"><span class="rk">Kg estimados</span><span class="rv">${f(cam.reduce((s,b)=>s+(b.pesoBolsa||2.6),0))} kg</span></div>
+      <div class="rr"><span class="rk">Kg estimados</span><span class="rv">${fN(cam.reduce((s,b)=>s+(b.pesoBolsa||2.6),0))} kg</span></div>
     </div>`;
 }
 
-// ── WHATSAPP ──
+// ─────────────────────────────────
+//  WHATSAPP + COPY
+// ─────────────────────────────────
 function bldTxt(){
-  const td=TK(),ms=gM().filter(m=>m.fecha.startsWith(td));
-  const ing=ms.filter(m=>m.tipo==='ingreso'),pro=ms.filter(m=>m.tipo==='proceso'),des=ms.filter(m=>m.tipo==='despacho'),cam=gC();
-  const kgI=ing.reduce((s,m)=>s+(m.pesoBruto||0),0),kgMe=pro.reduce((s,m)=>s+(m.merma||0),0),kgNe=pro.reduce((s,m)=>s+(m.pesoNeto||0),0);
-  const bP=pro.reduce((s,m)=>s+(m.bolsas||0),0),bD=des.reduce((s,m)=>s+(m.bolsas||0),0);
-  const pct=kgI>0?((kgMe/kgI)*100).toFixed(1):'0.0';
+  const ms=gM();
+  const ing=ms.filter(m=>m.tipo==='ingreso');
+  const pro=ms.filter(m=>m.tipo==='proceso');
+  const des=ms.filter(m=>m.tipo==='despacho');
+  const cam=gC();
+  const kgIng=ing.reduce((s,m)=>s+(m.pesoBruto||0),0);
+  const kgProBr=pro.reduce((s,m)=>s+(m.pesoBruto||0),0);
+  const kgPend=Math.max(0,kgIng-kgProBr);
+  const kgMer=pro.reduce((s,m)=>s+(m.merma||0),0);
+  const kgNet=pro.reduce((s,m)=>s+(m.pesoNeto||0),0);
+  const bP=pro.reduce((s,m)=>s+(m.bolsas||0),0);
+  const bD=des.reduce((s,m)=>s+(m.bolsas||0),0);
+  const pct=kgIng>0?((kgMer/kgIng)*100).toFixed(1):'0,0';
+  const td=TK();
   let t=`🥩 *REPORTE CÁMARA DE FRÍO*\n📅 ${fdate(td)}\n${'━'.repeat(22)}\n\n`;
-  t+=`📥 *INGRESOS*\n• Kg brutos: ${f(kgI)} kg\n`;
-  ing.forEach(i=>t+=`  - ${i.tipoCarne}: ${f(i.pesoBruto)} kg\n`);
-  t+=`\n⚙️ *PROCESAMIENTO*\n• Bolsas: ${bP}  |  Cortes: ${bP*20}\n• Kg netos: ${f(kgNe)} kg\n• Merma: ${f(kgMe)} kg (${pct}%)\n`;
+  t+=`📥 *INGRESOS*\n• Kg brutos: ${fN(kgIng)} kg\n`;
+  ing.forEach(i=>t+=`  - ${i.tipoCarne}: ${fN(i.pesoBruto)} kg\n`);
+  t+=`\n⚙️ *PROCESAMIENTO*\n• Bolsas: ${bP}  |  Cortes: ${bP*20}\n• Kg netos: ${fN(kgNet)} kg  |  Merma: ${fN(kgMer)} kg (${pct}%)\n• Pendiente: ${fN(kgPend)} kg\n`;
   pro.forEach(p=>t+=`  - ${p.tipoCarne}${p.empleado?' – '+p.empleado:''}: ${p.bolsas} bolsas\n`);
-  t+=`\n🚚 *DESPACHOS A COCINA*\n• Bolsas: ${bD}  |  Cortes: ${bD*20}\n`;
+  t+=`\n🍳 *DESPACHOS A COCINA*\n• Bolsas: ${bD}  |  Cortes: ${bD*20}\n`;
   des.forEach(d=>t+=`  - ${fdt(d.fecha)}: ${d.tipoCarne} ${d.bolsas} bolsas${d.recibe?' → '+d.recibe:''}\n`);
-  t+=`\n❄️ *STOCK EN CÁMARA*\n• ${cam.length} bolsas  |  ${cam.length*20} cortes\n• ${f(cam.reduce((s,b)=>s+(b.pesoBolsa||2.6),0))} kg est.\n`;
+  t+=`\n❄️ *STOCK EN CÁMARA*\n• ${cam.length} bolsas  |  ${cam.length*20} cortes\n• ${fN(cam.reduce((s,b)=>s+(b.pesoBolsa||2.6),0))} kg est.\n`;
   t+=`${'━'.repeat(22)}\n✅ _CámaraControl_`;
   return t;
 }
 function sendWA(){window.open('https://wa.me/?text='+encodeURIComponent(bldTxt()),'_blank');}
-function copyRep(){const txt=bldTxt();if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('✓ Copiado'));else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copiado');}}
-
-// ── CONFIG ──
-function renderCfg(){
-  const meats=gMt();const el=document.getElementById('cfgml');
-  el.innerHTML=meats.length?meats.map((m,i)=>`<div class="li" style="margin-bottom:6px"><div class="lt">🥩 ${m}</div><button class="dbtn" onclick="rmMt(${i})">✕</button></div>`).join(''):'<div class="empty" style="padding:10px"><div class="et">Sin tipos configurados</div></div>';
+function copyRep(){
+  const txt=bldTxt();
+  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('✓ Copiado'));
+  else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copiado');}
 }
-function addMt(){const v=document.getElementById('cfgnm').value.trim();if(!v){toast('Escribe el nombre','warn');return;}const m=gMt();if(m.includes(v)){toast('Ya existe','warn');return;}m.push(v);sMt(m);document.getElementById('cfgnm').value='';renderCfg();toast('✓ '+v+' agregado');}
+
+// ─────────────────────────────────
+//  CONFIG
+// ─────────────────────────────────
+function renderCfg(){
+  const meats=gMt();
+  document.getElementById('cfgml').innerHTML=meats.length
+    ?meats.map((m,i)=>`<div class="li" style="margin-bottom:6px"><div class="lt">🥩 ${m}</div><button class="dbtn" onclick="rmMt(${i})">✕</button></div>`).join('')
+    :'<div class="empty" style="padding:10px"><div class="et">Sin tipos configurados</div></div>';
+}
+function addMt(){
+  const v=document.getElementById('cfgnm').value.trim();
+  if(!v){toast('Escribe el nombre','warn');return;}
+  const m=gMt();if(m.includes(v)){toast('Ya existe','warn');return;}
+  m.push(v);sMt(m);document.getElementById('cfgnm').value='';renderCfg();toast('✓ '+v+' agregado');
+}
 function rmMt(i){const m=gMt();m.splice(i,1);sMt(m);renderCfg();}
-function chgPin(){const v=document.getElementById('cfgpin').value.trim();if(v.length!==4||!/^\d{4}$/.test(v)){toast('PIN debe ser 4 dígitos','err');return;}sPin(v);document.getElementById('cfgpin').value='';toast('✓ PIN actualizado');}
-function clearAll(){if(!confirm('¿Borrar TODOS los datos?'))return;if(!confirm('¿Seguro? No se puede deshacer.'))return;sM([]);sC([]);closeM('mo-cfg');renderDash();toast('Datos borrados','warn');}
+function chgPin(){
+  const v=document.getElementById('cfgpin').value.trim();
+  if(v.length!==4||!/^\d{4}$/.test(v)){toast('PIN debe ser 4 dígitos','err');return;}
+  sPin(v);document.getElementById('cfgpin').value='';toast('✓ PIN actualizado');
+}
+function clearAll(){
+  if(!confirm('¿Borrar TODOS los datos?'))return;
+  if(!confirm('¿Seguro? No se puede deshacer.'))return;
+  sM([]);sC([]);closeM('mo-cfg');renderDash();toast('Datos borrados','warn');
+}
 
 // ── PWA ──
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
