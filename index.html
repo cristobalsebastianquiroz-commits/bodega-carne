@@ -12,13 +12,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0f1923;--sf:#162030;--sf2:#1d2d40;
-  --bd:rgba(200,169,110,.18);--bd2:rgba(255,255,255,.07);
-  --gold:#c8a96e;--goldl:#e8c98a;--goldd:rgba(200,169,110,.12);
-  --red:#e05c5c;--redd:rgba(224,92,92,.12);
-  --green:#5cb87a;--greend:rgba(92,184,122,.12);
-  --blue:#5b9bd5;--blued:rgba(91,155,213,.12);
-  --orange:#e09a3a;--oranged:rgba(224,154,58,.12);
+  --bg:#0f1923;--sf:#162030;--sf2:#1d2d40;--sf3:#0d1720;
+  --bd:rgba(200,169,110,.18);--bd2:rgba(255,255,255,.07);--bd3:rgba(255,255,255,.04);
+  --gold:#c8a96e;--goldl:#e8c98a;--goldd:rgba(200,169,110,.12);--goldb:rgba(200,169,110,.35);
+  --red:#e05c5c;--redd:rgba(224,92,92,.12);--redb:rgba(224,92,92,.35);
+  --green:#5cb87a;--greend:rgba(92,184,122,.12);--greenb:rgba(92,184,122,.35);
+  --blue:#5b9bd5;--blued:rgba(91,155,213,.12);--blueb:rgba(91,155,213,.35);
+  --orange:#e09a3a;--oranged:rgba(224,154,58,.12);--orangeb:rgba(224,154,58,.35);
+  --purple:#a07cd5;--purpled:rgba(160,124,213,.12);
   --tx:#eef2f7;--txm:#7a90a8;--txd:#3a5068;
   --r:16px;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px)
 }
@@ -47,34 +48,47 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 .pgt{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;margin-top:4px}
 .pgs{font-size:12px;color:var(--txm);margin-top:3px;margin-bottom:16px}
 
-/* FLUJO VISUAL */
-.flujo{display:flex;align-items:center;gap:0;overflow-x:auto;padding:4px 0 6px}
-.fp{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:72px}
-.fp-ic{font-size:22px}
-.fp-lb{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;text-align:center;line-height:1.2}
-.fp-vl{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;line-height:1}
-.fp-un{font-size:9px;color:var(--txm);text-align:center}
-.fp-ar{color:var(--txd);font-size:20px;flex-shrink:0;padding:0 3px;margin-top:-10px}
-.c-gold .fp-lb{color:var(--gold)}.c-gold .fp-vl{color:var(--gold)}
-.c-orange .fp-lb{color:var(--orange)}.c-orange .fp-vl{color:var(--orange)}
-.c-blue .fp-lb{color:var(--blue)}.c-blue .fp-vl{color:var(--blue)}
-.c-green .fp-lb{color:var(--green)}.c-green .fp-vl{color:var(--green)}
+/* SECTION HEADERS */
+.sec-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;margin-top:4px}
+.sec-pill{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.pill-gold{background:var(--goldd);color:var(--gold);border:1px solid var(--goldb)}
+.pill-blue{background:var(--blued);color:var(--blue);border:1px solid var(--blueb)}
+.pill-green{background:var(--greend);color:var(--green);border:1px solid var(--greenb)}
+.sec-line{flex:1;height:1px;background:var(--bd2)}
 
 /* CARDS */
 .card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:15px;margin-bottom:11px}
 .ct{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:11px}
 
-/* STATS */
+/* STATS GRID */
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:11px}
-.st{background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:13px 11px;display:flex;flex-direction:column;gap:3px}
-.st.full{grid-column:1/-1}.st.ac{border-color:rgba(200,169,110,.35);background:rgba(200,169,110,.04)}
-.st.ac-or{border-color:rgba(224,154,58,.35);background:rgba(224,154,58,.04)}
+.sg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:11px}
+.st{background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:12px 10px;display:flex;flex-direction:column;gap:2px}
+.st.full{grid-column:1/-1}
+.st.ac-gold{border-color:var(--goldb);background:rgba(200,169,110,.04)}
+.st.ac-blue{border-color:var(--blueb);background:rgba(91,155,213,.04)}
+.st.ac-green{border-color:var(--greenb);background:rgba(92,184,122,.04)}
+.st.ac-red{border-color:var(--redb);background:rgba(224,92,92,.04)}
 .sl{font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.8px;font-weight:600}
-.sv{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;line-height:1;letter-spacing:-.5px}
-.su{font-size:11px;color:var(--txm)}
+.sv{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;line-height:1.1;letter-spacing:-.5px}
+.sv.sm{font-size:18px}
+.su{font-size:10px;color:var(--txm)}
 .gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}.orange{color:var(--orange)}
-.prog{background:var(--sf2);border-radius:4px;height:4px;overflow:hidden;margin-top:8px}
+.prog{background:var(--sf2);border-radius:4px;height:4px;overflow:hidden;margin-top:6px}
 .pb{height:100%;border-radius:4px;background:var(--gold);transition:width .6s}
+.pb.green{background:var(--green)}.pb.blue{background:var(--blue)}
+
+/* BALANCE TABLE */
+.bal-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:4px}
+.bal-table th{font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.7px;font-weight:600;padding:4px 6px;text-align:right;border-bottom:1px solid var(--bd2)}
+.bal-table th:first-child{text-align:left}
+.bal-table td{padding:6px 6px;text-align:right;color:var(--txm);font-size:12px;border-bottom:1px solid var(--bd3)}
+.bal-table td:first-child{text-align:left;color:var(--tx);font-weight:500}
+.bal-table tr.total td{color:var(--tx);font-weight:700;font-family:'Syne',sans-serif;border-top:1px solid var(--bd);border-bottom:none;padding-top:8px}
+.bal-table tr.total td:first-child{color:var(--gold)}
+.num-pos{color:var(--green);font-weight:600}
+.num-neg{color:var(--red);font-weight:600}
+.num-neu{color:var(--gold);font-weight:700}
 
 /* QUICK ACTIONS */
 .qag{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:11px}
@@ -85,22 +99,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 
 /* LIST */
 .li{background:var(--sf2);border:1px solid var(--bd2);border-radius:11px;padding:11px 12px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.lt{font-weight:600;font-size:13px;color:var(--tx)}.ls{font-size:11px;color:var(--txm);margin-top:3px;line-height:1.4}
+.lt{font-weight:600;font-size:13px;color:var(--tx)}.ls{font-size:11px;color:var(--txm);margin-top:3px;line-height:1.5}
 .badge{font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;flex-shrink:0}
-.bg{background:var(--goldd);color:var(--gold)}.bgn{background:var(--greend);color:var(--green)}
-.bb{background:var(--blued);color:var(--blue)}.br{background:var(--redd);color:var(--red)}
-.bor{background:var(--oranged);color:var(--orange)}
+.bg-g{background:var(--goldd);color:var(--gold)}.bg-gn{background:var(--greend);color:var(--green)}
+.bg-b{background:var(--blued);color:var(--blue)}.bg-r{background:var(--redd);color:var(--red)}
+.bg-or{background:var(--oranged);color:var(--orange)}.bg-pu{background:var(--purpled);color:var(--purple)}
 
 /* FORMS */
 .fg{margin-bottom:11px}
 .fl{font-size:11px;color:var(--txm);font-weight:600;margin-bottom:5px;display:block}
-.fi,.fs{width:100%;background:var(--sf2);border:1.5px solid var(--bd2);border-radius:9px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:16px;padding:11px 12px;appearance:none;-webkit-appearance:none;outline:none;transition:border-color .2s}
-.fi:focus,.fs:focus{border-color:var(--gold)}
-.fs{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%237a90a8' d='M5 6L0 0h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;padding-right:30px}
+.fi{width:100%;background:var(--sf2);border:1.5px solid var(--bd2);border-radius:9px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:16px;padding:11px 12px;appearance:none;-webkit-appearance:none;outline:none;transition:border-color .2s}
+.fi:focus{border-color:var(--gold)}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.cb{background:var(--goldd);border:1px solid rgba(200,169,110,.3);border-radius:9px;padding:11px;margin-bottom:11px;display:none}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.cb{background:var(--goldd);border:1px solid var(--goldb);border-radius:9px;padding:11px;margin-bottom:11px;display:none}
 .cbl{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;font-weight:700}
-.cbv{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--goldl);margin-top:2px}
+.cbv{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--goldl);margin-top:2px}
 
 /* CHIPS */
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px}
@@ -115,34 +129,46 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 .bg-gold{background:var(--gold);color:var(--bg)}.bg-gold:active{background:var(--goldl);transform:scale(.98)}
 .bg-green{background:var(--green);color:#0f1923}.bg-green:active{transform:scale(.98)}
 .bg-blue{background:var(--blue);color:#fff}.bg-blue:active{transform:scale(.98)}
+.bg-orange{background:var(--orange);color:#fff}.bg-orange:active{transform:scale(.98)}
 .bg-red{background:var(--red);color:#fff}.bg-red:active{transform:scale(.98)}
 .bg-ghost{background:transparent;color:var(--txm);border:1.5px solid var(--bd2)}.bg-ghost:active{transform:scale(.98)}
 
 /* MODAL */
-.ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-end;backdrop-filter:blur(6px)}
+.ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:500;align-items:flex-end;backdrop-filter:blur(8px)}
 .ovl.on{display:flex}
-.modal{background:var(--sf);border-radius:22px 22px 0 0;width:100%;padding:16px 16px calc(16px + var(--sb));border-top:1px solid var(--bd);animation:su .28s ease;max-height:92dvh;overflow-y:auto}
+.modal{background:var(--sf);border-radius:24px 24px 0 0;width:100%;padding:16px 16px calc(16px + var(--sb));border-top:1px solid var(--bd);animation:su .28s ease;max-height:93dvh;overflow-y:auto}
 @keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .mh{width:34px;height:3px;background:var(--bd);border-radius:2px;margin:0 auto 14px}
-.mt{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--gold);margin-bottom:15px}
-.divl{height:1px;background:var(--bd2);margin:13px 0}
-.av{display:none;margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px}
+.mt{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--gold);margin-bottom:4px}
+.mt-sub{font-size:12px;color:var(--txm);margin-bottom:14px;line-height:1.5}
+.divl{height:1px;background:var(--bd2);margin:12px 0}
+.av{display:none;margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px;line-height:1.4}
 
 /* TOAST */
-.toast{position:fixed;top:calc(var(--st)+70px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--green);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;font-weight:700;z-index:1000;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;max-width:86vw;text-align:center}
+.toast{position:fixed;top:calc(var(--st)+70px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--green);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;font-weight:700;z-index:1000;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;max-width:88vw;text-align:center}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}.toast.err{background:var(--red)}.toast.warn{background:var(--orange)}
 
 /* EMPTY */
-.empty{text-align:center;padding:32px 16px;color:var(--txd)}
-.ei{font-size:40px;margin-bottom:9px}.et{font-size:13px}
+.empty{text-align:center;padding:28px 16px;color:var(--txd)}
+.ei{font-size:38px;margin-bottom:8px}.et{font-size:13px}
 
-/* REPORT */
+/* REPORT ROWS */
 .rb{background:var(--sf2);border:1px solid var(--bd2);border-radius:11px;padding:13px;margin-bottom:10px}
-.rr{display:flex;justify-content:space-between;align-items:center;padding:4px 0}
-.rr+.rr{border-top:1px solid rgba(255,255,255,.04)}
+.rb.accent-gold{border-color:var(--goldb);background:rgba(200,169,110,.04)}
+.rb.accent-blue{border-color:var(--blueb);background:rgba(91,155,213,.04)}
+.rb.accent-green{border-color:var(--greenb);background:rgba(92,184,122,.04)}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:5px 0}
+.rr+.rr{border-top:1px solid var(--bd3)}
+.rr.total{border-top:1px solid var(--bd);margin-top:4px;padding-top:8px}
 .rk{font-size:12px;color:var(--txm)}.rv{font-size:13px;font-weight:600;color:var(--tx)}
+.rv.gold{color:var(--gold)}.rv.green{color:var(--green)}.rv.red{color:var(--red)}.rv.orange{color:var(--orange)}
 .dbtn{background:none;border:none;color:var(--red);font-size:15px;cursor:pointer;padding:4px 6px;border-radius:6px;flex-shrink:0}
 .dbtn:active{background:var(--redd)}
+
+/* SEPARADOR */
+.sep{display:flex;align-items:center;gap:8px;margin:14px 0 10px}
+.sep-line{flex:1;height:1px;background:var(--bd2)}
+.sep-txt{font-size:10px;color:var(--txd);font-weight:600;text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
 
 /* LOGIN */
 .lw{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100dvh;padding:28px 20px}
@@ -162,9 +188,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 .pk{background:var(--sf);border:1px solid var(--bd2);border-radius:11px;padding:14px;font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--tx);cursor:pointer;text-align:center;transition:all .15s}
 .pk:active{background:var(--sf2);transform:scale(.93)}.pk.del{font-size:15px;color:var(--txm)}
 
-/* INFO BOX */
-.info-box{background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:12px;color:var(--txm);line-height:1.5}
-.info-box strong{color:var(--tx)}
+/* DATE SELECTOR */
+.date-sel{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.date-sel input{background:var(--sf2);border:1.5px solid var(--bd2);border-radius:9px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:14px;padding:8px 12px;outline:none;flex:1;-webkit-appearance:none}
+.date-sel input:focus{border-color:var(--gold)}
+.date-btn{background:var(--goldd);border:1px solid var(--goldb);border-radius:9px;color:var(--gold);font-size:11px;font-weight:700;padding:9px 12px;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif}
 </style>
 </head>
 <body>
@@ -178,12 +206,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <div class="rcard" id="rc-bod" onclick="selRole('bodeguero')">
       <div class="rci">📦</div>
       <div class="rcn">Bodeguero</div>
-      <div class="rcd">Registrar ingreso · Procesar carne · Despachar a cocina</div>
+      <div class="rcd">Registrar ingresos · Producción · Despachos</div>
     </div>
     <div class="rcard" id="rc-adm" onclick="selRole('admin')">
       <div class="rci">👑</div>
       <div class="rcn">Administrador</div>
-      <div class="rcd">Acceso completo · Reportes · Configuración · Eliminar</div>
+      <div class="rcd">Acceso completo · Reportes · Configuración</div>
     </div>
   </div>
   <div class="pinw" id="pinw" style="display:none">
@@ -219,87 +247,79 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   </div>
 </div>
 
-<!-- ── DASHBOARD ── -->
+<!-- ════════ DASHBOARD ════════ -->
 <div class="pg on" id="pg-dash">
   <div class="pgt">Resumen del día</div>
   <div class="pgs" id="dashd">—</div>
 
-  <!-- FLUJO VISUAL -->
-  <div class="card" style="padding:14px 12px">
-    <div class="ct" style="margin-bottom:10px">🔄 Flujo de carne hoy</div>
-    <div class="flujo">
-      <div class="fp c-gold">
-        <div class="fp-ic">📥</div>
-        <div class="fp-lb">Ingresó</div>
-        <div class="fp-vl" id="fl-ing">0,0</div>
-        <div class="fp-un">kg brutos</div>
-      </div>
-      <div class="fp-ar">›</div>
-      <div class="fp c-orange">
-        <div class="fp-ic">⚙️</div>
-        <div class="fp-lb">Procesado</div>
-        <div class="fp-vl" id="fl-pro">0,0</div>
-        <div class="fp-un">kg netos</div>
-      </div>
-      <div class="fp-ar">›</div>
-      <div class="fp c-blue">
-        <div class="fp-ic">❄️</div>
-        <div class="fp-lb">En cámara</div>
-        <div class="fp-vl" id="fl-cam">0</div>
-        <div class="fp-un">bolsas</div>
-      </div>
-      <div class="fp-ar">›</div>
-      <div class="fp c-green">
-        <div class="fp-ic">🍳</div>
-        <div class="fp-lb">A cocina</div>
-        <div class="fp-vl" id="fl-coc">0</div>
-        <div class="fp-un">bolsas</div>
-      </div>
+  <!-- MATERIA PRIMA -->
+  <div class="sec-hdr">
+    <span class="sec-pill pill-gold">🥩 Materia Prima</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="sg" style="margin-bottom:8px">
+    <div class="st ac-gold">
+      <div class="sl">Ingresado hoy</div>
+      <div class="sv gold" id="d-mp-ing">0</div>
+      <div class="su" id="d-mp-ing-kg">0,0 kg</div>
+    </div>
+    <div class="st">
+      <div class="sl">Enviado a producción</div>
+      <div class="sv orange" id="d-mp-sal">0</div>
+      <div class="su" id="d-mp-sal-kg">0,0 kg</div>
     </div>
   </div>
-
-  <div class="sg">
-    <div class="st">
-      <div class="sl">Kg brutos ingresados</div>
-      <div class="sv gold" id="s-ing">0,0</div>
-      <div class="su">kg</div>
+  <div class="st full ac-gold" style="margin-bottom:11px;border-radius:13px;padding:13px 11px">
+    <div class="sl">📦 Saldo MP en cámara</div>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-top:2px">
+      <div class="sv gold" id="d-mp-saldo">0</div>
+      <div style="font-size:13px;color:var(--txm)">piezas</div>
+      <div style="font-size:16px;font-family:'Syne',sans-serif;font-weight:700;color:var(--goldl)" id="d-mp-saldo-kg">/ 0,0 kg</div>
     </div>
-    <div class="st">
-      <div class="sl">Pendiente por procesar</div>
-      <div class="sv orange" id="s-pend">0,0</div>
-      <div class="su">kg brutos sin procesar</div>
-    </div>
-    <div class="st">
-      <div class="sl">Merma del día</div>
-      <div class="sv red" id="s-mer">0,0</div>
-      <div class="su">kg</div>
-    </div>
-    <div class="st">
-      <div class="sl">Kg netos procesados</div>
-      <div class="sv green" id="s-net">0,0</div>
-      <div class="su">kg</div>
-    </div>
-    <div class="st full ac">
-      <div class="sl">❄️ Bolsas disponibles en cámara</div>
-      <div class="sv gold" id="s-cam">0</div>
-      <div class="su" id="s-cams">bolsas · 0 cortes</div>
-      <div class="prog"><div class="pb" id="s-prog" style="width:0%"></div></div>
-    </div>
+    <div class="prog"><div class="pb" id="d-mp-prog" style="width:0%"></div></div>
   </div>
 
+  <!-- PRODUCTO PROCESADO -->
+  <div class="sec-hdr">
+    <span class="sec-pill pill-blue">📦 Producto Procesado</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="sg" style="margin-bottom:8px">
+    <div class="st ac-blue">
+      <div class="sl">Ingresado hoy</div>
+      <div class="sv blue" id="d-pp-ing">0</div>
+      <div class="su" id="d-pp-ing-kg">bolsas · 0,0 kg</div>
+    </div>
+    <div class="st">
+      <div class="sl">Despachado a línea</div>
+      <div class="sv green" id="d-pp-des">0</div>
+      <div class="su" id="d-pp-des-kg">bolsas · 0,0 kg</div>
+    </div>
+  </div>
+  <div class="st full ac-blue" style="margin-bottom:11px;border-radius:13px;padding:13px 11px">
+    <div class="sl">❄️ Saldo PP en cámara</div>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-top:2px">
+      <div class="sv blue" id="d-pp-saldo">0</div>
+      <div style="font-size:13px;color:var(--txm)">bolsas</div>
+      <div style="font-size:16px;font-family:'Syne',sans-serif;font-weight:700;color:var(--blue)" id="d-pp-saldo-kg">/ 0,0 kg</div>
+    </div>
+    <div class="prog"><div class="pb blue" id="d-pp-prog" style="width:0%"></div></div>
+  </div>
+
+  <!-- ACCIONES -->
   <div class="ct" style="margin-bottom:9px">Acciones rápidas</div>
   <div class="qag">
     <div class="qab" onclick="openM('mo-ing')">
-      <div class="qi">📥</div><div class="ql">Registrar Ingreso</div><div class="qs">Carne bruta que llega</div>
+      <div class="qi">📥</div><div class="ql">Ingreso MP</div><div class="qs">Piezas brutas que llegan</div>
     </div>
     <div class="qab" onclick="openM('mo-pro')">
-      <div class="qi">⚙️</div><div class="ql">Registrar Proceso</div><div class="qs">Cortar, bolsear → cámara</div>
+      <div class="qi">⚙️</div><div class="ql">Producción</div><div class="qs">MP → bolsas procesadas</div>
     </div>
     <div class="qab" onclick="openM('mo-des')">
-      <div class="qi">🍳</div><div class="ql">Despachar a Cocina</div><div class="qs">Salida de cámara</div>
+      <div class="qi">🍽️</div><div class="ql">Despacho a Línea</div><div class="qs">Bolsas PP → cliente</div>
     </div>
-    <div class="qab adm" id="qa-rep" onclick="goTo('pg-rep')" style="display:none">
-      <div class="qi">📊</div><div class="ql">Ver Reporte</div><div class="qs">Resumen y WhatsApp</div>
+    <div class="qab adm" onclick="goTo('pg-rep')" style="display:none">
+      <div class="qi">📊</div><div class="ql">Ver Reporte</div><div class="qs">Balance y cuadre</div>
     </div>
   </div>
 
@@ -309,60 +329,78 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   </div>
 </div>
 
-<!-- ── CÁMARA ── -->
+<!-- ════════ CÁMARA ════════ -->
 <div class="pg" id="pg-cam">
   <div class="pgt">Cámara de Frío</div>
-  <div class="pgs">Stock actual de bolsas procesadas</div>
-  <div class="sg">
-    <div class="st full ac">
-      <div class="sl">Total disponible en cámara</div>
-      <div class="sv gold" id="cam-tot">0</div>
-      <div class="su" id="cam-sub">bolsas · 0 cortes</div>
-    </div>
-    <div class="st">
-      <div class="sl">Despachado a cocina hoy</div>
-      <div class="sv green" id="cam-des">0</div>
-      <div class="su">bolsas</div>
-    </div>
-    <div class="st">
-      <div class="sl">Kg estimados en cámara</div>
-      <div class="sv blue" id="cam-kg">0,0</div>
-      <div class="su">kg</div>
-    </div>
-    <div class="st full ac-or">
-      <div class="sl">⚙️ Pendiente por procesar</div>
-      <div class="sv orange" id="cam-pend">0,0</div>
-      <div class="su">kg brutos aún sin procesar</div>
+  <div class="pgs">Stock actual separado por tipo</div>
+
+  <!-- MP -->
+  <div class="sec-hdr">
+    <span class="sec-pill pill-gold">🥩 Materia Prima</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="sg" style="margin-bottom:11px">
+    <div class="st ac-gold full">
+      <div class="sl">Stock total MP</div>
+      <div style="display:flex;align-items:baseline;gap:10px;margin-top:2px">
+        <div class="sv gold" id="c-mp-pzs">0</div>
+        <div style="font-size:12px;color:var(--txm)">piezas</div>
+        <div style="font-size:18px;font-family:'Syne',sans-serif;font-weight:800;color:var(--goldl)" id="c-mp-kg">/ 0,0 kg</div>
+      </div>
     </div>
   </div>
   <div class="card">
-    <div class="ct">📦 Bolsas por tipo de corte</div>
-    <div id="cam-byt"><div class="empty"><div class="ei">❄️</div><div class="et">Cámara vacía</div></div></div>
+    <div class="ct">Detalle por tipo de corte</div>
+    <div id="c-mp-list"><div class="empty"><div class="ei">🥩</div><div class="et">Sin materia prima en cámara</div></div></div>
+  </div>
+
+  <!-- PP -->
+  <div class="sec-hdr">
+    <span class="sec-pill pill-blue">📦 Producto Procesado</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="sg" style="margin-bottom:11px">
+    <div class="st ac-blue full">
+      <div class="sl">Stock total PP</div>
+      <div style="display:flex;align-items:baseline;gap:10px;margin-top:2px">
+        <div class="sv blue" id="c-pp-bols">0</div>
+        <div style="font-size:12px;color:var(--txm)">bolsas</div>
+        <div style="font-size:18px;font-family:'Syne',sans-serif;font-weight:800;color:var(--blue)" id="c-pp-kg">/ 0,0 kg</div>
+      </div>
+    </div>
   </div>
   <div class="card">
-    <div class="ct">🍳 Despachos a cocina hoy</div>
-    <div id="cam-dcoc"><div class="empty"><div class="ei">🍳</div><div class="et">Sin despachos hoy</div></div></div>
+    <div class="ct">Detalle por tipo de corte</div>
+    <div id="c-pp-list"><div class="empty"><div class="ei">📦</div><div class="et">Sin producto procesado en cámara</div></div></div>
   </div>
 </div>
 
-<!-- ── HISTORIAL ── -->
+<!-- ════════ HISTORIAL ════════ -->
 <div class="pg" id="pg-hist">
   <div class="pgt">Historial</div>
   <div class="pgs">Todos los registros</div>
   <div class="chips" id="hchips">
-    <button class="chip on" onclick="sf('todo',this)">Todos</button>
-    <button class="chip" onclick="sf('ingreso',this)">📥 Ingreso</button>
-    <button class="chip" onclick="sf('proceso',this)">⚙️ Proceso</button>
-    <button class="chip" onclick="sf('despacho',this)">🍳 Despacho</button>
+    <button class="chip on"  onclick="sf('todo',this)">Todos</button>
+    <button class="chip"     onclick="sf('ingreso',this)">📥 Ingreso MP</button>
+    <button class="chip"     onclick="sf('proceso',this)">⚙️ Producción</button>
+    <button class="chip"     onclick="sf('despacho',this)">🍽️ Despacho</button>
   </div>
   <div id="hlist"><div class="empty"><div class="ei">📋</div><div class="et">Sin registros aún</div></div></div>
 </div>
 
-<!-- ── REPORTE (admin) ── -->
+<!-- ════════ REPORTE (admin) ════════ -->
 <div class="pg adm" id="pg-rep" style="display:none">
-  <div class="pgt">Reporte Diario</div>
-  <div class="pgs" id="repd">—</div>
-  <div id="repc"><div class="empty"><div class="ei">📊</div><div class="et">Sin datos aún</div></div></div>
+  <div class="pgt">Reporte & Balance</div>
+  <div class="pgs">Cuadre de ingresos, stock y merma</div>
+
+  <div class="date-sel">
+    <input type="date" id="rep-date-input">
+    <button class="date-btn" onclick="setRepDate('today')">Hoy</button>
+    <button class="date-btn" onclick="setRepDate('all')">Todo</button>
+  </div>
+
+  <div id="repc"><div class="empty"><div class="ei">📊</div><div class="et">Sin datos para esta fecha</div></div></div>
+
   <div id="repbtns" class="adm" style="display:none;margin-top:15px;flex-direction:column;gap:8px">
     <button class="btn bg-green" onclick="sendWA()">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12.004 2C6.468 2 2 6.478 2 12.004c0 1.773.463 3.521 1.34 5.064L2 22l5.083-1.323A9.924 9.924 0 0012.004 22C17.532 22 22 17.522 22 11.996 22 6.48 17.532 2 12.004 2zm0 18.215a8.18 8.18 0 01-4.162-1.136l-.298-.178-3.097.807.825-3.01-.195-.308A8.23 8.23 0 013.79 12.004c0-4.527 3.686-8.212 8.215-8.212 4.52 0 8.206 3.686 8.206 8.212 0 4.527-3.686 8.211-8.207 8.211z"/></svg>
@@ -391,14 +429,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 </nav>
 </div>
 
-<!-- ═══ MODALS ═══ -->
+<!-- ═══ MODALES ═══ -->
 
-<!-- 1. INGRESO DE CARNE BRUTA -->
+<!-- 1. INGRESO MATERIA PRIMA -->
 <div class="ovl" id="mo-ing">
   <div class="modal">
     <div class="mh"></div>
-    <div class="mt">📥 Registrar Ingreso</div>
-    <div class="info-box">Registra la carne bruta que llega. El kg ingresado quedará <strong>pendiente por procesar</strong> hasta que el bodeguero corte y bolsee.</div>
+    <div class="mt">📥 Ingreso Materia Prima</div>
+    <div class="mt-sub">Carne bruta que llega a bodega. Ingresa a <strong style="color:var(--gold)">stock MP</strong> en cámara.</div>
     <div class="fg">
       <label class="fl">Tipo de corte</label>
       <div class="chips" id="ic"></div>
@@ -406,73 +444,89 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     </div>
     <div class="fr">
       <div class="fg">
-        <label class="fl">Peso total bruto (kg)</label>
-        <input class="fi" id="ipe" placeholder="Ej: 25,5" type="text" inputmode="decimal">
+        <label class="fl">N° de piezas recibidas</label>
+        <input class="fi" id="ipzs" placeholder="Ej: 5" type="text" inputmode="numeric">
       </div>
       <div class="fg">
-        <label class="fl">N° bolsas recibidas</label>
-        <input class="fi" id="ibol" placeholder="Ej: 5" type="text" inputmode="numeric">
+        <label class="fl">Peso total bruto (kg)</label>
+        <input class="fi" id="ikg" placeholder="Ej: 25,5" type="text" inputmode="decimal">
       </div>
     </div>
     <div class="fg">
       <label class="fl">Observaciones (opcional)</label>
       <input class="fi" id="inot" placeholder="Ej: llegó a las 9am..." type="text">
     </div>
-    <button class="btn bg-gold" onclick="doIng()">✓ Registrar ingreso</button>
+    <button class="btn bg-gold" onclick="doIng()">✓ Registrar ingreso a cámara</button>
     <button class="btn bg-ghost" onclick="closeM('mo-ing')">Cancelar</button>
   </div>
 </div>
 
-<!-- 2. PROCESO: bodeguero corta y bolsea → cámara -->
+<!-- 2. PRODUCCIÓN: MP → bolsas PP -->
 <div class="ovl" id="mo-pro">
   <div class="modal">
     <div class="mh"></div>
-    <div class="mt">⚙️ Registrar Procesamiento</div>
-    <div class="info-box">El bodeguero cortó y bolseó la carne. Los kg brutos se <strong>descuentan del pendiente</strong> y las bolsas producidas <strong>ingresan a cámara</strong>.</div>
+    <div class="mt">⚙️ Registrar Producción</div>
+    <div class="mt-sub">La MP sale de cámara, se procesa y las bolsas resultantes <strong style="color:var(--blue)">vuelven a cámara como PP</strong>.</div>
+
     <div class="fg">
-      <label class="fl">Tipo de corte procesado</label>
+      <label class="fl">Tipo de corte</label>
       <div class="chips" id="pc"></div>
       <input class="fi" id="pti" placeholder="O escribe el tipo..." type="text">
     </div>
+
+    <div class="sep"><div class="sep-line"></div><div class="sep-txt">📤 Materia prima que sale</div><div class="sep-line"></div></div>
     <div class="fr">
       <div class="fg">
-        <label class="fl">Kg brutos procesados</label>
-        <input class="fi" id="pbr" placeholder="Ej: 10,5" type="text" inputmode="decimal" oninput="calcN()">
+        <label class="fl">N° piezas enviadas</label>
+        <input class="fi" id="ppzs" placeholder="Ej: 3" type="text" inputmode="numeric" oninput="calcN()">
       </div>
       <div class="fg">
-        <label class="fl">Kg merma / grasa</label>
-        <input class="fi" id="pme" placeholder="Ej: 1,5" type="text" inputmode="decimal" oninput="calcN()">
+        <label class="fl">Kg brutos enviados</label>
+        <input class="fi" id="pbr" placeholder="Ej: 15,0" type="text" inputmode="decimal" oninput="calcN()">
       </div>
     </div>
-    <div class="cb" id="cbox">
-      <div class="cbl">Kg netos estimados</div>
-      <div class="cbv" id="cnv">—</div>
-    </div>
+
+    <div class="sep"><div class="sep-line"></div><div class="sep-txt">📦 Resultado del proceso</div><div class="sep-line"></div></div>
     <div class="fr">
       <div class="fg">
         <label class="fl">Bolsas producidas</label>
-        <input class="fi" id="pbo" placeholder="Ej: 3" type="text" inputmode="numeric">
+        <input class="fi" id="pbo" placeholder="Ej: 4" type="text" inputmode="numeric">
       </div>
       <div class="fg">
-        <label class="fl">Peso por bolsa (kg)</label>
-        <input class="fi" id="ppb" placeholder="Ej: 2,6" type="text" inputmode="decimal">
+        <label class="fl">Kg total de bolsas</label>
+        <input class="fi" id="ppkg" placeholder="Ej: 10,4" type="text" inputmode="decimal" oninput="calcN()">
       </div>
     </div>
-    <div class="fg">
-      <label class="fl">Empleado responsable</label>
-      <input class="fi" id="pem" placeholder="Nombre..." type="text">
+
+    <div class="sep"><div class="sep-line"></div><div class="sep-txt">🗑 Merma</div><div class="sep-line"></div></div>
+    <div class="fr">
+      <div class="fg">
+        <label class="fl">Kg de merma / grasa</label>
+        <input class="fi" id="pme" placeholder="Ej: 1,5" type="text" inputmode="decimal" oninput="calcN()">
+      </div>
+      <div class="fg">
+        <label class="fl">Empleado responsable</label>
+        <input class="fi" id="pem" placeholder="Nombre..." type="text">
+      </div>
     </div>
-    <button class="btn bg-blue" onclick="doPro()">✓ Ingresar bolsas a cámara</button>
+
+    <div class="cb" id="cbox">
+      <div class="cbl">Balance del proceso</div>
+      <div class="cbv" id="cnv">—</div>
+    </div>
+
+    <div class="av" id="pav"></div>
+    <button class="btn bg-blue" onclick="doPro()">✓ Registrar producción</button>
     <button class="btn bg-ghost" onclick="closeM('mo-pro')">Cancelar</button>
   </div>
 </div>
 
-<!-- 3. DESPACHO: cámara → cocina para servir -->
+<!-- 3. DESPACHO PP A LÍNEA -->
 <div class="ovl" id="mo-des">
   <div class="modal">
     <div class="mh"></div>
-    <div class="mt">🍳 Despachar a Cocina</div>
-    <div class="info-box">Las bolsas salen de cámara hacia cocina para ser servidas. El stock de cámara se <strong>descuenta automáticamente</strong>.</div>
+    <div class="mt">🍽️ Despacho a Línea</div>
+    <div class="mt-sub">Bolsas de PP salen de cámara hacia la <strong style="color:var(--green)">línea de consumo</strong> (buffet). Se descuenta del stock PP.</div>
     <div class="fg">
       <label class="fl">Tipo de corte</label>
       <div class="chips" id="dc"></div>
@@ -480,24 +534,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     </div>
     <div class="fr">
       <div class="fg">
-        <label class="fl">Bolsas a despachar</label>
+        <label class="fl">N° bolsas a despachar</label>
         <input class="fi" id="dbo" placeholder="Ej: 2" type="text" inputmode="numeric" oninput="chkStk()">
       </div>
       <div class="fg">
-        <label class="fl">Cortes sueltos (si aplica)</label>
-        <input class="fi" id="dco" placeholder="Ej: 5" type="text" inputmode="numeric">
+        <label class="fl">Kg a despachar</label>
+        <input class="fi" id="dkg" placeholder="Ej: 5,2" type="text" inputmode="decimal">
       </div>
     </div>
     <div class="av" id="dav"></div>
     <div class="fg">
-      <label class="fl">Recibe en cocina</label>
-      <input class="fi" id="dre" placeholder="Nombre del cocinero" type="text">
+      <label class="fl">Recibe en cocina / responsable</label>
+      <input class="fi" id="dre" placeholder="Nombre..." type="text">
     </div>
     <div class="fg">
       <label class="fl">Observaciones</label>
       <input class="fi" id="dno" placeholder="Opcional..." type="text">
     </div>
-    <button class="btn bg-green" onclick="doDes()">✓ Confirmar despacho</button>
+    <button class="btn bg-green" onclick="doDes()">✓ Confirmar despacho a línea</button>
     <button class="btn bg-ghost" onclick="closeM('mo-des')">Cancelar</button>
   </div>
 </div>
@@ -527,49 +581,77 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 
 <div class="toast" id="toast"></div>
 
+<!-- ═══ SCRIPT ═══ -->
 <script>
-// ── STORAGE ──
+// ─── STORAGE ───
 const S={
   g:(k,d)=>{try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}},
   s:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
 };
+// movimientos: {id, tipo:'ingreso'|'proceso'|'despacho', fecha, tipoCarne,
+//   ingreso: {piezas, kg}
+//   proceso: {pzsSalida, kgBruto, bolsas, kgBolsas, merma, empleado}
+//   despacho:{bolsas, kg, recibe}
+// }
 const gM=()=>S.g('movs',[]);const sM=m=>S.s('movs',m);
-const gC=()=>S.g('cam',[]);const sC=c=>S.s('cam',c);
 const gMt=()=>S.g('meats',['Pollo','Lomo Liso','Lomo Vetado']);
 const sMt=m=>S.s('meats',m);
 const gPin=()=>S.g('pin','1234');const sPin=p=>S.s('pin',p);
 
-// ── STATE ──
-let role=null,pbuf='',hf='todo';
+let role=null,pbuf='',hf='todo',repFiltro='today';
 
-// ─────────────────────────────────
-//  PARSE: acepta coma O punto
-// ─────────────────────────────────
-function pNum(v){
-  if(v===undefined||v===null||String(v).trim()==='')return NaN;
-  return parseFloat(String(v).replace(',','.').trim());
-}
-function pInt(v){
-  if(v===undefined||v===null||String(v).trim()==='')return NaN;
-  return parseInt(String(v).trim(),10);
-}
-// Formatear para mostrar (usa coma como separador decimal)
-const fN=(n,d=1)=>isNaN(n)||n===null?'0,0':parseFloat(n).toFixed(d).replace('.',',');
+// ─── PARSE NÚMEROS (acepta coma y punto) ───
+const pN=v=>{if(v===undefined||v===null||String(v).trim()==='')return NaN;return parseFloat(String(v).replace(',','.').trim());};
+const pI=v=>{if(v===undefined||v===null||String(v).trim()==='')return NaN;return parseInt(String(v).trim(),10);};
+const fN=(n,d=1)=>isNaN(n)||n===null?'0,0':parseFloat(n||0).toFixed(d).replace('.',',');
+const fI=(n)=>isNaN(n)||n===null?'0':String(Math.round(n||0));
 
-// ── LOGIN ──
+// ─── UTILS ───
+const fdt=iso=>new Date(iso).toLocaleString('es-CL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+const fdate=iso=>{try{const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`;}catch{return iso;}};
+const TK=()=>new Date().toISOString().slice(0,10);
+
+// ─── CALCULAR STOCKS desde movimientos ───
+function calcStocks(movs){
+  // MP stock: ingresado - piezas/kg enviados a produccion
+  let mpPzs=0,mpKg=0;
+  // PP stock: bolsas/kg de produccion - bolsas/kg despachados
+  let ppBols=0,ppKg=0;
+  // Merma acumulada
+  let mermaKg=0;
+
+  movs.forEach(m=>{
+    if(m.tipo==='ingreso'){
+      mpPzs+=(m.piezas||0);
+      mpKg+=(m.kg||0);
+    }
+    if(m.tipo==='proceso'){
+      mpPzs-=(m.pzsSalida||0);
+      mpKg-=(m.kgBruto||0);
+      ppBols+=(m.bolsas||0);
+      ppKg+=(m.kgBolsas||0);
+      mermaKg+=(m.merma||0);
+    }
+    if(m.tipo==='despacho'){
+      ppBols-=(m.bolsas||0);
+      ppKg-=(m.kg||0);
+    }
+  });
+  return{
+    mpPzs:Math.max(0,mpPzs),mpKg:Math.max(0,mpKg),
+    ppBols:Math.max(0,ppBols),ppKg:Math.max(0,ppKg),
+    mermaKg
+  };
+}
+
+// ─── LOGIN ───
 function selRole(r){
   document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('on'));
   document.getElementById(r==='admin'?'rc-adm':'rc-bod').classList.add('on');
   if(r==='admin'){pbuf='';document.getElementById('pinw').style.display='block';updPD();}
   else enterApp('bodeguero');
 }
-function pi(d){
-  if(pbuf.length>=4)return;pbuf+=d;updPD();
-  if(pbuf.length===4)setTimeout(()=>{
-    if(pbuf===gPin())enterApp('admin');
-    else{toast('PIN incorrecto','err');pbuf='';updPD();}
-  },150);
-}
+function pi(d){if(pbuf.length>=4)return;pbuf+=d;updPD();if(pbuf.length===4)setTimeout(()=>{if(pbuf===gPin())enterApp('admin');else{toast('PIN incorrecto','err');pbuf='';updPD();}},150);}
 function pb2(){pbuf=pbuf.slice(0,-1);updPD();}
 function cancelPin(){document.getElementById('pinw').style.display='none';pbuf='';document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('on'));}
 function updPD(){for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.toggle('f',i<pbuf.length);}
@@ -587,26 +669,17 @@ function enterApp(r){
     :'Gestión de cámara';
   clk();renderDash();
 }
-function logout(){
-  if(!confirm('¿Cerrar sesión?'))return;
-  role=null;
-  document.getElementById('lscreen').style.display='flex';
-  document.getElementById('app').style.display='none';
-  document.getElementById('pinw').style.display='none';
-  document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('on'));
-  pbuf='';
-}
+function logout(){if(!confirm('¿Cerrar sesión?'))return;role=null;document.getElementById('lscreen').style.display='flex';document.getElementById('app').style.display='none';document.getElementById('pinw').style.display='none';document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('on'));pbuf='';}
 
-// ── CLOCK ──
+// ─── CLOCK ───
 function clk(){
   const d=new Date();
   document.getElementById('hdtm').innerHTML=d.toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit'})+'<br>'+d.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('dashd').textContent=d.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  document.getElementById('repd').textContent=d.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 }
 setInterval(clk,30000);
 
-// ── NAV ──
+// ─── NAV ───
 function goTo(id){
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
@@ -616,235 +689,237 @@ function goTo(id){
   if(id==='pg-dash')renderDash();
   if(id==='pg-cam')renderCam();
   if(id==='pg-hist')renderHist();
-  if(id==='pg-rep')renderRep();
+  if(id==='pg-rep'){initRepDate();renderRep();}
 }
 
-// ── MODALS ──
+// ─── MODALS ───
 const CMAP={'mo-ing':['ic','iti'],'mo-pro':['pc','pti'],'mo-des':['dc','dti']};
-function openM(id){
-  document.getElementById(id).classList.add('on');
-  if(CMAP[id])bldChips(...CMAP[id]);
-  if(id==='mo-cfg')renderCfg();
-}
+function openM(id){document.getElementById(id).classList.add('on');if(CMAP[id])bldChips(...CMAP[id]);if(id==='mo-cfg')renderCfg();}
 function closeM(id){document.getElementById(id).classList.remove('on');}
 document.querySelectorAll('.ovl').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeM(o.id);}));
 
-// ── MEAT CHIPS ──
-function bldChips(cid,iid){
-  const meats=gMt();const c=document.getElementById(cid);if(!c)return;
-  c.innerHTML=meats.map(m=>`<button class="mchip" onclick="selMt('${cid}','${iid}','${m}')">${m}</button>`).join('');
-}
-function selMt(cid,iid,m){
-  document.getElementById(iid).value=m;
-  document.querySelectorAll('#'+cid+' .mchip').forEach(c=>c.classList.remove('on'));
-  event.target.classList.add('on');
-  if(iid==='dti')chkStk();
-}
+// ─── CHIPS ───
+function bldChips(cid,iid){const meats=gMt();const c=document.getElementById(cid);if(!c)return;c.innerHTML=meats.map(m=>`<button class="mchip" onclick="selMt('${cid}','${iid}','${m}')">${m}</button>`).join('');}
+function selMt(cid,iid,m){document.getElementById(iid).value=m;document.querySelectorAll('#'+cid+' .mchip').forEach(c=>c.classList.remove('on'));event.target.classList.add('on');if(iid==='dti')chkStk();}
 
-// ── TOAST ──
-function toast(msg,t=''){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.className='toast on'+(t?' '+t:'');
-  setTimeout(()=>el.classList.remove('on'),2500);
-}
+// ─── TOAST ───
+function toast(msg,t=''){const el=document.getElementById('toast');el.textContent=msg;el.className='toast on'+(t?' '+t:'');setTimeout(()=>el.classList.remove('on'),2600);}
 
-// ── UTILS ──
-const fdt=iso=>new Date(iso).toLocaleString('es-CL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-const fdate=iso=>{const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`;};
-const TK=()=>new Date().toISOString().slice(0,10);
-
-// ─────────────────────────────────
-//  CÁLCULO PENDIENTE POR TIPO
-//  ingresado - procesado = pendiente
-// ─────────────────────────────────
-function calcPendiente(ms, tipo){
-  const filtro = tipo ? ms.filter(m=>m.tipoCarne===tipo) : ms;
-  const kgIng  = filtro.filter(m=>m.tipo==='ingreso').reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgPro  = filtro.filter(m=>m.tipo==='proceso').reduce((s,m)=>s+(m.pesoBruto||0),0);
-  return Math.max(0, kgIng - kgPro);
-}
-
-// ─────────────────────────────────
-//  1. REGISTRAR INGRESO
-// ─────────────────────────────────
+// ═══════════════════════════════════════
+//  1. INGRESO MATERIA PRIMA
+// ═══════════════════════════════════════
 function doIng(){
   const tipo=document.getElementById('iti').value.trim();
-  const peso=pNum(document.getElementById('ipe').value);
-  const bols=pInt(document.getElementById('ibol').value);
+  const pzs=pI(document.getElementById('ipzs').value);
+  const kg=pN(document.getElementById('ikg').value);
   if(!tipo){toast('Selecciona o escribe el tipo de corte','err');return;}
-  if(isNaN(peso)||peso<=0){toast('Ingresa el peso (ej: 25,5)','err');return;}
-  if(isNaN(bols)||bols<=0){toast('Ingresa la cantidad de bolsas','err');return;}
-  const mov={id:Date.now(),tipo:'ingreso',fecha:new Date().toISOString(),tipoCarne:tipo,pesoBruto:peso,bolsas:bols,notas:document.getElementById('inot').value.trim()};
+  if(isNaN(pzs)||pzs<=0){toast('Ingresa el número de piezas','err');return;}
+  if(isNaN(kg)||kg<=0){toast('Ingresa el peso en kg (ej: 25,5)','err');return;}
+  const mov={id:Date.now(),tipo:'ingreso',fecha:new Date().toISOString(),tipoCarne:tipo,piezas:pzs,kg,notas:document.getElementById('inot').value.trim()};
   const ms=gM();ms.unshift(mov);sM(ms);
-  ['iti','ipe','ibol','inot'].forEach(i=>document.getElementById(i).value='');
+  ['iti','ipzs','ikg','inot'].forEach(i=>document.getElementById(i).value='');
   document.querySelectorAll('#ic .mchip').forEach(c=>c.classList.remove('on'));
-  closeM('mo-ing');toast(`✓ Ingreso: ${fN(peso)} kg de ${tipo}`);renderDash();
+  closeM('mo-ing');toast(`✓ ${pzs} piezas · ${fN(kg)} kg ingresados`);renderDash();
 }
 
-// ─────────────────────────────────
-//  2. REGISTRAR PROCESO → CÁMARA
-// ─────────────────────────────────
+// ═══════════════════════════════════════
+//  2. PRODUCCIÓN MP → PP
+// ═══════════════════════════════════════
 function calcN(){
-  const br=pNum(document.getElementById('pbr').value);
-  const me=pNum(document.getElementById('pme').value)||0;
-  const ne=Math.max(0,(isNaN(br)?0:br)-me);
+  const br=pN(document.getElementById('pbr').value)||0;
+  const bkg=pN(document.getElementById('ppkg').value)||0;
+  const me=pN(document.getElementById('pme').value)||0;
   const box=document.getElementById('cbox');
-  if(!isNaN(br)&&br>0){
+  const av=document.getElementById('pav');
+  if(br>0){
+    const diff=br-bkg-me;
+    const pctMe=br>0?((me/br)*100).toFixed(1):0;
     box.style.display='block';
-    const p=br>0?((me/br)*100).toFixed(1):0;
-    document.getElementById('cnv').textContent=`${fN(ne,2)} kg  (merma ${p}%)`;
-  }else box.style.display='none';
+    document.getElementById('cnv').textContent=`Bruto ${fN(br)} kg → PP ${fN(bkg)} kg + Merma ${fN(me)} kg (${pctMe}%) = Dif ${fN(diff,2)} kg`;
+    if(Math.abs(diff)>0.5){
+      av.style.cssText='display:block;background:var(--oranged);border:1px solid var(--orangeb);color:var(--orange);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
+      av.textContent=`⚠️ Diferencia de ${fN(Math.abs(diff),2)} kg entre bruto y (PP + merma)`;
+    }else av.style.display='none';
+  }else{box.style.display='none';av.style.display='none';}
 }
 
 function doPro(){
   const tipo=document.getElementById('pti').value.trim();
-  const br=pNum(document.getElementById('pbr').value);
-  const me=pNum(document.getElementById('pme').value)||0;
-  const bo=pInt(document.getElementById('pbo').value);
-  const pb=pNum(document.getElementById('ppb').value)||null;
+  const pzs=pI(document.getElementById('ppzs').value);
+  const br=pN(document.getElementById('pbr').value);
+  const bo=pI(document.getElementById('pbo').value);
+  const bkg=pN(document.getElementById('ppkg').value);
+  const me=pN(document.getElementById('pme').value)||0;
   const em=document.getElementById('pem').value.trim();
   if(!tipo){toast('Selecciona o escribe el tipo de corte','err');return;}
-  if(isNaN(br)||br<=0){toast('Ingresa los kg brutos procesados (ej: 10,5)','err');return;}
+  if(isNaN(pzs)||pzs<=0){toast('Ingresa las piezas enviadas','err');return;}
+  if(isNaN(br)||br<=0){toast('Ingresa los kg brutos enviados (ej: 15,0)','err');return;}
   if(isNaN(bo)||bo<=0){toast('Ingresa las bolsas producidas','err');return;}
+  if(isNaN(bkg)||bkg<=0){toast('Ingresa los kg totales de las bolsas','err');return;}
 
-  // Validar que no se procese más de lo que hay pendiente
+  // Verificar stock MP disponible
   const ms=gM();
-  const pend=calcPendiente(ms,tipo);
-  if(br>pend+0.001){
-    toast(`Solo hay ${fN(pend)} kg pendientes de ${tipo}`,'err');return;
-  }
+  const st=calcStocks(ms);
+  // Calcular stock MP por tipo
+  let mpPzsTipo=0,mpKgTipo=0;
+  ms.forEach(m=>{
+    if(m.tipoCarne!==tipo)return;
+    if(m.tipo==='ingreso'){mpPzsTipo+=m.piezas||0;mpKgTipo+=m.kg||0;}
+    if(m.tipo==='proceso'){mpPzsTipo-=m.pzsSalida||0;mpKgTipo-=m.kgBruto||0;}
+  });
+  mpPzsTipo=Math.max(0,mpPzsTipo);mpKgTipo=Math.max(0,mpKgTipo);
+  if(pzs>mpPzsTipo){toast(`Solo hay ${mpPzsTipo} piezas de ${tipo} en MP`,'err');return;}
+  if(br>mpKgTipo+0.05){toast(`Solo hay ${fN(mpKgTipo)} kg de ${tipo} en MP`,'err');return;}
 
-  const ne=Math.max(0,br-me);
-  const ts=new Date().toISOString();
-  const mov={id:Date.now(),tipo:'proceso',fecha:ts,tipoCarne:tipo,pesoBruto:br,merma:me,pesoNeto:ne,bolsas:bo,pesoPorBolsa:pb,empleado:em};
+  const mov={id:Date.now(),tipo:'proceso',fecha:new Date().toISOString(),tipoCarne:tipo,pzsSalida:pzs,kgBruto:br,bolsas:bo,kgBolsas:bkg,merma:me,empleado:em};
   ms.unshift(mov);sM(ms);
-  // Agregar bolsas a cámara
-  const cam=gC();
-  for(let i=0;i<bo;i++)cam.push({id:ts+'_'+i,tipoCarne:tipo,fecha:ts,pesoBolsa:pb||(ne/bo),cortes:20});
-  sC(cam);
-  ['pti','pbr','pme','pbo','ppb','pem'].forEach(i=>document.getElementById(i).value='');
+  ['pti','ppzs','pbr','pbo','ppkg','pme','pem'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('cbox').style.display='none';
+  document.getElementById('pav').style.display='none';
   document.querySelectorAll('#pc .mchip').forEach(c=>c.classList.remove('on'));
-  closeM('mo-pro');toast(`✓ ${bo} bolsas de ${tipo} en cámara`);renderDash();
+  closeM('mo-pro');toast(`✓ ${bo} bolsas de ${tipo} ingresadas a cámara`);renderDash();
 }
 
-// ─────────────────────────────────
-//  3. DESPACHAR A COCINA
-// ─────────────────────────────────
+// ═══════════════════════════════════════
+//  3. DESPACHO PP A LÍNEA
+// ═══════════════════════════════════════
 function chkStk(){
   const tipo=document.getElementById('dti').value.trim().toLowerCase();
-  const bo=pInt(document.getElementById('dbo').value)||0;
+  const bo=pI(document.getElementById('dbo').value)||0;
   const av=document.getElementById('dav');
   if(!tipo){av.style.display='none';return;}
-  const disp=gC().filter(b=>b.tipoCarne.toLowerCase().includes(tipo)).length;
+  // Calcular stock PP de ese tipo
+  let ppBols=0;
+  gM().forEach(m=>{
+    if(m.tipoCarne.toLowerCase()!==tipo)return;
+    if(m.tipo==='proceso')ppBols+=m.bolsas||0;
+    if(m.tipo==='despacho')ppBols-=m.bolsas||0;
+  });
+  ppBols=Math.max(0,ppBols);
   av.style.display='block';
-  if(bo>disp){
-    av.style.cssText='display:block;background:var(--redd);border:1px solid rgba(224,92,92,.3);color:var(--red);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
-    av.textContent=`⚠️ Solo hay ${disp} bolsa(s) disponibles en cámara`;
+  if(bo>ppBols){
+    av.style.cssText='display:block;background:var(--redd);border:1px solid var(--redb);color:var(--red);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
+    av.textContent=`⚠️ Solo hay ${ppBols} bolsa(s) de PP de ese tipo en cámara`;
   }else{
-    av.style.cssText='display:block;background:var(--greend);border:1px solid rgba(92,184,122,.3);color:var(--green);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
-    av.textContent=`✓ ${disp} bolsa(s) disponibles en cámara`;
+    av.style.cssText='display:block;background:var(--greend);border:1px solid var(--greenb);color:var(--green);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
+    av.textContent=`✓ ${ppBols} bolsa(s) disponibles en cámara`;
   }
 }
 
 function doDes(){
   const tipo=document.getElementById('dti').value.trim();
-  const bo=pInt(document.getElementById('dbo').value)||0;
-  const cs=pInt(document.getElementById('dco').value)||0;
+  const bo=pI(document.getElementById('dbo').value)||0;
+  const kg=pN(document.getElementById('dkg').value)||0;
   const re=document.getElementById('dre').value.trim();
   if(!tipo){toast('Selecciona o escribe el tipo de corte','err');return;}
-  if(bo<=0&&cs<=0){toast('Ingresa bolsas o cortes a despachar','err');return;}
-  const cam=gC();
-  const disp=cam.filter(b=>b.tipoCarne.toLowerCase().includes(tipo.toLowerCase()));
-  if(bo>disp.length){toast(`Solo hay ${disp.length} bolsa(s) de ese tipo en cámara`,'err');return;}
-  let rem=0;
-  const nCam=cam.filter(b=>{
-    if(b.tipoCarne.toLowerCase().includes(tipo.toLowerCase())&&rem<bo){rem++;return false;}
-    return true;
+  if(bo<=0){toast('Ingresa las bolsas a despachar','err');return;}
+  // Verificar stock PP
+  let ppBols=0;
+  gM().forEach(m=>{
+    if(m.tipoCarne.toLowerCase()!==tipo.toLowerCase())return;
+    if(m.tipo==='proceso')ppBols+=m.bolsas||0;
+    if(m.tipo==='despacho')ppBols-=m.bolsas||0;
   });
-  sC(nCam);
-  const mov={id:Date.now(),tipo:'despacho',fecha:new Date().toISOString(),tipoCarne:tipo,bolsas:bo,cortesSueltos:cs,recibe:re,notas:document.getElementById('dno').value.trim()};
+  if(bo>Math.max(0,ppBols)){toast(`Solo hay ${Math.max(0,ppBols)} bolsa(s) de ${tipo} en cámara`,'err');return;}
+  const mov={id:Date.now(),tipo:'despacho',fecha:new Date().toISOString(),tipoCarne:tipo,bolsas:bo,kg:kg||0,recibe:re,notas:document.getElementById('dno').value.trim()};
   const ms=gM();ms.unshift(mov);sM(ms);
-  ['dti','dbo','dco','dre','dno'].forEach(i=>document.getElementById(i).value='');
+  ['dti','dbo','dkg','dre','dno'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('dav').style.display='none';
   document.querySelectorAll('#dc .mchip').forEach(c=>c.classList.remove('on'));
-  closeM('mo-des');toast(`✓ ${bo} bolsas de ${tipo} despachadas a cocina`);renderDash();
+  closeM('mo-des');toast(`✓ ${bo} bolsas de ${tipo} despachadas`);renderDash();
 }
 
-// ─────────────────────────────────
+// ═══════════════════════════════════════
 //  RENDER DASHBOARD
-// ─────────────────────────────────
+// ═══════════════════════════════════════
 function renderDash(){
   const ms=gM();
-  const ing=ms.filter(m=>m.tipo==='ingreso');
-  const pro=ms.filter(m=>m.tipo==='proceso');
-  const des=ms.filter(m=>m.tipo==='despacho');
-  const cam=gC();
+  const td=TK();
+  const msHoy=ms.filter(m=>m.fecha.startsWith(td));
+  const st=calcStocks(ms);
 
-  const kgIng=ing.reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgProBr=pro.reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgPend=Math.max(0,kgIng-kgProBr);
-  const kgMer=pro.reduce((s,m)=>s+(m.merma||0),0);
-  const kgNet=pro.reduce((s,m)=>s+(m.pesoNeto||0),0);
-  const bPro=pro.reduce((s,m)=>s+(m.bolsas||0),0);
-  const bDes=des.reduce((s,m)=>s+(m.bolsas||0),0);
-  const camT=cam.length;
+  // MP hoy
+  const ingHoy=msHoy.filter(m=>m.tipo==='ingreso');
+  const proHoy=msHoy.filter(m=>m.tipo==='proceso');
+  const desHoy=msHoy.filter(m=>m.tipo==='despacho');
+  const mpIngPzs=ingHoy.reduce((s,m)=>s+(m.piezas||0),0);
+  const mpIngKg=ingHoy.reduce((s,m)=>s+(m.kg||0),0);
+  const mpSalPzs=proHoy.reduce((s,m)=>s+(m.pzsSalida||0),0);
+  const mpSalKg=proHoy.reduce((s,m)=>s+(m.kgBruto||0),0);
+  // PP hoy
+  const ppIngBols=proHoy.reduce((s,m)=>s+(m.bolsas||0),0);
+  const ppIngKg=proHoy.reduce((s,m)=>s+(m.kgBolsas||0),0);
+  const ppDesBols=desHoy.reduce((s,m)=>s+(m.bolsas||0),0);
+  const ppDesKg=desHoy.reduce((s,m)=>s+(m.kg||0),0);
 
-  // Flujo
-  document.getElementById('fl-ing').textContent=fN(kgIng);
-  document.getElementById('fl-pro').textContent=fN(kgNet);
-  document.getElementById('fl-cam').textContent=camT;
-  document.getElementById('fl-coc').textContent=bDes;
+  document.getElementById('d-mp-ing').textContent=fI(mpIngPzs);
+  document.getElementById('d-mp-ing-kg').textContent=fN(mpIngKg)+' kg';
+  document.getElementById('d-mp-sal').textContent=fI(mpSalPzs);
+  document.getElementById('d-mp-sal-kg').textContent=fN(mpSalKg)+' kg';
+  document.getElementById('d-mp-saldo').textContent=fI(st.mpPzs);
+  document.getElementById('d-mp-saldo-kg').textContent='/ '+fN(st.mpKg)+' kg';
+  const maxMP=Math.max(st.mpPzs+mpSalPzs,1);
+  document.getElementById('d-mp-prog').style.width=Math.min(100,(st.mpPzs/maxMP)*100)+'%';
 
-  document.getElementById('s-ing').textContent=fN(kgIng);
-  document.getElementById('s-pend').textContent=fN(kgPend);
-  document.getElementById('s-mer').textContent=fN(kgMer);
-  document.getElementById('s-net').textContent=fN(kgNet);
-  document.getElementById('s-cam').textContent=camT;
-  document.getElementById('s-cams').textContent=`bolsas · ${camT*20} cortes`;
-  document.getElementById('s-prog').style.width=Math.min(100,bPro>0?(camT/bPro)*100:0)+'%';
+  document.getElementById('d-pp-ing').textContent=fI(ppIngBols);
+  document.getElementById('d-pp-ing-kg').textContent='bolsas · '+fN(ppIngKg)+' kg';
+  document.getElementById('d-pp-des').textContent=fI(ppDesBols);
+  document.getElementById('d-pp-des-kg').textContent='bolsas · '+fN(ppDesKg)+' kg';
+  document.getElementById('d-pp-saldo').textContent=fI(st.ppBols);
+  document.getElementById('d-pp-saldo-kg').textContent='/ '+fN(st.ppKg)+' kg';
+  const maxPP=Math.max(st.ppBols+ppDesBols,1);
+  document.getElementById('d-pp-prog').style.width=Math.min(100,(st.ppBols/maxPP)*100)+'%';
 
   const all=ms.slice(0,6);
   document.getElementById('lmovs').innerHTML=all.length?all.map(mCard).join(''):'<div class="empty"><div class="ei">📦</div><div class="et">Sin movimientos</div></div>';
 }
 
-// ─────────────────────────────────
+// ═══════════════════════════════════════
 //  RENDER CÁMARA
-// ─────────────────────────────────
+// ═══════════════════════════════════════
 function renderCam(){
-  const cam=gC(),ms=gM();
-  const des=ms.filter(m=>m.tipo==='despacho');
-  const ing=ms.filter(m=>m.tipo==='ingreso');
-  const pro=ms.filter(m=>m.tipo==='proceso');
-  const kgIng=ing.reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgProBr=pro.reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgPend=Math.max(0,kgIng-kgProBr);
+  const ms=gM();
+  // Calcular por tipo
+  const tipos={};
+  gMt().concat([...new Set(ms.map(m=>m.tipoCarne))]).forEach(t=>{if(!tipos[t])tipos[t]={mpPzs:0,mpKg:0,ppBols:0,ppKg:0};});
+  ms.forEach(m=>{
+    if(!tipos[m.tipoCarne])tipos[m.tipoCarne]={mpPzs:0,mpKg:0,ppBols:0,ppKg:0};
+    const t=tipos[m.tipoCarne];
+    if(m.tipo==='ingreso'){t.mpPzs+=m.piezas||0;t.mpKg+=m.kg||0;}
+    if(m.tipo==='proceso'){t.mpPzs-=m.pzsSalida||0;t.mpKg-=m.kgBruto||0;t.ppBols+=m.bolsas||0;t.ppKg+=m.kgBolsas||0;}
+    if(m.tipo==='despacho'){t.ppBols-=m.bolsas||0;t.ppKg-=m.kg||0;}
+  });
+  Object.keys(tipos).forEach(k=>{const t=tipos[k];t.mpPzs=Math.max(0,t.mpPzs);t.mpKg=Math.max(0,t.mpKg);t.ppBols=Math.max(0,t.ppBols);t.ppKg=Math.max(0,t.ppKg);});
 
-  document.getElementById('cam-tot').textContent=cam.length;
-  document.getElementById('cam-sub').textContent=`bolsas · ${cam.length*20} cortes`;
-  document.getElementById('cam-des').textContent=des.reduce((s,m)=>s+(m.bolsas||0),0);
-  document.getElementById('cam-kg').textContent=fN(cam.reduce((s,b)=>s+(b.pesoBolsa||2.6),0));
-  document.getElementById('cam-pend').textContent=fN(kgPend);
+  let totMpPzs=0,totMpKg=0,totPpBols=0,totPpKg=0;
+  const tipArr=Object.entries(tipos).filter(([k,v])=>v.mpPzs>0||v.mpKg>0||v.ppBols>0||v.ppKg>0);
+  tipArr.forEach(([k,v])=>{totMpPzs+=v.mpPzs;totMpKg+=v.mpKg;totPpBols+=v.ppBols;totPpKg+=v.ppKg;});
 
-  const cbt=document.getElementById('cam-byt');
-  if(!cam.length){cbt.innerHTML='<div class="empty"><div class="ei">❄️</div><div class="et">Cámara vacía</div></div>';}
-  else{
-    const gr={};
-    cam.forEach(b=>{if(!gr[b.tipoCarne])gr[b.tipoCarne]={bo:0,kg:0};gr[b.tipoCarne].bo++;gr[b.tipoCarne].kg+=b.pesoBolsa||2.6;});
-    cbt.innerHTML=Object.entries(gr).sort((a,b)=>b[1].bo-a[1].bo).map(([t,d])=>
-      `<div class="li"><div><div class="lt">🥩 ${t}</div><div class="ls">${d.bo} bolsas · ${d.bo*20} cortes · ${fN(d.kg)} kg est.</div></div><span class="badge bg">${d.bo}</span></div>`
-    ).join('');
-  }
+  document.getElementById('c-mp-pzs').textContent=fI(totMpPzs);
+  document.getElementById('c-mp-kg').textContent='/ '+fN(totMpKg)+' kg';
+  document.getElementById('c-pp-bols').textContent=fI(totPpBols);
+  document.getElementById('c-pp-kg').textContent='/ '+fN(totPpKg)+' kg';
 
-  const cdc=document.getElementById('cam-dcoc');
-  cdc.innerHTML=des.length?des.map(d=>
-    `<div class="li"><div><div class="lt">🍳 ${d.tipoCarne}</div><div class="ls">${fdt(d.fecha)}${d.recibe?' · '+d.recibe:''}</div></div><span class="badge bgn">${d.bolsas} bolsas</span></div>`
-  ).join(''):'<div class="empty"><div class="ei">🍳</div><div class="et">Sin despachos hoy</div></div>';
+  const mpL=document.getElementById('c-mp-list');
+  const mpTips=tipArr.filter(([k,v])=>v.mpPzs>0||v.mpKg>0);
+  mpL.innerHTML=mpTips.length?mpTips.map(([t,v])=>`
+    <div class="li">
+      <div><div class="lt">🥩 ${t}</div><div class="ls">${fI(v.mpPzs)} piezas · ${fN(v.mpKg)} kg</div></div>
+      <span class="badge bg-g">${fI(v.mpPzs)} pzas</span>
+    </div>`).join(''):'<div class="empty"><div class="ei">🥩</div><div class="et">Sin MP en cámara</div></div>';
+
+  const ppL=document.getElementById('c-pp-list');
+  const ppTips=tipArr.filter(([k,v])=>v.ppBols>0||v.ppKg>0);
+  ppL.innerHTML=ppTips.length?ppTips.map(([t,v])=>`
+    <div class="li">
+      <div><div class="lt">📦 ${t}</div><div class="ls">${fI(v.ppBols)} bolsas · ${v.ppBols*20} trozos · ${fN(v.ppKg)} kg</div></div>
+      <span class="badge bg-b">${fI(v.ppBols)} bols</span>
+    </div>`).join(''):'<div class="empty"><div class="ei">📦</div><div class="et">Sin PP en cámara</div></div>';
 }
 
-// ─────────────────────────────────
+// ═══════════════════════════════════════
 //  RENDER HISTORIAL
-// ─────────────────────────────────
+// ═══════════════════════════════════════
 function sf(f2,el){hf=f2;document.querySelectorAll('#hchips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');renderHist();}
 function renderHist(){
   let ms=gM();if(hf!=='todo')ms=ms.filter(m=>m.tipo===hf);
@@ -854,131 +929,191 @@ function renderHist(){
 }
 function delM(id){if(!confirm('¿Eliminar este registro?'))return;sM(gM().filter(m=>m.id!==id));renderHist();renderDash();toast('Registro eliminado');}
 
-// ─────────────────────────────────
-//  MOV CARD
-// ─────────────────────────────────
 function mCard(m){
   const cfg={
-    ingreso:{ico:'📥',cls:'bg',  lbl:'Ingreso', sub:`${fN(m.pesoBruto)} kg brutos · ${m.bolsas||0} bolsas`},
-    proceso:{ico:'⚙️',cls:'bb',  lbl:'Proceso',  sub:`${m.bolsas} bolsas · merma ${fN(m.merma)} kg · neto ${fN(m.pesoNeto)} kg${m.empleado?' · '+m.empleado:''}`},
-    despacho:{ico:'🍳',cls:'bgn',lbl:'Despacho', sub:`${m.bolsas} bolsas${m.cortesSueltos?' + '+m.cortesSueltos+' sueltos':''}${m.recibe?' → '+m.recibe:''}`}
+    ingreso:{ico:'📥',cls:'bg-g', lbl:'Ingreso MP', sub:`${fI(m.piezas)} piezas · ${fN(m.kg)} kg`},
+    proceso:{ico:'⚙️',cls:'bg-b', lbl:'Producción',  sub:`${fI(m.pzsSalida)} pzas / ${fN(m.kgBruto)} kg → ${fI(m.bolsas)} bolsas / ${fN(m.kgBolsas)} kg · merma ${fN(m.merma)} kg${m.empleado?' · '+m.empleado:''}`},
+    despacho:{ico:'🍽️',cls:'bg-gn',lbl:'Despacho',   sub:`${fI(m.bolsas)} bolsas · ${fN(m.kg)} kg${m.recibe?' → '+m.recibe:''}`}
   };
-  const c=cfg[m.tipo]||{ico:'•',cls:'bg',lbl:m.tipo,sub:''};
-  return`<div class="li"><div style="flex:1;padding-right:6px"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span>${c.ico}</span><span class="lt">${m.tipoCarne||'—'}</span><span class="badge ${c.cls}">${c.lbl}</span></div><div class="ls">${fdt(m.fecha)}</div><div class="ls">${c.sub}</div></div></div>`;
+  const c=cfg[m.tipo]||{ico:'•',cls:'bg-g',lbl:m.tipo,sub:''};
+  return`<div class="li"><div style="flex:1;padding-right:6px"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span>${c.ico}</span><span class="lt">${m.tipoCarne||'—'}</span><span class="badge ${c.cls}">${c.lbl}</span></div><div class="ls">${fdt(m.fecha)}</div><div class="ls" style="margin-top:2px">${c.sub}</div></div></div>`;
 }
 
-// ─────────────────────────────────
-//  RENDER REPORTE
-// ─────────────────────────────────
+// ═══════════════════════════════════════
+//  RENDER REPORTE (balance cuadrado)
+// ═══════════════════════════════════════
+function initRepDate(){
+  const inp=document.getElementById('rep-date-input');
+  if(!inp.value)inp.value=TK();
+}
+function setRepDate(mode){
+  repFiltro=mode;
+  if(mode==='today')document.getElementById('rep-date-input').value=TK();
+  renderRep();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('rep-date-input')?.addEventListener('change',()=>{repFiltro='custom';renderRep();});
+});
+
 function renderRep(){
-  const ms=gM();
+  const inp=document.getElementById('rep-date-input');
+  const selDate=inp?inp.value:'';
+  let ms=gM();
+  let tituloFecha='';
+  if(repFiltro==='today'||repFiltro==='custom'){
+    const d=selDate||TK();
+    ms=ms.filter(m=>m.fecha.startsWith(d));
+    tituloFecha=fdate(d);
+  }else{
+    tituloFecha='Acumulado total';
+  }
+  document.getElementById('repd').textContent=tituloFecha;
+  const rc=document.getElementById('repc'),rb=document.getElementById('repbtns');
+  if(!ms.length){rc.innerHTML='<div class="empty"><div class="ei">📊</div><div class="et">Sin datos para esta fecha</div></div>';rb.style.display='none';return;}
+  rb.style.display='flex';
+
   const ing=ms.filter(m=>m.tipo==='ingreso');
   const pro=ms.filter(m=>m.tipo==='proceso');
   const des=ms.filter(m=>m.tipo==='despacho');
-  const cam=gC();
-  const rc=document.getElementById('repc'),rb=document.getElementById('repbtns');
-  if(!ms.length){rc.innerHTML='<div class="empty"><div class="ei">📊</div><div class="et">Sin datos aún</div></div>';rb.style.display='none';return;}
-  rb.style.display='flex';
 
-  const kgIng=ing.reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgProBr=pro.reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgPend=Math.max(0,kgIng-kgProBr);
-  const kgMer=pro.reduce((s,m)=>s+(m.merma||0),0);
-  const kgNet=pro.reduce((s,m)=>s+(m.pesoNeto||0),0);
-  const bP=pro.reduce((s,m)=>s+(m.bolsas||0),0);
-  const bD=des.reduce((s,m)=>s+(m.bolsas||0),0);
-  const pct=kgIng>0?((kgMer/kgIng)*100).toFixed(1):'0,0';
+  // Totales MP
+  const mpIngPzs=ing.reduce((s,m)=>s+(m.piezas||0),0);
+  const mpIngKg=ing.reduce((s,m)=>s+(m.kg||0),0);
+  const mpSalPzs=pro.reduce((s,m)=>s+(m.pzsSalida||0),0);
+  const mpSalKg=pro.reduce((s,m)=>s+(m.kgBruto||0),0);
+  const mpSaldoPzs=Math.max(0,mpIngPzs-mpSalPzs);
+  const mpSaldoKg=Math.max(0,mpIngKg-mpSalKg);
+
+  // Totales PP
+  const ppIngBols=pro.reduce((s,m)=>s+(m.bolsas||0),0);
+  const ppIngKg=pro.reduce((s,m)=>s+(m.kgBolsas||0),0);
+  const ppDesBols=des.reduce((s,m)=>s+(m.bolsas||0),0);
+  const ppDesKg=des.reduce((s,m)=>s+(m.kg||0),0);
+  const ppSaldoBols=Math.max(0,ppIngBols-ppDesBols);
+  const ppSaldoKg=Math.max(0,ppIngKg-ppDesKg);
+
+  // Merma
+  const mermaKg=pro.reduce((s,m)=>s+(m.merma||0),0);
+  const pctMerma=mpSalKg>0?((mermaKg/mpSalKg)*100).toFixed(1):'0,0';
+
+  // Cuadre: kgBruto = kgBolsas + merma + diferencia
+  const difKg=mpSalKg-ppIngKg-mermaKg;
 
   rc.innerHTML=`
-    <div class="rb"><div class="ct">📥 Ingresos</div>
-      <div class="rr"><span class="rk">Kg brutos recibidos</span><span class="rv">${fN(kgIng)} kg</span></div>
-      <div class="rr"><span class="rk">Bolsas recibidas</span><span class="rv">${ing.reduce((s,m)=>s+(m.bolsas||0),0)}</span></div>
-      ${ing.map(i=>`<div class="rr"><span class="rk" style="font-size:11px">· ${i.tipoCarne}</span><span class="rv">${fN(i.pesoBruto)} kg</span></div>`).join('')}
+    <!-- BALANCE MP -->
+    <div class="rb accent-gold">
+      <div class="ct">🥩 Balance Materia Prima</div>
+      <table class="bal-table">
+        <tr><th>Concepto</th><th>Piezas</th><th>Kg</th></tr>
+        <tr><td>Ingreso MP</td><td class="num-pos">+${fI(mpIngPzs)}</td><td class="num-pos">+${fN(mpIngKg)}</td></tr>
+        <tr><td>Salida a producción</td><td class="num-neg">−${fI(mpSalPzs)}</td><td class="num-neg">−${fN(mpSalKg)}</td></tr>
+        <tr class="total"><td>Saldo MP en cámara</td><td class="num-neu">${fI(mpSaldoPzs)}</td><td class="num-neu">${fN(mpSaldoKg)}</td></tr>
+      </table>
     </div>
-    <div class="rb"><div class="ct">⚙️ Procesamiento</div>
-      <div class="rr"><span class="rk">Bolsas producidas</span><span class="rv">${bP}</span></div>
-      <div class="rr"><span class="rk">Cortes producidos</span><span class="rv">${bP*20}</span></div>
-      <div class="rr"><span class="rk">Kg netos</span><span class="rv">${fN(kgNet)} kg</span></div>
-      <div class="rr"><span class="rk">Merma total</span><span class="rv" style="color:var(--red)">${fN(kgMer)} kg (${pct}%)</span></div>
-      <div class="rr"><span class="rk">Pendiente por procesar</span><span class="rv" style="color:var(--orange)">${fN(kgPend)} kg</span></div>
-      ${pro.map(p=>`<div class="rr"><span class="rk" style="font-size:11px">· ${p.tipoCarne}${p.empleado?' – '+p.empleado:''}</span><span class="rv">${p.bolsas} bolsas</span></div>`).join('')}
+
+    <!-- BALANCE PRODUCCIÓN -->
+    <div class="rb">
+      <div class="ct">⚙️ Balance Producción</div>
+      <table class="bal-table">
+        <tr><th>Concepto</th><th>Bolsas</th><th>Kg</th></tr>
+        <tr><td>Bruto procesado</td><td>—</td><td class="num-pos">+${fN(mpSalKg)}</td></tr>
+        <tr><td>Bolsas producidas</td><td class="num-pos">+${fI(ppIngBols)}</td><td class="num-neg">−${fN(ppIngKg)}</td></tr>
+        <tr><td>Merma / grasa</td><td>—</td><td class="num-neg">−${fN(mermaKg)} (${pctMerma}%)</td></tr>
+        ${Math.abs(difKg)>0.05?`<tr><td style="color:var(--orange)">Diferencia</td><td>—</td><td style="color:var(--orange)">${fN(difKg,2)} kg</td></tr>`:''}
+      </table>
+      ${pro.map(p=>`<div class="rr" style="font-size:11px;color:var(--txm)"><span>· ${p.tipoCarne}${p.empleado?' – '+p.empleado:''}</span><span>${fI(p.bolsas)} bols · ${fN(p.kgBolsas)} kg · merma ${fN(p.merma)} kg</span></div>`).join('')}
     </div>
-    <div class="rb"><div class="ct">🍳 Despachos a cocina</div>
-      <div class="rr"><span class="rk">Bolsas despachadas</span><span class="rv">${bD}</span></div>
-      <div class="rr"><span class="rk">Cortes despachados</span><span class="rv">${bD*20}</span></div>
-      ${des.map(d=>`<div class="rr"><span class="rk" style="font-size:11px">· ${fdt(d.fecha)} – ${d.tipoCarne}${d.recibe?' → '+d.recibe:''}</span><span class="rv">${d.bolsas} bolsas</span></div>`).join('')}
+
+    <!-- BALANCE PP -->
+    <div class="rb accent-blue">
+      <div class="ct">📦 Balance Producto Procesado</div>
+      <table class="bal-table">
+        <tr><th>Concepto</th><th>Bolsas</th><th>Trozos</th><th>Kg</th></tr>
+        <tr><td>Ingreso de producción</td><td class="num-pos">+${fI(ppIngBols)}</td><td class="num-pos">+${ppIngBols*20}</td><td class="num-pos">+${fN(ppIngKg)}</td></tr>
+        <tr><td>Despacho a línea</td><td class="num-neg">−${fI(ppDesBols)}</td><td class="num-neg">−${ppDesBols*20}</td><td class="num-neg">−${fN(ppDesKg)}</td></tr>
+        <tr class="total"><td>Saldo PP en cámara</td><td class="num-neu">${fI(ppSaldoBols)}</td><td class="num-neu">${ppSaldoBols*20}</td><td class="num-neu">${fN(ppSaldoKg)}</td></tr>
+      </table>
     </div>
-    <div class="rb" style="border-color:rgba(200,169,110,.35)"><div class="ct">❄️ Stock en cámara</div>
-      <div class="rr"><span class="rk">Bolsas disponibles</span><span class="rv" style="color:var(--gold)">${cam.length}</span></div>
-      <div class="rr"><span class="rk">Cortes disponibles</span><span class="rv">${cam.length*20}</span></div>
-      <div class="rr"><span class="rk">Kg estimados</span><span class="rv">${fN(cam.reduce((s,b)=>s+(b.pesoBolsa||2.6),0))} kg</span></div>
+
+    <!-- RESUMEN DESPACHOS -->
+    ${des.length?`<div class="rb accent-green">
+      <div class="ct">🍽️ Despachos a línea</div>
+      ${des.map(d=>`<div class="rr"><span class="rk">${fdt(d.fecha)} – ${d.tipoCarne}${d.recibe?' → '+d.recibe:''}</span><span class="rv">${fI(d.bolsas)} bolsas · ${fN(d.kg)} kg</span></div>`).join('')}
+    </div>`:''}
+
+    <!-- CUADRE FINAL -->
+    <div class="rb" style="border-color:var(--goldb);background:rgba(200,169,110,.04)">
+      <div class="ct">✅ Cuadre General</div>
+      <div class="rr"><span class="rk">Kg ingresados como MP</span><span class="rv gold">${fN(mpIngKg)} kg</span></div>
+      <div class="rr"><span class="rk">Kg enviados a producción</span><span class="rv">${fN(mpSalKg)} kg</span></div>
+      <div class="rr"><span class="rk">Kg en bolsas producidas</span><span class="rv">${fN(ppIngKg)} kg</span></div>
+      <div class="rr"><span class="rk">Kg de merma</span><span class="rv red">${fN(mermaKg)} kg</span></div>
+      <div class="rr"><span class="rk">Kg despachados a línea</span><span class="rv green">${fN(ppDesKg)} kg</span></div>
+      <div class="rr total"><span class="rk" style="color:var(--gold);font-weight:700">Saldo MP en cámara</span><span class="rv gold">${fN(mpSaldoKg)} kg (${fI(mpSaldoPzs)} pzas)</span></div>
+      <div class="rr" style="padding-top:4px"><span class="rk" style="color:var(--blue);font-weight:700">Saldo PP en cámara</span><span class="rv blue">${fN(ppSaldoKg)} kg (${fI(ppSaldoBols)} bols)</span></div>
     </div>`;
 }
 
-// ─────────────────────────────────
-//  WHATSAPP + COPY
-// ─────────────────────────────────
+// ═══════════════════════════════════════
+//  WHATSAPP
+// ═══════════════════════════════════════
 function bldTxt(){
-  const ms=gM();
+  const inp=document.getElementById('rep-date-input');
+  const selDate=inp?inp.value:TK();
+  let ms=gM();
+  let tituloFecha='';
+  if(repFiltro==='all'){tituloFecha='Acumulado total';}
+  else{ms=ms.filter(m=>m.fecha.startsWith(selDate||TK()));tituloFecha=fdate(selDate||TK());}
   const ing=ms.filter(m=>m.tipo==='ingreso');
   const pro=ms.filter(m=>m.tipo==='proceso');
   const des=ms.filter(m=>m.tipo==='despacho');
-  const cam=gC();
-  const kgIng=ing.reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgProBr=pro.reduce((s,m)=>s+(m.pesoBruto||0),0);
-  const kgPend=Math.max(0,kgIng-kgProBr);
-  const kgMer=pro.reduce((s,m)=>s+(m.merma||0),0);
-  const kgNet=pro.reduce((s,m)=>s+(m.pesoNeto||0),0);
-  const bP=pro.reduce((s,m)=>s+(m.bolsas||0),0);
-  const bD=des.reduce((s,m)=>s+(m.bolsas||0),0);
-  const pct=kgIng>0?((kgMer/kgIng)*100).toFixed(1):'0,0';
-  const td=TK();
-  let t=`🥩 *REPORTE CÁMARA DE FRÍO*\n📅 ${fdate(td)}\n${'━'.repeat(22)}\n\n`;
-  t+=`📥 *INGRESOS*\n• Kg brutos: ${fN(kgIng)} kg\n`;
-  ing.forEach(i=>t+=`  - ${i.tipoCarne}: ${fN(i.pesoBruto)} kg\n`);
-  t+=`\n⚙️ *PROCESAMIENTO*\n• Bolsas: ${bP}  |  Cortes: ${bP*20}\n• Kg netos: ${fN(kgNet)} kg  |  Merma: ${fN(kgMer)} kg (${pct}%)\n• Pendiente: ${fN(kgPend)} kg\n`;
-  pro.forEach(p=>t+=`  - ${p.tipoCarne}${p.empleado?' – '+p.empleado:''}: ${p.bolsas} bolsas\n`);
-  t+=`\n🍳 *DESPACHOS A COCINA*\n• Bolsas: ${bD}  |  Cortes: ${bD*20}\n`;
-  des.forEach(d=>t+=`  - ${fdt(d.fecha)}: ${d.tipoCarne} ${d.bolsas} bolsas${d.recibe?' → '+d.recibe:''}\n`);
-  t+=`\n❄️ *STOCK EN CÁMARA*\n• ${cam.length} bolsas  |  ${cam.length*20} cortes\n• ${fN(cam.reduce((s,b)=>s+(b.pesoBolsa||2.6),0))} kg est.\n`;
-  t+=`${'━'.repeat(22)}\n✅ _CámaraControl_`;
+  const mpIngPzs=ing.reduce((s,m)=>s+(m.piezas||0),0);
+  const mpIngKg=ing.reduce((s,m)=>s+(m.kg||0),0);
+  const mpSalPzs=pro.reduce((s,m)=>s+(m.pzsSalida||0),0);
+  const mpSalKg=pro.reduce((s,m)=>s+(m.kgBruto||0),0);
+  const mpSaldoPzs=Math.max(0,mpIngPzs-mpSalPzs);
+  const mpSaldoKg=Math.max(0,mpIngKg-mpSalKg);
+  const ppIngBols=pro.reduce((s,m)=>s+(m.bolsas||0),0);
+  const ppIngKg=pro.reduce((s,m)=>s+(m.kgBolsas||0),0);
+  const ppDesBols=des.reduce((s,m)=>s+(m.bolsas||0),0);
+  const ppDesKg=des.reduce((s,m)=>s+(m.kg||0),0);
+  const ppSaldoBols=Math.max(0,ppIngBols-ppDesBols);
+  const ppSaldoKg=Math.max(0,ppIngKg-ppDesKg);
+  const mermaKg=pro.reduce((s,m)=>s+(m.merma||0),0);
+  const pctMerma=mpSalKg>0?((mermaKg/mpSalKg)*100).toFixed(1):'0,0';
+  let t=`🥩 *REPORTE CÁMARA DE FRÍO*\n📅 ${tituloFecha}\n${'━'.repeat(24)}\n\n`;
+  t+=`*🥩 MATERIA PRIMA*\n`;
+  t+=`• Ingreso: ${fI(mpIngPzs)} piezas / ${fN(mpIngKg)} kg\n`;
+  t+=`• A producción: ${fI(mpSalPzs)} piezas / ${fN(mpSalKg)} kg\n`;
+  t+=`• Saldo MP cámara: ${fI(mpSaldoPzs)} piezas / ${fN(mpSaldoKg)} kg\n\n`;
+  t+=`*⚙️ PRODUCCIÓN*\n`;
+  t+=`• Bolsas producidas: ${fI(ppIngBols)} bolsas / ${fN(ppIngKg)} kg\n`;
+  t+=`• Merma: ${fN(mermaKg)} kg (${pctMerma}%)\n`;
+  pro.forEach(p=>t+=`  - ${p.tipoCarne}${p.empleado?' – '+p.empleado:''}: ${fI(p.bolsas)} bols / ${fN(p.kgBolsas)} kg / merma ${fN(p.merma)} kg\n`);
+  t+=`\n*📦 PRODUCTO PROCESADO*\n`;
+  t+=`• Ingresó a cámara: ${fI(ppIngBols)} bolsas / ${ppIngBols*20} trozos / ${fN(ppIngKg)} kg\n`;
+  t+=`• Despachado a línea: ${fI(ppDesBols)} bolsas / ${fN(ppDesKg)} kg\n`;
+  t+=`• Saldo PP cámara: ${fI(ppSaldoBols)} bolsas / ${ppSaldoBols*20} trozos / ${fN(ppSaldoKg)} kg\n\n`;
+  t+=`*✅ CUADRE*\n`;
+  t+=`• Kg ingresados MP: ${fN(mpIngKg)} kg\n`;
+  t+=`• − A producción: ${fN(mpSalKg)} kg\n`;
+  t+=`• = Saldo MP: ${fN(mpSaldoKg)} kg\n`;
+  t+=`• Bolsas PP: ${fN(ppIngKg)} kg + Merma: ${fN(mermaKg)} kg\n`;
+  t+=`• Saldo PP: ${fN(ppSaldoKg)} kg\n`;
+  t+=`${'━'.repeat(24)}\n✅ _CámaraControl_`;
   return t;
 }
 function sendWA(){window.open('https://wa.me/?text='+encodeURIComponent(bldTxt()),'_blank');}
-function copyRep(){
-  const txt=bldTxt();
-  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('✓ Copiado'));
-  else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copiado');}
-}
+function copyRep(){const txt=bldTxt();if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('✓ Copiado'));else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copiado');}}
 
-// ─────────────────────────────────
-//  CONFIG
-// ─────────────────────────────────
-function renderCfg(){
-  const meats=gMt();
-  document.getElementById('cfgml').innerHTML=meats.length
-    ?meats.map((m,i)=>`<div class="li" style="margin-bottom:6px"><div class="lt">🥩 ${m}</div><button class="dbtn" onclick="rmMt(${i})">✕</button></div>`).join('')
-    :'<div class="empty" style="padding:10px"><div class="et">Sin tipos configurados</div></div>';
-}
-function addMt(){
-  const v=document.getElementById('cfgnm').value.trim();
-  if(!v){toast('Escribe el nombre','warn');return;}
-  const m=gMt();if(m.includes(v)){toast('Ya existe','warn');return;}
-  m.push(v);sMt(m);document.getElementById('cfgnm').value='';renderCfg();toast('✓ '+v+' agregado');
-}
+// ─── CONFIG ───
+function renderCfg(){const meats=gMt();document.getElementById('cfgml').innerHTML=meats.length?meats.map((m,i)=>`<div class="li" style="margin-bottom:6px"><div class="lt">🥩 ${m}</div><button class="dbtn" onclick="rmMt(${i})">✕</button></div>`).join(''):'<div class="empty" style="padding:10px"><div class="et">Sin tipos</div></div>';}
+function addMt(){const v=document.getElementById('cfgnm').value.trim();if(!v){toast('Escribe el nombre','warn');return;}const m=gMt();if(m.includes(v)){toast('Ya existe','warn');return;}m.push(v);sMt(m);document.getElementById('cfgnm').value='';renderCfg();toast('✓ '+v+' agregado');}
 function rmMt(i){const m=gMt();m.splice(i,1);sMt(m);renderCfg();}
-function chgPin(){
-  const v=document.getElementById('cfgpin').value.trim();
-  if(v.length!==4||!/^\d{4}$/.test(v)){toast('PIN debe ser 4 dígitos','err');return;}
-  sPin(v);document.getElementById('cfgpin').value='';toast('✓ PIN actualizado');
-}
-function clearAll(){
-  if(!confirm('¿Borrar TODOS los datos?'))return;
-  if(!confirm('¿Seguro? No se puede deshacer.'))return;
-  sM([]);sC([]);closeM('mo-cfg');renderDash();toast('Datos borrados','warn');
-}
+function chgPin(){const v=document.getElementById('cfgpin').value.trim();if(v.length!==4||!/^\d{4}$/.test(v)){toast('PIN debe ser 4 dígitos','err');return;}sPin(v);document.getElementById('cfgpin').value='';toast('✓ PIN actualizado');}
+function clearAll(){if(!confirm('¿Borrar TODOS los datos?'))return;if(!confirm('¿Seguro? No se puede deshacer.'))return;S.s('movs',[]);closeM('mo-cfg');renderDash();toast('Datos borrados','warn');}
 
-// ── PWA ──
+// ─── PWA ───
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 if(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.navigator.standalone)
   setTimeout(()=>toast('Safari → Compartir → "Añadir al inicio"'),3000);
