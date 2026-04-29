@@ -908,12 +908,69 @@ function renderCam(){
   document.getElementById('c-mp-kg').textContent='/ '+fN(totMpKg)+' kg';
   document.getElementById('c-pp-bols').textContent=fI(totPpBols);
   document.getElementById('c-pp-kg').textContent='/ '+fN(totPpKg)+' kg';
+  // ── MP por tipo ──
   const mpL=document.getElementById('c-mp-list');
-  const mpTips=tipArr.filter(([k,v])=>v.mpPzs>0||v.mpKg>0.01);
-  mpL.innerHTML=mpTips.length?mpTips.map(([t,v])=>`<div class="li"><div><div class="lt">🥩 ${t}</div><div class="ls">${fI(v.mpPzs)} piezas · ${fN(v.mpKg)} kg</div></div><span class="badge bg-g">${fI(v.mpPzs)} pzas</span></div>`).join(''):'<div class="empty"><div class="ei">🥩</div><div class="et">Sin MP en cámara</div></div>';
+  const mpTips=tipArr.filter(([k,v])=>v.mpPzs>0||v.mpKg>0.01).sort((a,b)=>b[1].mpKg-a[1].mpKg);
+  if(!mpTips.length){
+    mpL.innerHTML='<div class="empty"><div class="ei">🥩</div><div class="et">Sin MP en cámara</div></div>';
+  } else {
+    const kgPorPieza = ([t,v]) => v.mpPzs>0 ? fN(v.mpKg/v.mpPzs,2) : '—';
+    mpL.innerHTML = mpTips.map(([t,v])=>`
+      <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:11px;padding:12px 14px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-weight:700;font-size:14px;color:var(--tx)">🥩 ${t}</div>
+          <span class="badge bg-g">${fI(v.mpPzs)} piezas</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+          <div style="background:var(--sf);border:1px solid var(--goldb);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">Piezas</div>
+            <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--gold)">${fI(v.mpPzs)}</div>
+          </div>
+          <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">Kg total</div>
+            <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--goldl)">${fN(v.mpKg)}</div>
+          </div>
+          <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">Kg/pieza</div>
+            <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--txm)">${kgPorPieza([t,v])}</div>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  // ── PP por tipo ──
   const ppL=document.getElementById('c-pp-list');
-  const ppTips=tipArr.filter(([k,v])=>v.ppBols>0||v.ppKg>0.01);
-  ppL.innerHTML=ppTips.length?ppTips.map(([t,v])=>`<div class="li"><div><div class="lt">📦 ${t}</div><div class="ls">${fI(v.ppBols)} bolsas · ${v.ppBols*20} trozos · ${fN(v.ppKg)} kg</div></div><span class="badge bg-b">${fI(v.ppBols)} bols</span></div>`).join(''):'<div class="empty"><div class="ei">📦</div><div class="et">Sin PP en cámara</div></div>';
+  const ppTips=tipArr.filter(([k,v])=>v.ppBols>0||v.ppKg>0.01).sort((a,b)=>b[1].ppBols-a[1].ppBols);
+  if(!ppTips.length){
+    ppL.innerHTML='<div class="empty"><div class="ei">📦</div><div class="et">Sin PP en cámara</div></div>';
+  } else {
+    const kgPorBolsa = ([t,v]) => v.ppBols>0 ? fN(v.ppKg/v.ppBols,2) : '—';
+    ppL.innerHTML = ppTips.map(([t,v])=>`
+      <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:11px;padding:12px 14px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-weight:700;font-size:14px;color:var(--tx)">📦 ${t}</div>
+          <span class="badge bg-b">${fI(v.ppBols)} bolsas</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:6px">
+          <div style="background:var(--sf);border:1px solid var(--blueb);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">Bolsas</div>
+            <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--blue)">${fI(v.ppBols)}</div>
+          </div>
+          <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">Kg total</div>
+            <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--blue)">${fN(v.ppKg)}</div>
+          </div>
+          <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">Kg/bolsa</div>
+            <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--txm)">${kgPorBolsa([t,v])}</div>
+          </div>
+        </div>
+        <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:8px;display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:11px;color:var(--txm)">Trozos totales (20 × bolsas)</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--green)">${v.ppBols*20} trozos</div>
+        </div>
+      </div>`).join('');
+  }
 }
 
 function sf(f2,el){ hf=f2; document.querySelectorAll('#hchips .chip').forEach(c=>c.classList.remove('on')); el.classList.add('on'); renderHist(); }
