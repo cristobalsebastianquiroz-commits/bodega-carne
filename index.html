@@ -467,13 +467,55 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   <div class="modal">
     <div class="mh"></div>
     <div class="mt">🍽️ Despacho a Línea</div>
-    <div class="mt-sub">Bolsas PP salen de cámara al <strong style="color:var(--green)">buffet</strong>. Se descuenta del stock PP.</div>
-    <div class="fg"><label class="fl">Tipo de corte</label><div class="chips" id="dc"></div><input class="fi" id="dti" placeholder="O escribe el tipo..." type="text" oninput="chkStk()"></div>
-    <div class="fr">
-      <div class="fg"><label class="fl">N° bolsas a despachar</label><input class="fi" id="dbo" placeholder="Ej: 2" type="text" inputmode="numeric" oninput="chkStk()"></div>
-      <div class="fg"><label class="fl">Kg (calculado automático)</label><input class="fi" id="dkg" placeholder="Se calcula solo" type="text" readonly style="background:var(--sf3);color:var(--txm);cursor:default"></div>
+    <div class="mt-sub">Ingresa la cantidad de bolsas, el <strong style="color:var(--green)">peso total real que indica la balanza</strong> y los trozos reales (si hay bolsas incompletas).</div>
+
+    <div class="fg">
+      <label class="fl">Tipo de corte</label>
+      <div class="chips" id="dc"></div>
+      <input class="fi" id="dti" placeholder="O escribe el tipo..." type="text" oninput="chkStk()">
     </div>
+
     <div class="av" id="dav"></div>
+
+    <div class="fr">
+      <div class="fg">
+        <label class="fl">N° bolsas a despachar</label>
+        <input class="fi" id="dbo" placeholder="Ej: 3" type="text" inputmode="numeric" oninput="chkStk();updTrozos()">
+      </div>
+      <div class="fg">
+        <label class="fl">Kg total — balanza</label>
+        <input class="fi" id="dkg" placeholder="Ej: 7,8" type="text" inputmode="decimal" oninput="updDesResumen()">
+      </div>
+    </div>
+
+    <!-- Trozos: se autocompleta a 20×bolsas pero es editable para bolsas incompletas -->
+    <div class="fg" id="trozos-row" style="display:none">
+      <label class="fl">Trozos reales <span style="color:var(--txd);font-weight:400">(se completa solo con 20×bolsas — edita si alguna bolsa va incompleta)</span></label>
+      <div style="display:flex;align-items:center;gap:10px">
+        <input class="fi" id="dtrozos" placeholder="Ej: 55" type="text" inputmode="numeric" style="flex:1" oninput="updDesResumen()">
+        <div style="font-size:11px;color:var(--txm);white-space:nowrap">def. <span id="trozos-def" style="color:var(--gold);font-weight:700">0</span></div>
+      </div>
+    </div>
+
+    <!-- Resumen -->
+    <div id="des-resumen" style="display:none;background:var(--greend);border:1px solid var(--greenb);border-radius:10px;padding:13px;margin-bottom:12px">
+      <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:9px">Resumen del despacho</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center">
+        <div style="background:var(--sf);border-radius:8px;padding:8px">
+          <div style="font-size:9px;color:var(--txm);text-transform:uppercase;font-weight:600;margin-bottom:3px">Bolsas</div>
+          <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--green)" id="des-sum-bols">0</div>
+        </div>
+        <div style="background:var(--sf);border-radius:8px;padding:8px">
+          <div style="font-size:9px;color:var(--txm);text-transform:uppercase;font-weight:600;margin-bottom:3px">Kg total</div>
+          <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--green)" id="des-sum-kg">0,0</div>
+        </div>
+        <div style="background:var(--sf);border-radius:8px;padding:8px">
+          <div style="font-size:9px;color:var(--txm);text-transform:uppercase;font-weight:600;margin-bottom:3px">Trozos</div>
+          <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--green)" id="des-sum-trz">0</div>
+        </div>
+      </div>
+    </div>
+
     <div class="fg"><label class="fl">Responsable / cocinero</label><input class="fi" id="dre" placeholder="Nombre..." type="text"></div>
     <div class="fg"><label class="fl">Observaciones</label><input class="fi" id="dno" placeholder="Opcional..." type="text"></div>
     <button class="btn bg-green" id="btn-des" onclick="doDes()">✓ Confirmar despacho</button>
@@ -834,7 +876,7 @@ async function doPro(){
 // ══════════════════════════════════
 //  3. DESPACHO A LÍNEA
 // ══════════════════════════════════
-// Stock PP disponible por tipo (robusto, case-insensitive)
+// Stock PP disponible por tipo
 function stockPP(tipo){
   const t=(tipo||'').trim().toLowerCase();
   let bols=0, kg=0;
@@ -846,32 +888,55 @@ function stockPP(tipo){
   return { bols:Math.max(0,bols), kg:Math.max(0,kg) };
 }
 
-// Calcula kg proporcional según bolsas elegidas y actualiza campo kg (readonly)
-function calcKgDespacho(st, bo){
-  const dkg = document.getElementById('dkg');
-  if(!dkg) return 0;
-  if(bo<=0 || st.bols<=0){ dkg.value=''; return 0; }
-  // kg proporcional: (kg_total / bolsas_total) * bolsas_a_despachar
-  const kgPorBolsa = st.kg / st.bols;
-  const kgCalc = kgPorBolsa * bo;
-  dkg.value = fN(kgCalc, 2);
-  return kgCalc;
+// Actualiza el campo trozos con 20×bolsas por defecto (editable)
+function updTrozos(){
+  const bo  = pI(document.getElementById('dbo').value)||0;
+  const row = document.getElementById('trozos-row');
+  const def = document.getElementById('trozos-def');
+  const inp = document.getElementById('dtrozos');
+  if(bo>0){
+    row.style.display='block';
+    const defVal = bo*20;
+    def.textContent = defVal;
+    // Solo sobreescribe si está vacío o tenía el valor calculado anterior
+    const cur = pI(inp.value);
+    if(!inp.value || cur===((bo-1)*20) || cur===bo*20) inp.value=defVal;
+  } else {
+    row.style.display='none';
+    inp.value='';
+  }
+  updDesResumen();
+}
+
+// Actualiza el resumen visual del despacho
+function updDesResumen(){
+  const bo  = pI(document.getElementById('dbo').value)||0;
+  const kg  = pN(document.getElementById('dkg').value)||0;
+  const trz = pI(document.getElementById('dtrozos').value)||(bo*20);
+  const res = document.getElementById('des-resumen');
+  if(bo>0){
+    res.style.display='block';
+    document.getElementById('des-sum-bols').textContent=fI(bo);
+    document.getElementById('des-sum-kg').textContent=fN(kg,2);
+    document.getElementById('des-sum-trz').textContent=fI(trz);
+  } else {
+    res.style.display='none';
+  }
 }
 
 function chkStk(){
   const tipo = document.getElementById('dti').value.trim();
-  const bo   = pI(document.getElementById('dbo').value) || 0;
+  const bo   = pI(document.getElementById('dbo').value)||0;
   const av   = document.getElementById('dav');
   const btn  = document.getElementById('btn-des');
   if(!tipo){
     av.style.display='none';
-    document.getElementById('dkg').value='';
+    document.getElementById('trozos-row').style.display='none';
+    document.getElementById('des-resumen').style.display='none';
     if(btn){ btn.disabled=false; btn.style.opacity='1'; }
     return;
   }
-  const st = stockPP(tipo);
-  // Calcular kg automáticamente
-  calcKgDespacho(st, bo);
+  const st=stockPP(tipo);
   av.style.display='block';
   if(st.bols===0){
     av.style.cssText='display:block;background:var(--redd);border:1px solid var(--redb);color:var(--red);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
@@ -879,50 +944,62 @@ function chkStk(){
     if(btn){ btn.disabled=true; btn.style.opacity='0.4'; }
   } else if(bo>0 && bo>st.bols){
     av.style.cssText='display:block;background:var(--redd);border:1px solid var(--redb);color:var(--red);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
-    av.textContent='\u{1F6AB} Stock insuficiente — solo hay '+st.bols+' bolsa(s) · '+fN(st.kg)+' kg de '+tipo;
+    av.textContent='\u{1F6AB} Stock insuficiente — solo hay '+st.bols+' bolsa(s) de '+tipo;
     if(btn){ btn.disabled=true; btn.style.opacity='0.4'; }
-  } else if(bo>0){
-    const kgPorBolsa = st.bols>0 ? fN(st.kg/st.bols,2) : '—';
-    av.style.cssText='display:block;background:var(--greend);border:1px solid var(--greenb);color:var(--green);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
-    av.textContent='\u2713 Stock: '+st.bols+' bolsas · '+fN(st.kg)+' kg  ('+kgPorBolsa+' kg/bolsa)';
-    if(btn){ btn.disabled=false; btn.style.opacity='1'; }
   } else {
     av.style.cssText='display:block;background:var(--greend);border:1px solid var(--greenb);color:var(--green);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
-    av.textContent='\u2713 Stock disponible: '+st.bols+' bolsas · '+fN(st.kg)+' kg';
+    av.textContent='\u2713 Stock disponible: '+st.bols+' bolsa(s)';
     if(btn){ btn.disabled=false; btn.style.opacity='1'; }
   }
+  updTrozos();
 }
 
 async function doDes(){
   const tipo = document.getElementById('dti').value.trim();
-  const bo   = pI(document.getElementById('dbo').value) || 0;
+  const bo   = pI(document.getElementById('dbo').value)||0;
+  const kg   = pN(document.getElementById('dkg').value)||0;
+  const trz  = pI(document.getElementById('dtrozos').value)||(bo*20);
   const re   = document.getElementById('dre').value.trim();
+
+  // Validaciones
   if(!tipo){ toast('Selecciona o escribe el tipo de corte','err'); return; }
   if(bo<=0){ toast('Ingresa las bolsas a despachar','err'); return; }
-  // Validacion final double-check antes de guardar en Firebase
-  const st = stockPP(tipo);
-  if(bo > st.bols){
+  if(isNaN(kg)||kg<=0){ toast('Ingresa el peso total de la balanza (ej: 7,8)','err'); return; }
+
+  // Validación final stock PP
+  const st=stockPP(tipo);
+  if(bo>st.bols){
     toast('\u{1F6AB} Solo hay '+st.bols+' bolsa(s) de '+tipo+' en cámara','err');
     chkStk();
     return;
   }
-  // Calcular kg proporcional (no se toma del input, se calcula aquí para evitar manipulación)
-  const kgDespacho = st.bols>0 ? parseFloat(((st.kg / st.bols) * bo).toFixed(2)) : 0;
+
+  // Validar que kg no supere stock kg en cámara
+  if(kg>st.kg+0.01){
+    toast('\u{1F6AB} Los kg ingresados ('+fN(kg)+') superan el stock ('+fN(st.kg)+' kg)','err');
+    return;
+  }
+
   setBtnLoading('btn-des', true);
   try{
-    await addMov({ tipo:'despacho', tipoCarne:tipo, bolsas:bo, kg:kgDespacho, recibe:re, notas:document.getElementById('dno').value.trim() });
-    ['dti','dbo','dkg','dre','dno'].forEach(i=>document.getElementById(i).value='');
+    await addMov({
+      tipo:'despacho', tipoCarne:tipo,
+      bolsas:bo, kg, trozos:trz,
+      recibe:re, notas:document.getElementById('dno').value.trim()
+    });
+    ['dti','dbo','dkg','dtrozos','dre','dno'].forEach(i=>document.getElementById(i).value='');
     document.getElementById('dav').style.display='none';
+    document.getElementById('trozos-row').style.display='none';
+    document.getElementById('des-resumen').style.display='none';
     const btn=document.getElementById('btn-des');
     if(btn){ btn.disabled=false; btn.style.opacity='1'; }
     document.querySelectorAll('#dc .mchip').forEach(c=>c.classList.remove('on'));
     closeM('mo-des');
-    toast('\u2713 '+bo+' bolsas · '+fN(kgDespacho)+' kg despachados');
+    toast('\u2713 '+bo+' bolsas · '+fN(kg)+' kg · '+trz+' trozos despachados');
   }catch(e){ toast('Error al guardar: '+e.message,'err'); }
   setBtnLoading('btn-des', false);
   document.getElementById('btn-des').innerHTML='\u2713 Confirmar despacho';
 }
-
 // ══════════════════════════════════
 //  RENDERS
 // ══════════════════════════════════
@@ -1060,7 +1137,7 @@ function mCard(m){
   const cfg={
     ingreso:{ico:'📥',cls:'bg-g', lbl:'Ingreso MP', sub:`${fI(m.piezas)} piezas · ${fN(m.kg)} kg`},
     proceso:{ico:'⚙️',cls:'bg-b', lbl:'Producción',  sub:`${fI(m.pzsSalida)} pzas/${fN(m.kgBruto)}kg → ${fI(m.bolsas)} bolsas/${fN(m.kgBolsas)}kg · merma ${fN(m.merma)}kg${m.empleado?' · '+m.empleado:''}`},
-    despacho:{ico:'🍽️',cls:'bg-gn',lbl:'Despacho',   sub:`${fI(m.bolsas)} bolsas · ${fN(m.kg)} kg${m.recibe?' → '+m.recibe:''}`}
+    despacho:{ico:'🍽️',cls:'bg-gn',lbl:'Despacho',   sub:`${fI(m.bolsas)} bolsas · ${fN(m.kg)} kg · ${fI(m.trozos||(m.bolsas*20))} trozos${m.recibe?' → '+m.recibe:''}`}
   };
   const c=cfg[m.tipo]||{ico:'•',cls:'bg-g',lbl:m.tipo,sub:''};
   return`<div class="li"><div style="flex:1;padding-right:6px"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span>${c.ico}</span><span class="lt">${m.tipoCarne||'—'}</span><span class="badge ${c.cls}">${c.lbl}</span></div><div class="ls">${fdt(m.fecha)}</div><div class="ls" style="margin-top:2px">${c.sub}</div></div></div>`;
@@ -1174,7 +1251,7 @@ function chgPin(){ const v=document.getElementById('cfgpin').value.trim(); if(v.
 async function clearAll(){ if(!confirm('¿Borrar TODOS los datos en la nube?'))return; if(!confirm('¿Seguro? No se puede deshacer. Se borrará para TODOS los dispositivos.'))return; try{ await deleteAllMovs(); closeM('mo-cfg'); toast('Datos borrados','warn'); }catch(e){ toast('Error al borrar','err'); } }
 
 // ── EXPONER FUNCIONES GLOBALES ──
-Object.assign(window,{selRole,pi,pb2,cancelPin,goTo,openM,closeM,selMt,sf,doIng,doPro,doDes,calcN,chkStk,delM,setRepDate,sendWA,copyRep,renderCfg,addMt,rmMt,chgPin,clearAll,logout});
+Object.assign(window,{selRole,pi,pb2,cancelPin,goTo,openM,closeM,selMt,sf,doIng,doPro,doDes,calcN,chkStk,updTrozos,updDesResumen,delM,setRepDate,sendWA,copyRep,renderCfg,addMt,rmMt,chgPin,clearAll,logout});
 
 // ── PWA ──
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
