@@ -791,25 +791,38 @@ async function doPro(){
 // ══════════════════════════════════
 //  3. DESPACHO A LÍNEA
 // ══════════════════════════════════
+// Stock PP disponible por tipo (robusto, case-insensitive)
+function stockPP(tipo){
+  const t=(tipo||'').trim().toLowerCase();
+  let bols=0, kg=0;
+  allMovs.forEach(m=>{
+    if((m.tipoCarne||'').trim().toLowerCase()!==t) return;
+    if(m.tipo==='proceso'){ bols+=m.bolsas||0; kg+=m.kgBolsas||0; }
+    if(m.tipo==='despacho'){ bols-=m.bolsas||0; kg-=m.kg||0; }
+  });
+  return { bols:Math.max(0,bols), kg:Math.max(0,kg) };
+}
+
 function chkStk(){
-  const tipo=document.getElementById('dti').value.trim().toLowerCase();
+  const tipo=document.getElementById('dti').value.trim();
   const bo=pI(document.getElementById('dbo').value)||0;
   const av=document.getElementById('dav');
-  if(!tipo){ av.style.display='none'; return; }
-  let ppBols=0;
-  allMovs.forEach(m=>{
-    if(m.tipoCarne.toLowerCase()!==tipo) return;
-    if(m.tipo==='proceso') ppBols+=m.bolsas||0;
-    if(m.tipo==='despacho') ppBols-=m.bolsas||0;
-  });
-  ppBols=Math.max(0,ppBols);
+  const btn=document.getElementById('btn-des');
+  if(!tipo){ av.style.display='none'; if(btn){btn.disabled=false;btn.style.opacity='1';} return; }
+  const st=stockPP(tipo);
   av.style.display='block';
-  if(bo>ppBols){
-    av.style.cssText='display:block;background:var(--redd);border:1px solid var(--redb);color:var(--red);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
-    av.textContent=`⚠️ Solo hay ${ppBols} bolsa(s) de PP disponibles`;
+  if(st.bols===0){
+    av.style.cssText='display:block;background:var(--redd);border:1px solid var(--redb);color:var(--red);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
+    av.textContent='\u{1F6AB} Sin stock de '+tipo+' en cámara';
+    if(btn){btn.disabled=true;btn.style.opacity='0.4';}
+  } else if(bo>0 && bo>st.bols){
+    av.style.cssText='display:block;background:var(--redd);border:1px solid var(--redb);color:var(--red);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
+    av.textContent='\u{1F6AB} Stock insuficiente — solo hay '+st.bols+' bolsa(s) · '+fN(st.kg)+' kg de '+tipo;
+    if(btn){btn.disabled=true;btn.style.opacity='0.4';}
   } else {
-    av.style.cssText='display:block;background:var(--greend);border:1px solid var(--greenb);color:var(--green);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
-    av.textContent=`✓ ${ppBols} bolsa(s) disponibles en cámara`;
+    av.style.cssText='display:block;background:var(--greend);border:1px solid var(--greenb);color:var(--green);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
+    av.textContent='\u2713 Disponible: '+st.bols+' bolsa(s) · '+fN(st.kg)+' kg';
+    if(btn){btn.disabled=false;btn.style.opacity='1';}
   }
 }
 
@@ -820,24 +833,26 @@ async function doDes(){
   const re=document.getElementById('dre').value.trim();
   if(!tipo){ toast('Selecciona o escribe el tipo de corte','err'); return; }
   if(bo<=0){ toast('Ingresa las bolsas a despachar','err'); return; }
-  let ppBols=0;
-  allMovs.forEach(m=>{
-    if(m.tipoCarne.toLowerCase()!==tipo.toLowerCase()) return;
-    if(m.tipo==='proceso') ppBols+=m.bolsas||0;
-    if(m.tipo==='despacho') ppBols-=m.bolsas||0;
-  });
-  if(bo>Math.max(0,ppBols)){ toast(`Solo hay ${Math.max(0,ppBols)} bolsa(s) de ${tipo}`,'err'); return; }
+  // Validacion final double-check antes de guardar en Firebase
+  const st=stockPP(tipo);
+  if(bo>st.bols){
+    toast('Solo hay '+st.bols+' bolsa(s) de '+tipo+' en cámara','err');
+    chkStk();
+    return;
+  }
   setBtnLoading('btn-des', true);
   try{
     await addMov({ tipo:'despacho', tipoCarne:tipo, bolsas:bo, kg:kg||0, recibe:re, notas:document.getElementById('dno').value.trim() });
     ['dti','dbo','dkg','dre','dno'].forEach(i=>document.getElementById(i).value='');
     document.getElementById('dav').style.display='none';
+    const btn=document.getElementById('btn-des');
+    if(btn){btn.disabled=false;btn.style.opacity='1';}
     document.querySelectorAll('#dc .mchip').forEach(c=>c.classList.remove('on'));
     closeM('mo-des');
-    toast(`✓ ${bo} bolsas despachadas a línea`);
+    toast('\u2713 '+bo+' bolsas de '+tipo+' despachadas');
   }catch(e){ toast('Error al guardar: '+e.message,'err'); }
   setBtnLoading('btn-des', false);
-  document.getElementById('btn-des').innerHTML='✓ Confirmar despacho';
+  document.getElementById('btn-des').innerHTML='\u2713 Confirmar despacho';
 }
 
 // ══════════════════════════════════
