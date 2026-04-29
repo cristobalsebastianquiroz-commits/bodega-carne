@@ -735,45 +735,88 @@ async function doIng(){
 //  2. PRODUCCIÓN
 // ══════════════════════════════════
 function calcN(){
-  const br=pN(document.getElementById('pbr').value)||0;
-  const bkg=pN(document.getElementById('ppkg').value)||0;
-  const me=pN(document.getElementById('pme').value)||0;
-  const box=document.getElementById('cbox');
-  const av=document.getElementById('pav');
+  const br  = pN(document.getElementById('pbr').value)||0;
+  const bkg = pN(document.getElementById('ppkg').value)||0;
+  const me  = pN(document.getElementById('pme').value)||0;
+  const box = document.getElementById('cbox');
+  const av  = document.getElementById('pav');
+  const btn = document.getElementById('btn-pro');
   if(br>0){
-    const diff=br-bkg-me;
-    const pctMe=br>0?((me/br)*100).toFixed(1):0;
+    const diff   = br - bkg - me;
+    const pctMe  = br>0 ? ((me/br)*100).toFixed(1) : 0;
     box.style.display='block';
-    document.getElementById('cnv').textContent=`Bruto ${fN(br)} kg → PP ${fN(bkg)} kg + Merma ${fN(me)} kg (${pctMe}%) = Dif ${fN(diff,2)} kg`;
-    if(Math.abs(diff)>0.5){
-      av.style.cssText='display:block;background:var(--oranged);border:1px solid var(--orangeb);color:var(--orange);margin-bottom:10px;padding:8px 12px;border-radius:8px;font-size:12px';
-      av.textContent=`⚠️ Diferencia de ${fN(Math.abs(diff),2)} kg entre bruto y (PP + merma)`;
-    } else av.style.display='none';
-  } else { box.style.display='none'; av.style.display='none'; }
+    document.getElementById('cnv').textContent =
+      'Bruto ' + fN(br) + ' kg \u2192 PP ' + fN(bkg) + ' kg + Merma ' + fN(me) + ' kg (' + pctMe + '%) = Dif ' + fN(diff,2) + ' kg';
+
+    // kg bolsas + merma SUPERA kg brutos → error bloqueante
+    if(bkg + me > br + 0.01){
+      av.style.cssText='display:block;background:var(--redd);border:1px solid var(--redb);color:var(--red);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
+      av.textContent = '\u{1F6AB} Error: PP (' + fN(bkg) + ') + Merma (' + fN(me) + ') = ' + fN(bkg+me) + ' kg supera los brutos (' + fN(br) + ' kg)';
+      if(btn){ btn.disabled=true; btn.style.opacity='0.4'; }
+    // diferencia tolerable pero informa
+    } else if(Math.abs(diff)>0.5){
+      av.style.cssText='display:block;background:var(--oranged);border:1px solid var(--orangeb);color:var(--orange);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
+      av.textContent = '\u26A0\uFE0F Diferencia de ' + fN(Math.abs(diff),2) + ' kg entre bruto y (PP + merma)';
+      if(btn){ btn.disabled=false; btn.style.opacity='1'; }
+    } else {
+      av.style.display='none';
+      if(btn){ btn.disabled=false; btn.style.opacity='1'; }
+    }
+  } else {
+    box.style.display='none';
+    av.style.display='none';
+    if(btn){ btn.disabled=false; btn.style.opacity='1'; }
+  }
 }
 
 async function doPro(){
-  const tipo=document.getElementById('pti').value.trim();
-  const pzs=pI(document.getElementById('ppzs').value);
-  const br=pN(document.getElementById('pbr').value);
-  const bo=pI(document.getElementById('pbo').value);
-  const bkg=pN(document.getElementById('ppkg').value);
-  const me=pN(document.getElementById('pme').value)||0;
-  const em=document.getElementById('pem').value.trim();
+  const tipo = document.getElementById('pti').value.trim();
+  const pzs  = pI(document.getElementById('ppzs').value);
+  const br   = pN(document.getElementById('pbr').value);
+  const bo   = pI(document.getElementById('pbo').value);
+  const bkg  = pN(document.getElementById('ppkg').value);
+  const me   = pN(document.getElementById('pme').value)||0;
+  const em   = document.getElementById('pem').value.trim();
+
+  // ── Validaciones básicas ──
   if(!tipo){ toast('Selecciona o escribe el tipo de corte','err'); return; }
   if(isNaN(pzs)||pzs<=0){ toast('Ingresa las piezas enviadas','err'); return; }
-  if(isNaN(br)||br<=0){ toast('Ingresa los kg brutos (ej: 15,0)','err'); return; }
+  if(isNaN(br)||br<=0){ toast('Ingresa los kg brutos enviados (ej: 15,0)','err'); return; }
   if(isNaN(bo)||bo<=0){ toast('Ingresa las bolsas producidas','err'); return; }
-  if(isNaN(bkg)||bkg<=0){ toast('Ingresa los kg de las bolsas','err'); return; }
-  // Validar stock MP por tipo
+  if(isNaN(bkg)||bkg<=0){ toast('Ingresa los kg totales de las bolsas','err'); return; }
+
+  // ── Validación 1: kg bolsas + merma no puede superar kg brutos ──
+  if(bkg + me > br + 0.01){
+    toast('Los kg de bolsas + merma (' + fN(bkg+me) + ') superan los kg brutos (' + fN(br) + ')','err');
+    return;
+  }
+
+  // ── Validación 2: stock MP disponible por tipo ──
+  const t = tipo.toLowerCase();
   let mpPzsTipo=0, mpKgTipo=0;
   allMovs.forEach(m=>{
-    if(m.tipoCarne.toLowerCase()!==tipo.toLowerCase()) return;
+    if((m.tipoCarne||'').toLowerCase()!==t) return;
     if(m.tipo==='ingreso'){ mpPzsTipo+=m.piezas||0; mpKgTipo+=m.kg||0; }
     if(m.tipo==='proceso'){ mpPzsTipo-=m.pzsSalida||0; mpKgTipo-=m.kgBruto||0; }
   });
-  if(pzs>Math.max(0,mpPzsTipo)){ toast(`Solo hay ${Math.max(0,mpPzsTipo)} piezas de ${tipo} en MP`,'err'); return; }
-  if(br>Math.max(0,mpKgTipo)+0.05){ toast(`Solo hay ${fN(Math.max(0,mpKgTipo))} kg de ${tipo} en MP`,'err'); return; }
+  const mpPzsDisp = Math.max(0, mpPzsTipo);
+  const mpKgDisp  = Math.max(0, mpKgTipo);
+
+  if(pzs > mpPzsDisp){
+    toast('Solo hay ' + mpPzsDisp + ' pieza(s) de ' + tipo + ' en MP','err');
+    return;
+  }
+  if(br > mpKgDisp + 0.01){
+    toast('Solo hay ' + fN(mpKgDisp) + ' kg de ' + tipo + ' disponibles en MP','err');
+    return;
+  }
+
+  // ── Validación 3: kg bolsas no puede superar kg brutos disponibles ──
+  if(bkg > br + 0.01){
+    toast('Los kg de bolsas (' + fN(bkg) + ') no pueden superar los kg brutos (' + fN(br) + ')','err');
+    return;
+  }
+
   setBtnLoading('btn-pro', true);
   try{
     await addMov({ tipo:'proceso', tipoCarne:tipo, pzsSalida:pzs, kgBruto:br, bolsas:bo, kgBolsas:bkg, merma:me, empleado:em });
@@ -782,10 +825,10 @@ async function doPro(){
     document.getElementById('pav').style.display='none';
     document.querySelectorAll('#pc .mchip').forEach(c=>c.classList.remove('on'));
     closeM('mo-pro');
-    toast(`✓ ${bo} bolsas de ${tipo} en cámara`);
+    toast('\u2713 ' + bo + ' bolsas de ' + tipo + ' en cámara');
   }catch(e){ toast('Error al guardar: '+e.message,'err'); }
   setBtnLoading('btn-pro', false);
-  document.getElementById('btn-pro').innerHTML='✓ Registrar producción';
+  document.getElementById('btn-pro').innerHTML='\u2713 Registrar producción';
 }
 
 // ══════════════════════════════════
