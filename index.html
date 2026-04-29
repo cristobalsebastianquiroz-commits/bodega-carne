@@ -471,7 +471,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <div class="fg"><label class="fl">Tipo de corte</label><div class="chips" id="dc"></div><input class="fi" id="dti" placeholder="O escribe el tipo..." type="text" oninput="chkStk()"></div>
     <div class="fr">
       <div class="fg"><label class="fl">N° bolsas a despachar</label><input class="fi" id="dbo" placeholder="Ej: 2" type="text" inputmode="numeric" oninput="chkStk()"></div>
-      <div class="fg"><label class="fl">Kg a despachar</label><input class="fi" id="dkg" placeholder="Ej: 5,2" type="text" inputmode="decimal"></div>
+      <div class="fg"><label class="fl">Kg (calculado automático)</label><input class="fi" id="dkg" placeholder="Se calcula solo" type="text" readonly style="background:var(--sf3);color:var(--txm);cursor:default"></div>
     </div>
     <div class="av" id="dav"></div>
     <div class="fg"><label class="fl">Responsable / cocinero</label><input class="fi" id="dre" placeholder="Nombre..." type="text"></div>
@@ -803,53 +803,78 @@ function stockPP(tipo){
   return { bols:Math.max(0,bols), kg:Math.max(0,kg) };
 }
 
+// Calcula kg proporcional según bolsas elegidas y actualiza campo kg (readonly)
+function calcKgDespacho(st, bo){
+  const dkg = document.getElementById('dkg');
+  if(!dkg) return 0;
+  if(bo<=0 || st.bols<=0){ dkg.value=''; return 0; }
+  // kg proporcional: (kg_total / bolsas_total) * bolsas_a_despachar
+  const kgPorBolsa = st.kg / st.bols;
+  const kgCalc = kgPorBolsa * bo;
+  dkg.value = fN(kgCalc, 2);
+  return kgCalc;
+}
+
 function chkStk(){
-  const tipo=document.getElementById('dti').value.trim();
-  const bo=pI(document.getElementById('dbo').value)||0;
-  const av=document.getElementById('dav');
-  const btn=document.getElementById('btn-des');
-  if(!tipo){ av.style.display='none'; if(btn){btn.disabled=false;btn.style.opacity='1';} return; }
-  const st=stockPP(tipo);
+  const tipo = document.getElementById('dti').value.trim();
+  const bo   = pI(document.getElementById('dbo').value) || 0;
+  const av   = document.getElementById('dav');
+  const btn  = document.getElementById('btn-des');
+  if(!tipo){
+    av.style.display='none';
+    document.getElementById('dkg').value='';
+    if(btn){ btn.disabled=false; btn.style.opacity='1'; }
+    return;
+  }
+  const st = stockPP(tipo);
+  // Calcular kg automáticamente
+  calcKgDespacho(st, bo);
   av.style.display='block';
   if(st.bols===0){
     av.style.cssText='display:block;background:var(--redd);border:1px solid var(--redb);color:var(--red);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
     av.textContent='\u{1F6AB} Sin stock de '+tipo+' en cámara';
-    if(btn){btn.disabled=true;btn.style.opacity='0.4';}
+    if(btn){ btn.disabled=true; btn.style.opacity='0.4'; }
   } else if(bo>0 && bo>st.bols){
     av.style.cssText='display:block;background:var(--redd);border:1px solid var(--redb);color:var(--red);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
     av.textContent='\u{1F6AB} Stock insuficiente — solo hay '+st.bols+' bolsa(s) · '+fN(st.kg)+' kg de '+tipo;
-    if(btn){btn.disabled=true;btn.style.opacity='0.4';}
+    if(btn){ btn.disabled=true; btn.style.opacity='0.4'; }
+  } else if(bo>0){
+    const kgPorBolsa = st.bols>0 ? fN(st.kg/st.bols,2) : '—';
+    av.style.cssText='display:block;background:var(--greend);border:1px solid var(--greenb);color:var(--green);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
+    av.textContent='\u2713 Stock: '+st.bols+' bolsas · '+fN(st.kg)+' kg  ('+kgPorBolsa+' kg/bolsa)';
+    if(btn){ btn.disabled=false; btn.style.opacity='1'; }
   } else {
     av.style.cssText='display:block;background:var(--greend);border:1px solid var(--greenb);color:var(--green);margin-bottom:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600';
-    av.textContent='\u2713 Disponible: '+st.bols+' bolsa(s) · '+fN(st.kg)+' kg';
-    if(btn){btn.disabled=false;btn.style.opacity='1';}
+    av.textContent='\u2713 Stock disponible: '+st.bols+' bolsas · '+fN(st.kg)+' kg';
+    if(btn){ btn.disabled=false; btn.style.opacity='1'; }
   }
 }
 
 async function doDes(){
-  const tipo=document.getElementById('dti').value.trim();
-  const bo=pI(document.getElementById('dbo').value)||0;
-  const kg=pN(document.getElementById('dkg').value)||0;
-  const re=document.getElementById('dre').value.trim();
+  const tipo = document.getElementById('dti').value.trim();
+  const bo   = pI(document.getElementById('dbo').value) || 0;
+  const re   = document.getElementById('dre').value.trim();
   if(!tipo){ toast('Selecciona o escribe el tipo de corte','err'); return; }
   if(bo<=0){ toast('Ingresa las bolsas a despachar','err'); return; }
   // Validacion final double-check antes de guardar en Firebase
-  const st=stockPP(tipo);
-  if(bo>st.bols){
-    toast('Solo hay '+st.bols+' bolsa(s) de '+tipo+' en cámara','err');
+  const st = stockPP(tipo);
+  if(bo > st.bols){
+    toast('\u{1F6AB} Solo hay '+st.bols+' bolsa(s) de '+tipo+' en cámara','err');
     chkStk();
     return;
   }
+  // Calcular kg proporcional (no se toma del input, se calcula aquí para evitar manipulación)
+  const kgDespacho = st.bols>0 ? parseFloat(((st.kg / st.bols) * bo).toFixed(2)) : 0;
   setBtnLoading('btn-des', true);
   try{
-    await addMov({ tipo:'despacho', tipoCarne:tipo, bolsas:bo, kg:kg||0, recibe:re, notas:document.getElementById('dno').value.trim() });
+    await addMov({ tipo:'despacho', tipoCarne:tipo, bolsas:bo, kg:kgDespacho, recibe:re, notas:document.getElementById('dno').value.trim() });
     ['dti','dbo','dkg','dre','dno'].forEach(i=>document.getElementById(i).value='');
     document.getElementById('dav').style.display='none';
     const btn=document.getElementById('btn-des');
-    if(btn){btn.disabled=false;btn.style.opacity='1';}
+    if(btn){ btn.disabled=false; btn.style.opacity='1'; }
     document.querySelectorAll('#dc .mchip').forEach(c=>c.classList.remove('on'));
     closeM('mo-des');
-    toast('\u2713 '+bo+' bolsas de '+tipo+' despachadas');
+    toast('\u2713 '+bo+' bolsas · '+fN(kgDespacho)+' kg despachados');
   }catch(e){ toast('Error al guardar: '+e.message,'err'); }
   setBtnLoading('btn-des', false);
   document.getElementById('btn-des').innerHTML='\u2713 Confirmar despacho';
