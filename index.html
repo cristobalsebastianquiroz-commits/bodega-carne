@@ -264,75 +264,84 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 
 <!-- DASHBOARD -->
 <div class="pg on" id="pg-dash">
-  <div class="pgt">Resumen del día</div>
-  <div class="pgs" id="dashd">—</div>
-
-  <div class="sec-hdr">
-    <span class="sec-pill pill-gold">🥩 Materia Prima</span>
-    <div class="sec-line"></div>
+  <!-- Fecha y saludo -->
+  <div style="margin-top:4px;margin-bottom:16px">
+    <div class="pgt" id="dash-greeting">Buenos días</div>
+    <div style="font-size:12px;color:var(--txm);margin-top:3px" id="dashd">—</div>
   </div>
-  <div class="sg" style="margin-bottom:8px">
+
+  <!-- FLUJO DEL DÍA: 3 tarjetas grandes -->
+  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Movimientos de hoy</div>
+
+  <!-- 1. INGRESO -->
+  <div style="background:var(--sf);border:1px solid var(--goldb);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px">
+    <div style="width:48px;height:48px;border-radius:12px;background:var(--goldd);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">📥</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:11px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Ingreso Materia Prima</div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <span style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--gold)" id="d-ing-pzs">0</span>
+        <span style="font-size:12px;color:var(--txm)">piezas</span>
+        <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--goldl)" id="d-ing-kg">0,0 kg</span>
+      </div>
+    </div>
+    <button onclick="openM('mo-ing')" style="background:var(--gold);border:none;border-radius:10px;color:var(--bg);font-size:20px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">+</button>
+  </div>
+
+  <!-- 2. PRODUCCIÓN -->
+  <div style="background:var(--sf);border:1px solid var(--blueb);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px">
+    <div style="width:48px;height:48px;border-radius:12px;background:var(--blued);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">⚙️</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:11px;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Producción</div>
+      <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap">
+        <span style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--blue)" id="d-pro-bols">0</span>
+        <span style="font-size:12px;color:var(--txm)">bolsas</span>
+        <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--blue)" id="d-pro-kg">0,0 kg</span>
+      </div>
+      <div style="font-size:11px;color:var(--txm);margin-top:2px" id="d-pro-merma">merma 0,0 kg</div>
+    </div>
+    <button onclick="openM('mo-pro')" style="background:var(--blue);border:none;border-radius:10px;color:#fff;font-size:20px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">+</button>
+  </div>
+
+  <!-- 3. DESPACHO A LÍNEA -->
+  <div style="background:var(--sf);border:1px solid var(--greenb);border-radius:14px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:14px">
+    <div style="width:48px;height:48px;border-radius:12px;background:var(--greend);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🍽️</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:11px;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Despachado a línea</div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <span style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--green)" id="d-des-bols">0</span>
+        <span style="font-size:12px;color:var(--txm)">bolsas</span>
+        <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--green)" id="d-des-kg">0,0 kg</span>
+      </div>
+      <div style="font-size:11px;color:var(--txm);margin-top:2px" id="d-des-trz">0 trozos</div>
+    </div>
+    <button onclick="openM('mo-des')" style="background:var(--green);border:none;border-radius:10px;color:#0f1923;font-size:20px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">+</button>
+  </div>
+
+  <!-- STOCK RÁPIDO EN CÁMARA -->
+  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock en cámara ahora</div>
+  <div class="sg" style="margin-bottom:14px">
     <div class="st ac-gold">
-      <div class="sl">Ingresado hoy</div>
-      <div class="sv gold" id="d-mp-ing">0</div>
-      <div class="su" id="d-mp-ing-kg">0,0 kg</div>
+      <div class="sl">🥩 Materia Prima</div>
+      <div style="display:flex;align-items:baseline;gap:5px;margin-top:3px">
+        <div class="sv gold" id="d-st-mp-pzs">0</div>
+        <div style="font-size:11px;color:var(--txm)">pzas</div>
+      </div>
+      <div class="su" id="d-st-mp-kg">0,0 kg</div>
     </div>
-    <div class="st">
-      <div class="sl">A producción hoy</div>
-      <div class="sv orange" id="d-mp-sal">0</div>
-      <div class="su" id="d-mp-sal-kg">0,0 kg</div>
-    </div>
-  </div>
-  <div class="st full ac-gold" style="margin-bottom:14px;border-radius:13px;padding:13px 11px">
-    <div class="sl">📦 Saldo MP total en cámara</div>
-    <div style="display:flex;align-items:baseline;gap:8px;margin-top:2px">
-      <div class="sv gold" id="d-mp-saldo">0</div>
-      <div style="font-size:13px;color:var(--txm)">piezas</div>
-      <div style="font-size:16px;font-family:'Syne',sans-serif;font-weight:700;color:var(--goldl)" id="d-mp-saldo-kg">/ 0,0 kg</div>
-    </div>
-    <div class="prog"><div class="pb" id="d-mp-prog" style="width:0%"></div></div>
-  </div>
-
-  <div class="sec-hdr">
-    <span class="sec-pill pill-blue">📦 Producto Procesado</span>
-    <div class="sec-line"></div>
-  </div>
-  <div class="sg" style="margin-bottom:8px">
     <div class="st ac-blue">
-      <div class="sl">Producido hoy</div>
-      <div class="sv blue" id="d-pp-ing">0</div>
-      <div class="su" id="d-pp-ing-kg">bolsas · 0,0 kg</div>
+      <div class="sl">📦 Prod. Procesado</div>
+      <div style="display:flex;align-items:baseline;gap:5px;margin-top:3px">
+        <div class="sv blue" id="d-st-pp-bols">0</div>
+        <div style="font-size:11px;color:var(--txm)">bols</div>
+      </div>
+      <div class="su" id="d-st-pp-kg">0,0 kg</div>
     </div>
-    <div class="st">
-      <div class="sl">Despachado hoy</div>
-      <div class="sv green" id="d-pp-des">0</div>
-      <div class="su" id="d-pp-des-kg">bolsas · 0,0 kg</div>
-    </div>
-  </div>
-  <div class="st full ac-blue" style="margin-bottom:14px;border-radius:13px;padding:13px 11px">
-    <div class="sl">❄️ Saldo PP total en cámara</div>
-    <div style="display:flex;align-items:baseline;gap:8px;margin-top:2px">
-      <div class="sv blue" id="d-pp-saldo">0</div>
-      <div style="font-size:13px;color:var(--txm)">bolsas</div>
-      <div style="font-size:16px;font-family:'Syne',sans-serif;font-weight:700;color:var(--blue)" id="d-pp-saldo-kg">/ 0,0 kg</div>
-    </div>
-    <div class="prog"><div class="pb blue" id="d-pp-prog" style="width:0%"></div></div>
   </div>
 
-  <div class="ct" style="margin-bottom:9px">Acciones rápidas</div>
-  <div class="qag">
-    <div class="qab" onclick="openM('mo-ing')"><div class="qi">📥</div><div class="ql">Ingreso MP</div><div class="qs">Piezas brutas que llegan</div></div>
-    <div class="qab" onclick="openM('mo-pro')"><div class="qi">⚙️</div><div class="ql">Producción</div><div class="qs">MP → bolsas procesadas</div></div>
-    <div class="qab" onclick="openM('mo-des')"><div class="qi">🍽️</div><div class="ql">Despacho Línea</div><div class="qs">PP → cliente buffet</div></div>
-    <div class="qab adm" onclick="goTo('pg-rep')" style="display:none"><div class="qi">📊</div><div class="ql">Reporte</div><div class="qs">Balance y cuadre</div></div>
-  </div>
-
-  <div class="card">
-    <div class="ct">⏱ Últimos movimientos</div>
-    <div id="lmovs"><div class="loading"><div class="spin"></div><br>Cargando...</div></div>
-  </div>
+  <!-- ÚLTIMOS MOVIMIENTOS -->
+  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Últimos movimientos</div>
+  <div id="lmovs"><div class="loading"><div class="spin"></div><br>Cargando...</div></div>
 </div>
-
 <!-- CÁMARA -->
 <div class="pg" id="pg-cam">
   <div class="pgt">Cámara de Frío</div>
@@ -379,15 +388,80 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 
 <!-- REPORTE (admin) -->
 <div class="pg adm" id="pg-rep" style="display:none">
-  <div class="pgt">Reporte & Balance</div>
-  <div class="pgs">Cuadre de ingresos, stock y merma</div>
-  <div class="date-sel">
+  <div class="pgt">Dashboard</div>
+  <div class="pgs" id="repd">—</div>
+
+  <!-- Selector de fecha -->
+  <div class="date-sel" style="margin-bottom:16px">
     <input type="date" id="rep-date-input">
     <button class="date-btn on" id="btn-hoy" onclick="setRepDate('today')">Hoy</button>
-    <button class="date-btn" id="btn-todo" onclick="setRepDate('all')">Todo</button>
+    <button class="date-btn" id="btn-todo" onclick="setRepDate('all')">Total</button>
   </div>
-  <div id="repc"><div class="loading"><div class="spin"></div><br>Cargando...</div></div>
-  <div id="repbtns" class="adm" style="display:none;margin-top:15px;flex-direction:column;gap:8px">
+
+  <!-- KPIs principales -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+    <div style="background:var(--sf);border:1.5px solid var(--goldb);border-radius:13px;padding:13px;grid-column:1/-1">
+      <div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:6px">📥 Ingreso total MP</div>
+      <div style="display:flex;align-items:baseline;gap:8px">
+        <span style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--gold)" id="kpi-ing-kg">0,0</span>
+        <span style="font-size:13px;color:var(--txm)">kg brutos</span>
+        <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--goldl)" id="kpi-ing-pzs">· 0 piezas</span>
+      </div>
+    </div>
+    <div style="background:var(--sf);border:1.5px solid var(--blueb);border-radius:13px;padding:13px">
+      <div style="font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:6px">⚙️ Bolsas producidas</div>
+      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--blue)" id="kpi-pro-bols">0</div>
+      <div style="font-size:11px;color:var(--txm)" id="kpi-pro-kg">0,0 kg netos</div>
+    </div>
+    <div style="background:var(--sf);border:1.5px solid var(--greenb);border-radius:13px;padding:13px">
+      <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:6px">🍽️ Despachado línea</div>
+      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--green)" id="kpi-des-bols">0</div>
+      <div style="font-size:11px;color:var(--txm)" id="kpi-des-kg">0,0 kg · 0 trozos</div>
+    </div>
+  </div>
+
+  <!-- MERMA: barra visual -->
+  <div style="background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:14px;margin-bottom:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div style="font-size:11px;color:var(--txm);font-weight:600;text-transform:uppercase;letter-spacing:.7px">🗑 Merma del proceso</div>
+      <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--red)" id="kpi-merma-pct">0,0%</div>
+    </div>
+    <div style="background:var(--sf2);border-radius:6px;height:8px;overflow:hidden;margin-bottom:8px">
+      <div id="merma-bar" style="height:100%;border-radius:6px;background:var(--red);transition:width .6s;width:0%"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between">
+      <div style="font-size:11px;color:var(--txm)">Total: <span style="color:var(--red);font-weight:600" id="kpi-merma-kg">0,0 kg</span></div>
+      <div style="font-size:11px;color:var(--txm)">De <span style="color:var(--tx);font-weight:600" id="kpi-merma-de">0,0 kg</span> procesados</div>
+    </div>
+  </div>
+
+  <!-- STOCK EN CÁMARA: dos bloques -->
+  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock actual en cámara</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+    <div style="background:var(--sf);border:1.5px solid var(--goldb);border-radius:13px;padding:13px">
+      <div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:6px">🥩 MP</div>
+      <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--gold)" id="kpi-mp-pzs">0</div>
+      <div style="font-size:11px;color:var(--txm)">piezas</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--goldl);margin-top:4px" id="kpi-mp-kg">0,0 kg</div>
+    </div>
+    <div style="background:var(--sf);border:1.5px solid var(--blueb);border-radius:13px;padding:13px">
+      <div style="font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:6px">📦 PP</div>
+      <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--blue)" id="kpi-pp-bols">0</div>
+      <div style="font-size:11px;color:var(--txm)">bolsas</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--blue);margin-top:4px" id="kpi-pp-kg">0,0 kg</div>
+    </div>
+  </div>
+
+  <!-- CUADRE CONTABLE -->
+  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Cuadre de kg</div>
+  <div id="repc" style="margin-bottom:12px"></div>
+
+  <!-- DETALLE POR CORTE -->
+  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Por tipo de corte</div>
+  <div id="rep-by-type" style="margin-bottom:12px"></div>
+
+  <!-- Botones WhatsApp / Copiar -->
+  <div id="repbtns" class="adm" style="display:none;margin-top:4px;flex-direction:column;gap:8px">
     <button class="btn bg-green" onclick="sendWA()">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12.004 2C6.468 2 2 6.478 2 12.004c0 1.773.463 3.521 1.34 5.064L2 22l5.083-1.323A9.924 9.924 0 0012.004 22C17.532 22 22 17.522 22 11.996 22 6.48 17.532 2 12.004 2zm0 18.215a8.18 8.18 0 01-4.162-1.136l-.298-.178-3.097.807.825-3.01-.195-.308A8.23 8.23 0 013.79 12.004c0-4.527 3.686-8.212 8.215-8.212 4.52 0 8.206 3.686 8.206 8.212 0 4.527-3.686 8.211-8.207 8.211z"/></svg>
       Enviar por WhatsApp
@@ -398,7 +472,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     </button>
   </div>
 </div>
-
 <nav class="nav">
   <button class="nb on" id="nb-dash" onclick="goTo('pg-dash')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Inicio
@@ -704,7 +777,9 @@ function logout(){
 function clk(){
   const d=new Date();
   document.getElementById('hdtm').innerHTML = d.toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit'})+'<br>'+d.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
-  document.getElementById('dashd').textContent = d.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const dateStr = d.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const el = document.getElementById('dashd'); if(el) el.textContent = dateStr;
+  const rel = document.getElementById('repd'); if(rel && !rel.textContent.includes('/')) rel.textContent = dateStr;
 }
 setInterval(clk, 30000);
 
@@ -1004,36 +1079,52 @@ async function doDes(){
 //  RENDERS
 // ══════════════════════════════════
 function renderDash(){
-  const td=TK();
-  const hoy=allMovs.filter(m=>m.fecha&&m.fecha.startsWith(td));
-  const st=calcStocks(allMovs);
-  const ingH=hoy.filter(m=>m.tipo==='ingreso');
-  const proH=hoy.filter(m=>m.tipo==='proceso');
-  const desH=hoy.filter(m=>m.tipo==='despacho');
-  const mpIngPzs=ingH.reduce((s,m)=>s+(m.piezas||0),0);
-  const mpIngKg=ingH.reduce((s,m)=>s+(m.kg||0),0);
-  const mpSalPzs=proH.reduce((s,m)=>s+(m.pzsSalida||0),0);
-  const mpSalKg=proH.reduce((s,m)=>s+(m.kgBruto||0),0);
-  const ppIngBols=proH.reduce((s,m)=>s+(m.bolsas||0),0);
-  const ppIngKg=proH.reduce((s,m)=>s+(m.kgBolsas||0),0);
-  const ppDesBols=desH.reduce((s,m)=>s+(m.bolsas||0),0);
-  const ppDesKg=desH.reduce((s,m)=>s+(m.kg||0),0);
-  document.getElementById('d-mp-ing').textContent=fI(mpIngPzs);
-  document.getElementById('d-mp-ing-kg').textContent=fN(mpIngKg)+' kg';
-  document.getElementById('d-mp-sal').textContent=fI(mpSalPzs);
-  document.getElementById('d-mp-sal-kg').textContent=fN(mpSalKg)+' kg';
-  document.getElementById('d-mp-saldo').textContent=fI(st.mpPzs);
-  document.getElementById('d-mp-saldo-kg').textContent='/ '+fN(st.mpKg)+' kg';
-  document.getElementById('d-mp-prog').style.width=Math.min(100,(st.mpPzs/Math.max(st.mpPzs+mpSalPzs,1))*100)+'%';
-  document.getElementById('d-pp-ing').textContent=fI(ppIngBols);
-  document.getElementById('d-pp-ing-kg').textContent='bolsas · '+fN(ppIngKg)+' kg';
-  document.getElementById('d-pp-des').textContent=fI(ppDesBols);
-  document.getElementById('d-pp-des-kg').textContent='bolsas · '+fN(ppDesKg)+' kg';
-  document.getElementById('d-pp-saldo').textContent=fI(st.ppBols);
-  document.getElementById('d-pp-saldo-kg').textContent='/ '+fN(st.ppKg)+' kg';
-  document.getElementById('d-pp-prog').style.width=Math.min(100,(st.ppBols/Math.max(st.ppBols+ppDesBols,1))*100)+'%';
-  const recent=allMovs.slice(0,8);
-  document.getElementById('lmovs').innerHTML=recent.length?recent.map(mCard).join(''):'<div class="empty"><div class="ei">📦</div><div class="et">Sin movimientos aún</div></div>';
+  const td  = TK();
+  const hoy = allMovs.filter(m=>m.fecha&&m.fecha.startsWith(td));
+  const st  = calcStocks(allMovs);
+
+  // Greeting
+  const hr = new Date().getHours();
+  const gr = hr<12?'Buenos días':hr<19?'Buenas tardes':'Buenas noches';
+  const grEl = document.getElementById('dash-greeting');
+  if(grEl) grEl.textContent = gr;
+
+  // Hoy: Ingreso MP
+  const ingH = hoy.filter(m=>m.tipo==='ingreso');
+  const mpIngPzs = ingH.reduce((s,m)=>s+(m.piezas||0),0);
+  const mpIngKg  = ingH.reduce((s,m)=>s+(m.kg||0),0);
+  document.getElementById('d-ing-pzs').textContent = fI(mpIngPzs);
+  document.getElementById('d-ing-kg').textContent  = fN(mpIngKg)+' kg';
+
+  // Hoy: Producción
+  const proH = hoy.filter(m=>m.tipo==='proceso');
+  const proBols = proH.reduce((s,m)=>s+(m.bolsas||0),0);
+  const proKg   = proH.reduce((s,m)=>s+(m.kgBolsas||0),0);
+  const proMerma= proH.reduce((s,m)=>s+(m.merma||0),0);
+  document.getElementById('d-pro-bols').textContent  = fI(proBols);
+  document.getElementById('d-pro-kg').textContent    = fN(proKg)+' kg';
+  document.getElementById('d-pro-merma').textContent = 'merma '+fN(proMerma)+' kg';
+
+  // Hoy: Despacho línea
+  const desH = hoy.filter(m=>m.tipo==='despacho');
+  const desBols = desH.reduce((s,m)=>s+(m.bolsas||0),0);
+  const desKg   = desH.reduce((s,m)=>s+(m.kg||0),0);
+  const desTrz  = desH.reduce((s,m)=>s+(m.trozos||(m.bolsas*20)||0),0);
+  document.getElementById('d-des-bols').textContent = fI(desBols);
+  document.getElementById('d-des-kg').textContent   = fN(desKg)+' kg';
+  document.getElementById('d-des-trz').textContent  = fI(desTrz)+' trozos';
+
+  // Stock rápido en cámara (acumulado total)
+  document.getElementById('d-st-mp-pzs').textContent = fI(st.mpPzs);
+  document.getElementById('d-st-mp-kg').textContent  = fN(st.mpKg)+' kg';
+  document.getElementById('d-st-pp-bols').textContent= fI(st.ppBols);
+  document.getElementById('d-st-pp-kg').textContent  = fN(st.ppKg)+' kg';
+
+  // Últimos movimientos (8 más recientes)
+  const recent = allMovs.slice(0,8);
+  document.getElementById('lmovs').innerHTML = recent.length
+    ? recent.map(mCard).join('')
+    : '<div class="empty"><div class="ei">📦</div><div class="et">Sin movimientos aún</div></div>';
 }
 
 function renderCam(){
@@ -1156,66 +1247,131 @@ document.getElementById('rep-date-input')?.addEventListener('change',()=>{ repFi
 
 function renderRep(){
   initRepDate();
-  const selDate=document.getElementById('rep-date-input')?.value||TK();
-  let ms=allMovs, tituloFecha='';
-  if(repFiltro==='today'||repFiltro==='custom'){ ms=ms.filter(m=>m.fecha&&m.fecha.startsWith(selDate)); tituloFecha=fdate(selDate); }
-  else tituloFecha='Acumulado total';
-  document.getElementById('repd').textContent=tituloFecha;
-  const rc=document.getElementById('repc'), rb=document.getElementById('repbtns');
-  if(!ms.length){ rc.innerHTML='<div class="empty"><div class="ei">📊</div><div class="et">Sin datos para esta fecha</div></div>'; rb.style.display='none'; return; }
-  rb.style.display='flex';
-  const ing=ms.filter(m=>m.tipo==='ingreso'), pro=ms.filter(m=>m.tipo==='proceso'), des=ms.filter(m=>m.tipo==='despacho');
-  const mpIngPzs=ing.reduce((s,m)=>s+(m.piezas||0),0), mpIngKg=ing.reduce((s,m)=>s+(m.kg||0),0);
-  const mpSalPzs=pro.reduce((s,m)=>s+(m.pzsSalida||0),0), mpSalKg=pro.reduce((s,m)=>s+(m.kgBruto||0),0);
-  const mpSaldoPzs=Math.max(0,mpIngPzs-mpSalPzs), mpSaldoKg=Math.max(0,mpIngKg-mpSalKg);
-  const ppIngBols=pro.reduce((s,m)=>s+(m.bolsas||0),0), ppIngKg=pro.reduce((s,m)=>s+(m.kgBolsas||0),0);
-  const ppDesBols=des.reduce((s,m)=>s+(m.bolsas||0),0), ppDesKg=des.reduce((s,m)=>s+(m.kg||0),0);
-  const ppSaldoBols=Math.max(0,ppIngBols-ppDesBols), ppSaldoKg=Math.max(0,ppIngKg-ppDesKg);
-  const mermaKg=pro.reduce((s,m)=>s+(m.merma||0),0);
-  const pctMerma=mpSalKg>0?((mermaKg/mpSalKg)*100).toFixed(1):'0,0';
-  const difKg=mpSalKg-ppIngKg-mermaKg;
-  rc.innerHTML=`
-    <div class="rb accent-gold">
-      <div class="ct">🥩 Balance Materia Prima</div>
-      <table class="bal-table">
-        <tr><th>Concepto</th><th>Piezas</th><th>Kg</th></tr>
-        <tr><td>Ingreso MP</td><td class="num-pos">+${fI(mpIngPzs)}</td><td class="num-pos">+${fN(mpIngKg)}</td></tr>
-        <tr><td>Salida a producción</td><td class="num-neg">−${fI(mpSalPzs)}</td><td class="num-neg">−${fN(mpSalKg)}</td></tr>
-        <tr class="total"><td>Saldo MP en cámara</td><td class="num-neu">${fI(mpSaldoPzs)}</td><td class="num-neu">${fN(mpSaldoKg)}</td></tr>
+  const selDate = document.getElementById('rep-date-input')?.value || TK();
+  let ms = allMovs, tituloFecha = '';
+  if(repFiltro==='today'||repFiltro==='custom'){
+    ms = ms.filter(m=>m.fecha&&m.fecha.startsWith(selDate));
+    tituloFecha = fdate(selDate);
+  } else {
+    tituloFecha = 'Acumulado total';
+  }
+  document.getElementById('repd').textContent = tituloFecha;
+
+  const rb = document.getElementById('repbtns');
+  if(!ms.length){
+    document.getElementById('repc').innerHTML = '<div class="empty"><div class="ei">📊</div><div class="et">Sin datos para esta fecha</div></div>';
+    document.getElementById('rep-by-type').innerHTML = '';
+    ['kpi-ing-kg','kpi-ing-pzs','kpi-pro-bols','kpi-pro-kg','kpi-des-bols','kpi-des-kg',
+     'kpi-merma-pct','kpi-merma-kg','kpi-merma-de','kpi-mp-pzs','kpi-mp-kg','kpi-pp-bols','kpi-pp-kg']
+      .forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent='—'; });
+    document.getElementById('merma-bar').style.width='0%';
+    if(rb) rb.style.display='none';
+    return;
+  }
+  if(rb) rb.style.display='flex';
+
+  const ing = ms.filter(m=>m.tipo==='ingreso');
+  const pro = ms.filter(m=>m.tipo==='proceso');
+  const des = ms.filter(m=>m.tipo==='despacho');
+
+  // Totales
+  const mpIngPzs = ing.reduce((s,m)=>s+(m.piezas||0),0);
+  const mpIngKg  = ing.reduce((s,m)=>s+(m.kg||0),0);
+  const mpSalKg  = pro.reduce((s,m)=>s+(m.kgBruto||0),0);
+  const mpSalPzs = pro.reduce((s,m)=>s+(m.pzsSalida||0),0);
+  const ppIngBols= pro.reduce((s,m)=>s+(m.bolsas||0),0);
+  const ppIngKg  = pro.reduce((s,m)=>s+(m.kgBolsas||0),0);
+  const ppDesBols= des.reduce((s,m)=>s+(m.bolsas||0),0);
+  const ppDesKg  = des.reduce((s,m)=>s+(m.kg||0),0);
+  const ppDesTrz = des.reduce((s,m)=>s+(m.trozos||(m.bolsas*20)||0),0);
+  const mermaKg  = pro.reduce((s,m)=>s+(m.merma||0),0);
+  const pctMerma = mpSalKg>0 ? (mermaKg/mpSalKg*100) : 0;
+
+  // Stock acumulado TOTAL (no filtrado por fecha, siempre es el estado actual)
+  const stTotal  = calcStocks(allMovs);
+
+  // ── KPIs ──
+  document.getElementById('kpi-ing-kg').textContent  = fN(mpIngKg);
+  document.getElementById('kpi-ing-pzs').textContent = '· '+fI(mpIngPzs)+' piezas';
+  document.getElementById('kpi-pro-bols').textContent= fI(ppIngBols);
+  document.getElementById('kpi-pro-kg').textContent  = fN(ppIngKg)+' kg netos';
+  document.getElementById('kpi-des-bols').textContent= fI(ppDesBols);
+  document.getElementById('kpi-des-kg').textContent  = fN(ppDesKg)+' kg · '+fI(ppDesTrz)+' trozos';
+  document.getElementById('kpi-merma-pct').textContent = fN(pctMerma,1)+'%';
+  document.getElementById('kpi-merma-kg').textContent  = fN(mermaKg)+' kg';
+  document.getElementById('kpi-merma-de').textContent  = fN(mpSalKg)+' kg';
+  document.getElementById('merma-bar').style.width      = Math.min(100,pctMerma).toFixed(1)+'%';
+  document.getElementById('merma-bar').style.background = pctMerma>20?'var(--red)':pctMerma>10?'var(--orange)':'var(--green)';
+
+  // ── Stock cámara (siempre total) ──
+  document.getElementById('kpi-mp-pzs').textContent = fI(stTotal.mpPzs);
+  document.getElementById('kpi-mp-kg').textContent  = fN(stTotal.mpKg)+' kg';
+  document.getElementById('kpi-pp-bols').textContent= fI(stTotal.ppBols);
+  document.getElementById('kpi-pp-kg').textContent  = fN(stTotal.ppKg)+' kg';
+
+  // ── Cuadre contable ──
+  const mpSaldoKg  = Math.max(0, mpIngKg - mpSalKg);
+  const mpSaldoPzs = Math.max(0, mpIngPzs - mpSalPzs);
+  const ppSaldoBols= Math.max(0, ppIngBols - ppDesBols);
+  const ppSaldoKg  = Math.max(0, ppIngKg - ppDesKg);
+  const difKg      = mpSalKg - ppIngKg - mermaKg;
+
+  document.getElementById('repc').innerHTML = `
+    <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:11px;overflow:hidden;margin-bottom:8px">
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead>
+          <tr style="background:rgba(200,169,110,.08)">
+            <th style="text-align:left;padding:9px 12px;font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;font-weight:700">Concepto</th>
+            <th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.8px;font-weight:600">Unid.</th>
+            <th style="text-align:right;padding:9px 12px;font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.8px;font-weight:600">Kg</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-top:1px solid var(--bd3)"><td style="padding:8px 12px;color:var(--tx);font-weight:500">📥 Ingreso MP</td><td style="text-align:right;padding:8px;color:var(--green);font-weight:600">+${fI(mpIngPzs)} pzas</td><td style="text-align:right;padding:8px 12px;color:var(--green);font-weight:600">+${fN(mpIngKg)}</td></tr>
+          <tr style="border-top:1px solid var(--bd3)"><td style="padding:8px 12px;color:var(--tx);font-weight:500">⚙️ A producción</td><td style="text-align:right;padding:8px;color:var(--red);font-weight:600">−${fI(mpSalPzs)} pzas</td><td style="text-align:right;padding:8px 12px;color:var(--red);font-weight:600">−${fN(mpSalKg)}</td></tr>
+          <tr style="border-top:1px solid var(--bd);background:rgba(200,169,110,.04)"><td style="padding:9px 12px;color:var(--gold);font-weight:700;font-family:'Syne',sans-serif">Saldo MP cámara</td><td style="text-align:right;padding:9px 8px;color:var(--gold);font-weight:700">${fI(mpSaldoPzs)} pzas</td><td style="text-align:right;padding:9px 12px;color:var(--gold);font-weight:700">${fN(mpSaldoKg)}</td></tr>
+          <tr style="border-top:1px solid var(--bd3)"><td style="padding:8px 12px;color:var(--tx);font-weight:500">📦 Bolsas producidas</td><td style="text-align:right;padding:8px;color:var(--green);font-weight:600">+${fI(ppIngBols)} bols</td><td style="text-align:right;padding:8px 12px;color:var(--green);font-weight:600">+${fN(ppIngKg)}</td></tr>
+          <tr style="border-top:1px solid var(--bd3)"><td style="padding:8px 12px;color:var(--tx);font-weight:500">🗑 Merma</td><td style="text-align:right;padding:8px;color:var(--red);font-weight:600">—</td><td style="text-align:right;padding:8px 12px;color:var(--red);font-weight:600">−${fN(mermaKg)}</td></tr>
+          <tr style="border-top:1px solid var(--bd3)"><td style="padding:8px 12px;color:var(--tx);font-weight:500">🍽️ Despachado línea</td><td style="text-align:right;padding:8px;color:var(--red);font-weight:600">−${fI(ppDesBols)} bols</td><td style="text-align:right;padding:8px 12px;color:var(--red);font-weight:600">−${fN(ppDesKg)}</td></tr>
+          <tr style="border-top:1px solid var(--bd);background:rgba(91,155,213,.06)"><td style="padding:9px 12px;color:var(--blue);font-weight:700;font-family:'Syne',sans-serif">Saldo PP cámara</td><td style="text-align:right;padding:9px 8px;color:var(--blue);font-weight:700">${fI(ppSaldoBols)} bols</td><td style="text-align:right;padding:9px 12px;color:var(--blue);font-weight:700">${fN(ppSaldoKg)}</td></tr>
+          ${Math.abs(difKg)>0.05?`<tr style="border-top:1px solid var(--bd3)"><td style="padding:8px 12px;color:var(--orange);font-weight:500">⚠️ Diferencia proceso</td><td style="text-align:right;padding:8px">—</td><td style="text-align:right;padding:8px 12px;color:var(--orange);font-weight:600">${fN(difKg,2)}</td></tr>`:''}
+        </tbody>
       </table>
-    </div>
-    <div class="rb">
-      <div class="ct">⚙️ Balance Producción</div>
-      <table class="bal-table">
-        <tr><th>Concepto</th><th>Bolsas</th><th>Kg</th></tr>
-        <tr><td>Bruto procesado</td><td>—</td><td class="num-pos">+${fN(mpSalKg)}</td></tr>
-        <tr><td>Bolsas producidas</td><td class="num-pos">+${fI(ppIngBols)}</td><td class="num-neg">−${fN(ppIngKg)}</td></tr>
-        <tr><td>Merma / grasa</td><td>—</td><td class="num-neg">−${fN(mermaKg)} (${pctMerma}%)</td></tr>
-        ${Math.abs(difKg)>0.05?`<tr><td style="color:var(--orange)">Diferencia</td><td>—</td><td style="color:var(--orange)">${fN(difKg,2)} kg</td></tr>`:''}
-      </table>
-      ${pro.map(p=>`<div class="rr" style="font-size:11px;color:var(--txm)"><span>· ${p.tipoCarne}${p.empleado?' – '+p.empleado:''}</span><span>${fI(p.bolsas)} bols / ${fN(p.kgBolsas)}kg / merma ${fN(p.merma)}kg</span></div>`).join('')}
-    </div>
-    <div class="rb accent-blue">
-      <div class="ct">📦 Balance Producto Procesado</div>
-      <table class="bal-table">
-        <tr><th>Concepto</th><th>Bolsas</th><th>Trozos</th><th>Kg</th></tr>
-        <tr><td>Ingreso de producción</td><td class="num-pos">+${fI(ppIngBols)}</td><td class="num-pos">+${ppIngBols*20}</td><td class="num-pos">+${fN(ppIngKg)}</td></tr>
-        <tr><td>Despacho a línea</td><td class="num-neg">−${fI(ppDesBols)}</td><td class="num-neg">−${ppDesBols*20}</td><td class="num-neg">−${fN(ppDesKg)}</td></tr>
-        <tr class="total"><td>Saldo PP en cámara</td><td class="num-neu">${fI(ppSaldoBols)}</td><td class="num-neu">${ppSaldoBols*20}</td><td class="num-neu">${fN(ppSaldoKg)}</td></tr>
-      </table>
-    </div>
-    ${des.length?`<div class="rb accent-green"><div class="ct">🍽️ Despachos a línea</div>${des.map(d=>`<div class="rr"><span class="rk">${fdt(d.fecha)} – ${d.tipoCarne}${d.recibe?' → '+d.recibe:''}</span><span class="rv">${fI(d.bolsas)} bolsas · ${fN(d.kg)} kg</span></div>`).join('')}</div>`:''}
-    <div class="rb" style="border-color:var(--goldb);background:rgba(200,169,110,.04)">
-      <div class="ct">✅ Cuadre General</div>
-      <div class="rr"><span class="rk">Kg ingresados como MP</span><span class="rv gold">${fN(mpIngKg)} kg</span></div>
-      <div class="rr"><span class="rk">− Kg a producción</span><span class="rv">${fN(mpSalKg)} kg</span></div>
-      <div class="rr"><span class="rk">= Saldo MP cámara</span><span class="rv">${fN(mpSaldoKg)} kg</span></div>
-      <div class="rr" style="padding-top:6px"><span class="rk">Kg en bolsas PP</span><span class="rv">${fN(ppIngKg)} kg</span></div>
-      <div class="rr"><span class="rk">+ Merma</span><span class="rv red">${fN(mermaKg)} kg</span></div>
-      <div class="rr"><span class="rk">− Despachado a línea</span><span class="rv green">${fN(ppDesKg)} kg</span></div>
-      <div class="rr total"><span style="color:var(--gold);font-weight:700">Saldo MP cámara</span><span class="rv gold">${fN(mpSaldoKg)} kg · ${fI(mpSaldoPzs)} pzas</span></div>
-      <div class="rr" style="padding-top:4px"><span style="color:var(--blue);font-weight:700">Saldo PP cámara</span><span class="rv blue">${fN(ppSaldoKg)} kg · ${fI(ppSaldoBols)} bolsas</span></div>
     </div>`;
+
+  // ── Por tipo de corte ──
+  const tipos = {};
+  ms.forEach(m=>{
+    const t = m.tipoCarne||'—';
+    if(!tipos[t]) tipos[t]={mpIngKg:0,mpIngPzs:0,proKg:0,proBols:0,merma:0,desKg:0,desBols:0,desTrz:0};
+    const d = tipos[t];
+    if(m.tipo==='ingreso'){ d.mpIngKg+=m.kg||0; d.mpIngPzs+=m.piezas||0; }
+    if(m.tipo==='proceso'){ d.proKg+=m.kgBolsas||0; d.proBols+=m.bolsas||0; d.merma+=m.merma||0; }
+    if(m.tipo==='despacho'){ d.desKg+=m.kg||0; d.desBols+=m.bolsas||0; d.desTrz+=m.trozos||(m.bolsas*20)||0; }
+  });
+
+  const byType = Object.entries(tipos);
+  document.getElementById('rep-by-type').innerHTML = byType.length ? byType.map(([t,d])=>`
+    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:14px;margin-bottom:8px">
+      <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--tx);margin-bottom:10px">🥩 ${t}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center">
+        <div style="background:var(--sf2);border-radius:8px;padding:8px;border:1px solid var(--goldb)">
+          <div style="font-size:8px;color:var(--gold);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">Ingresó</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--gold)">${fN(d.mpIngKg)}</div>
+          <div style="font-size:9px;color:var(--txm)">${fI(d.mpIngPzs)} pzas</div>
+        </div>
+        <div style="background:var(--sf2);border-radius:8px;padding:8px;border:1px solid var(--blueb)">
+          <div style="font-size:8px;color:var(--blue);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">Producido</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--blue)">${fN(d.proKg)}</div>
+          <div style="font-size:9px;color:var(--txm)">${fI(d.proBols)} bols · ${fN(d.merma)} kg merma</div>
+        </div>
+        <div style="background:var(--sf2);border-radius:8px;padding:8px;border:1px solid var(--greenb)">
+          <div style="font-size:8px;color:var(--green);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">Despachado</div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--green)">${fN(d.desKg)}</div>
+          <div style="font-size:9px;color:var(--txm)">${fI(d.desBols)} bols · ${fI(d.desTrz)} trz</div>
+        </div>
+      </div>
+    </div>`).join('') : '<div class="empty"><div class="ei">📋</div><div class="et">Sin movimientos</div></div>';
 }
 
 // ── WHATSAPP ──
