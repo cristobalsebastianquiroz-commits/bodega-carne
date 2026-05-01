@@ -423,19 +423,36 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     </div>
   </div>
 
-  <!-- STOCK EN CÁMARA -->
+  <!-- CONSUMO POR PRODUCTO (primero) -->
+  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">🍽️ Consumo por producto</div>
+  <div id="rep-consumo" style="margin-bottom:12px"></div>
+
+  <!-- STOCK EN CÁMARA + VALOR -->
   <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock actual en cámara</div>
+  <!-- Valor total en cámara -->
+  <div style="background:var(--sf);border:1.5px solid var(--greenb);border-radius:13px;padding:13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:4px">💰 Valor total en cámara</div>
+      <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--green)" id="kpi-camara-valor">—</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-bottom:4px">Total kg</div>
+      <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--txm)" id="kpi-camara-kg-total">0,0 kg</div>
+    </div>
+  </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
     <div style="background:var(--sf);border:1.5px solid var(--goldb);border-radius:13px;padding:13px">
       <div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:6px">🥩 MP</div>
       <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--gold)" id="kpi-mp-kg">0,0</div>
       <div style="font-size:11px;color:var(--txm)">kg</div>
+      <div style="font-size:12px;font-weight:700;color:var(--goldl);margin-top:5px" id="kpi-mp-valor">—</div>
     </div>
     <div style="background:var(--sf);border:1.5px solid var(--blueb);border-radius:13px;padding:13px">
       <div style="font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:6px">📦 PP</div>
       <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--blue)" id="kpi-pp-bols">0</div>
       <div style="font-size:11px;color:var(--txm)">bolsas</div>
       <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--blue);margin-top:4px" id="kpi-pp-kg">0,0 kg</div>
+      <div style="font-size:12px;font-weight:700;color:var(--blue);margin-top:5px" id="kpi-pp-valor">—</div>
     </div>
   </div>
 
@@ -450,10 +467,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   <!-- OCUPACIÓN EN CÁMARA -->
   <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Ocupación en cámara por producto</div>
   <div id="rep-ocupacion" style="margin-bottom:12px"></div>
-
-  <!-- CONSUMO POR PRODUCTO -->
-  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">🍽️ Consumo por producto</div>
-  <div id="rep-consumo" style="margin-bottom:12px"></div>
 
   <!-- Botones WhatsApp / Copiar -->
   <div id="repbtns" style="display:none;flex-direction:column;gap:8px;margin-top:4px">
@@ -1276,8 +1289,34 @@ function renderRep(){
   document.getElementById('kpi-pp-bols').textContent= fI(stTotal.ppBols);
   document.getElementById('kpi-pp-kg').textContent  = fN(stTotal.ppKg)+' kg';
 
-  // Costo total merma (suma de todas las mermas con precio)
+  // ── Valor en cámara por tipo ──
   const meatsConf = gMt();
+  // Calcular stock en cámara desglosado por tipo (siempre total, no filtrado)
+  const stockTiposCamara = {};
+  allMovs.forEach(m=>{
+    const t = m.tipoCarne||'—';
+    if(!stockTiposCamara[t]) stockTiposCamara[t]={mpKg:0,ppKg:0};
+    if(m.tipo==='ingreso') stockTiposCamara[t].mpKg+=m.kg||0;
+    if(m.tipo==='proceso'){ stockTiposCamara[t].mpKg-=m.kgBruto||0; stockTiposCamara[t].ppKg+=m.kgBolsas||0; }
+    if(m.tipo==='despacho') stockTiposCamara[t].ppKg-=m.kg||0;
+  });
+  Object.keys(stockTiposCamara).forEach(k=>{ stockTiposCamara[k].mpKg=Math.max(0,stockTiposCamara[k].mpKg); stockTiposCamara[k].ppKg=Math.max(0,stockTiposCamara[k].ppKg); });
+
+  let valorMpTotal=0, valorPpTotal=0;
+  Object.entries(stockTiposCamara).forEach(([t,d])=>{
+    const conf = meatsConf.find(c=>c.name.toLowerCase()===t.toLowerCase());
+    const precio = conf?.price||0;
+    if(precio>0){ valorMpTotal+=d.mpKg*precio; valorPpTotal+=d.ppKg*precio; }
+  });
+  const valorCamaraTotal = valorMpTotal + valorPpTotal;
+  const elValorTotal = document.getElementById('kpi-camara-valor');
+  const elKgTotal   = document.getElementById('kpi-camara-kg-total');
+  const elMpValor   = document.getElementById('kpi-mp-valor');
+  const elPpValor   = document.getElementById('kpi-pp-valor');
+  if(elValorTotal) elValorTotal.textContent = valorCamaraTotal>0 ? fCLP(valorCamaraTotal) : '—';
+  if(elKgTotal)    elKgTotal.textContent    = fN(stTotal.mpKg + stTotal.ppKg)+' kg';
+  if(elMpValor)    elMpValor.textContent    = valorMpTotal>0 ? fCLP(valorMpTotal) : '—';
+  if(elPpValor)    elPpValor.textContent    = valorPpTotal>0 ? fCLP(valorPpTotal) : '—';
   let costoMermaTotal = 0;
   pro.forEach(m=>{
     const conf = meatsConf.find(c=>c.name.toLowerCase()===(m.tipoCarne||'').toLowerCase());
