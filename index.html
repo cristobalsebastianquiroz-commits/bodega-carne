@@ -361,7 +361,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 
 <!-- DASHBOARD ADMIN (solo admin) -->
 <div class="pg adm" id="pg-rep" style="display:none">
-  <div class="pgt">Dashboard</div>
+  <div class="pgt">Reporte</div>
   <div class="pgs" id="repd">—</div>
 
   <!-- Selector de fecha con rango -->
@@ -426,7 +426,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     </div>
   </div>
 
-  <!-- CONSUMO POR PRODUCTO (primero) -->
+  <!-- OCUPACIÓN EN CÁMARA -->
+  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock en camara por producto</div>
+  <div id="rep-ocupacion" style="margin-bottom:12px"></div>
+
+  <!-- Botones WhatsApp / Copiar -->  <!-- CONSUMO POR PRODUCTO (primero) -->
   <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">🍽️ Consumo por producto</div>
   <div id="rep-consumo" style="margin-bottom:12px"></div>
 
@@ -463,11 +467,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">KPIs por producto</div>
   <div id="rep-by-type" style="margin-bottom:12px"></div>
 
-  <!-- OCUPACIÓN EN CÁMARA -->
-  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Ocupación en cámara por producto</div>
-  <div id="rep-ocupacion" style="margin-bottom:12px"></div>
 
-  <!-- Botones WhatsApp / Copiar -->
   <div id="repbtns" style="display:none;flex-direction:column;gap:8px;margin-top:4px">
     <button class="btn bg-green" onclick="sendWA()">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12.004 2C6.468 2 2 6.478 2 12.004c0 1.773.463 3.521 1.34 5.064L2 22l5.083-1.323A9.924 9.924 0 0012.004 22C17.532 22 22 17.522 22 11.996 22 6.48 17.532 2 12.004 2zm0 18.215a8.18 8.18 0 01-4.162-1.136l-.298-.178-3.097.807.825-3.01-.195-.308A8.23 8.23 0 013.79 12.004c0-4.527 3.686-8.212 8.215-8.212 4.52 0 8.206 3.686 8.206 8.212 0 4.527-3.686 8.211-8.207 8.211z"/></svg>
@@ -1156,8 +1156,8 @@ function renderCam(){
           <div style="font-family:'Inter',sans-serif;font-size:20px;font-weight:800;color:var(--blue)">${fN(v.ppKg)}</div>
         </div>
         <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:8px;text-align:center">
-          <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">% PP total</div>
-          <div style="font-family:'Inter',sans-serif;font-size:20px;font-weight:800;color:var(--txm)">${totPpKg>0?fN(v.ppKg/totPpKg*100,1):'0,0'}%</div>
+          <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">Trozos</div>
+          <div style="font-family:'Inter',sans-serif;font-size:20px;font-weight:800;color:var(--green)">${v.ppBols*20}</div>
         </div>
       </div>
       <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:8px;display:flex;justify-content:space-between;align-items:center">
@@ -1403,7 +1403,10 @@ function renderRep(){
         <div style="background:var(--sf2);border-radius:8px;padding:9px;border:1px solid var(--redb)">
           <div style="font-size:8px;color:var(--red);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">Merma</div>
           <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--red)">${fN(d.merma)} kg</div>
-          <div style="font-size:9px;color:var(--txm)">${fN(pctMerma,1)}%${costoMerma!=='—'?' · '+costoMerma:''}</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap">
+            <span style="background:var(--redd);border:1px solid var(--redb);color:var(--red);border-radius:6px;padding:2px 7px;font-size:11px;font-weight:700">${fN(pctMerma,1)}%</span>
+            ${costoMerma!=='—'?`<span style="background:var(--oranged);border:1px solid var(--orangeb);color:var(--orange);border-radius:6px;padding:2px 7px;font-size:11px;font-weight:700">${costoMerma}</span>`:''}
+          </div>
         </div>
         <div style="background:var(--sf2);border-radius:8px;padding:9px;border:1px solid var(--greenb)">
           <div style="font-size:8px;color:var(--green);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">Despachado</div>
