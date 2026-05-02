@@ -256,7 +256,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   <div style="background:var(--sf);border:1px solid var(--goldb);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px">
     <div style="width:48px;height:48px;border-radius:12px;background:var(--goldd);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">📥</div>
     <div style="flex:1;min-width:0">
-      <div style="font-size:11px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Ingreso Materia Prima</div>
+      <div style="font-size:11px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Ingreso Mercadería</div>
       <div style="display:flex;align-items:baseline;gap:6px">
         <span style="font-family:'Inter',sans-serif;font-size:26px;font-weight:800;color:var(--gold)" id="d-ing-kg">0,0</span>
         <span style="font-size:12px;color:var(--txm)">kg</span>
@@ -268,7 +268,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   <div style="background:var(--sf);border:1px solid var(--blueb);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px">
     <div style="width:48px;height:48px;border-radius:12px;background:var(--blued);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">⚙️</div>
     <div style="flex:1;min-width:0">
-      <div style="font-size:11px;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Producción</div>
+      <div style="font-size:11px;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Despacho a Producción</div>
       <div style="display:flex;align-items:baseline;gap:6px">
         <span style="font-family:'Inter',sans-serif;font-size:26px;font-weight:800;color:var(--blue)" id="d-pro-bols">0</span>
         <span style="font-size:12px;color:var(--txm)">bolsas</span>
@@ -294,20 +294,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   </div>
 
   <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock en cámara ahora</div>
-  <div class="sg" style="margin-bottom:14px">
-    <div class="st ac-gold">
-      <div class="sl">🥩 Materia Prima</div>
-      <div class="sv gold" id="d-st-mp-kg">0,0</div>
-      <div class="su">kg</div>
-    </div>
-    <div class="st ac-blue">
-      <div class="sl">📦 Prod. Procesado</div>
-      <div style="display:flex;align-items:baseline;gap:5px;margin-top:3px">
-        <div class="sv blue" id="d-st-pp-bols">0</div>
-        <div style="font-size:11px;color:var(--txm)">bols</div>
-      </div>
-      <div class="su" id="d-st-pp-kg">0,0 kg</div>
-    </div>
+  <div id="d-stock-por-producto" style="margin-bottom:14px">
+    <div class="loading"><div class="spin"></div><br>Cargando...</div>
   </div>
 
   <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Últimos movimientos</div>
@@ -319,28 +307,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   <div class="pgt">Cámara de Frío</div>
   <div class="pgs">Stock en tiempo real</div>
   <div class="sec-hdr"><span class="sec-pill pill-gold">🥩 Materia Prima</span><div class="sec-line"></div></div>
-  <div class="sg" style="margin-bottom:11px">
-    <div class="st ac-gold full">
-      <div class="sl">Stock total MP</div>
-      <div style="display:flex;align-items:baseline;gap:10px;margin-top:2px">
-        <div style="font-size:18px;font-family:'Inter',sans-serif;font-weight:800;color:var(--goldl)" id="c-mp-kg">0,0 kg</div>
-      </div>
-    </div>
-  </div>
-  <div class="card"><div class="ct">Detalle por tipo</div><div id="c-mp-list"><div class="loading"><div class="spin"></div><br>Cargando...</div></div></div>
+  <div class="card"><div class="ct">Por tipo de corte</div><div id="c-mp-list"><div class="loading"><div class="spin"></div><br>Cargando...</div></div></div>
 
   <div class="sec-hdr"><span class="sec-pill pill-blue">📦 Producto Procesado</span><div class="sec-line"></div></div>
-  <div class="sg" style="margin-bottom:11px">
-    <div class="st ac-blue full">
-      <div class="sl">Stock total PP</div>
-      <div style="display:flex;align-items:baseline;gap:10px;margin-top:2px">
-        <div class="sv blue" id="c-pp-bols">0</div>
-        <div style="font-size:12px;color:var(--txm)">bolsas</div>
-        <div style="font-size:18px;font-family:'Inter',sans-serif;font-weight:800;color:var(--blue)" id="c-pp-kg">/ 0,0 kg</div>
-      </div>
-    </div>
-  </div>
-  <div class="card"><div class="ct">Detalle por tipo</div><div id="c-pp-list"><div class="loading"><div class="spin"></div><br>Cargando...</div></div></div>
+  <div class="card"><div class="ct">Por tipo de corte</div><div id="c-pp-list"><div class="loading"><div class="spin"></div><br>Cargando...</div></div></div>
 
   <div class="sec-hdr"><span class="sec-pill pill-gold">⚖️ Cuadre de kg</span><div class="sec-line"></div></div>
   <div id="c-cuadre"><div class="loading"><div class="spin"></div><br>Cargando...</div></div>
@@ -390,15 +360,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <div id="rep-periodo-label" style="font-size:11px;color:var(--gold);font-weight:600;margin-top:6px"></div>
   </div>
 
-  <!-- KPIs principales -->
+  <!-- STOCK EN CAMARA POR PRODUCTO (primero en dashboard) -->
+  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock en camara por producto</div>
+  <div id="rep-ocupacion" style="margin-bottom:12px"></div>
+
+  <!-- KPIs principales — nuevo orden: Stock camara primero -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-    <div style="background:var(--sf);border:1.5px solid var(--goldb);border-radius:13px;padding:13px;grid-column:1/-1">
-      <div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:6px">📥 Ingreso total MP</div>
-      <div style="display:flex;align-items:baseline;gap:8px">
-        <span style="font-family:'Inter',sans-serif;font-size:32px;font-weight:800;color:var(--gold)" id="kpi-ing-kg">0,0</span>
-        <span style="font-size:13px;color:var(--txm)">kg brutos</span>
-      </div>
-    </div>
     <div style="background:var(--sf);border:1.5px solid var(--blueb);border-radius:13px;padding:13px">
       <div style="font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:6px">⚙️ Bolsas producidas</div>
       <div style="font-family:'Inter',sans-serif;font-size:28px;font-weight:800;color:var(--blue)" id="kpi-pro-bols">0</div>
@@ -410,6 +377,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
       <div style="font-size:11px;color:var(--txm)" id="kpi-des-kg">0,0 kg · 0 trozos</div>
     </div>
   </div>
+  <!-- kpi-ing-kg hidden (still needed for JS calculations) -->
+  <span id="kpi-ing-kg" style="display:none">0</span>
 
   <!-- MERMA -->
   <div style="background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:14px;margin-bottom:12px">
@@ -426,9 +395,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     </div>
   </div>
 
-  <!-- OCUPACIÓN EN CÁMARA -->
-  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock en camara por producto</div>
-  <div id="rep-ocupacion" style="margin-bottom:12px"></div>
+
 
   <!-- Botones WhatsApp / Copiar -->  <!-- CONSUMO POR PRODUCTO (primero) -->
   <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">🍽️ Consumo por producto</div>
@@ -1091,9 +1058,41 @@ function renderDash(){
   document.getElementById('d-des-kg').textContent   = fN(desKg)+' kg';
   document.getElementById('d-des-trz').textContent  = fI(desTrz)+' trozos';
 
-  document.getElementById('d-st-mp-kg').textContent  = fN(st.mpKg);
-  document.getElementById('d-st-pp-bols').textContent= fI(st.ppBols);
-  document.getElementById('d-st-pp-kg').textContent  = fN(st.ppKg)+' kg';
+  // Stock en cámara por producto (inicio)
+  const stTiposDash = {};
+  allMovs.forEach(m=>{
+    const t=m.tipoCarne||'?';
+    if(!stTiposDash[t]) stTiposDash[t]={mpKg:0,ppBols:0,ppKg:0};
+    const d=stTiposDash[t];
+    if(m.tipo==='ingreso') d.mpKg+=m.kg||0;
+    if(m.tipo==='proceso'){ d.mpKg-=m.kgBruto||0; d.ppBols+=m.bolsas||0; d.ppKg+=m.kgBolsas||0; }
+    if(m.tipo==='despacho'){ d.ppBols-=m.bolsas||0; d.ppKg-=m.kg||0; }
+  });
+  Object.keys(stTiposDash).forEach(k=>{ const d=stTiposDash[k]; d.mpKg=Math.max(0,d.mpKg); d.ppBols=Math.max(0,d.ppBols); d.ppKg=Math.max(0,d.ppKg); });
+  const stEl = document.getElementById('d-stock-por-producto');
+  if(stEl){
+    const rows = Object.entries(stTiposDash).filter(([k,d])=>d.mpKg>0.01||d.ppBols>0);
+    if(!rows.length){
+      stEl.innerHTML='<div style="font-size:12px;color:var(--txd);padding:8px 0">Camara vacia</div>';
+    } else {
+      stEl.innerHTML = rows.map(([t,d])=>`
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:13px;margin-bottom:8px">
+          <div style="font-weight:700;font-size:13px;color:var(--tx);margin-bottom:9px">&#x1F969; ${t}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+            <div style="background:var(--sf2);border:1px solid var(--goldb);border-radius:9px;padding:10px;text-align:center">
+              <div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">MP - kg</div>
+              <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800;color:var(--gold)">${fN(d.mpKg)}</div>
+              <div style="font-size:10px;color:var(--txm);margin-top:2px">kg disponibles</div>
+            </div>
+            <div style="background:var(--sf2);border:1px solid var(--blueb);border-radius:9px;padding:10px;text-align:center">
+              <div style="font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">PP - bolsas</div>
+              <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800;color:var(--blue)">${fI(d.ppBols)}</div>
+              <div style="font-size:10px;color:var(--txm);margin-top:2px">${fN(d.ppKg)} kg - ${d.ppBols*20} trozos</div>
+            </div>
+          </div>
+        </div>`).join('');
+    }
+  }
 
   const recent = allMovs.slice(0,8);
   document.getElementById('lmovs').innerHTML = recent.length
@@ -1121,18 +1120,13 @@ function renderCam(){
   const mpL=document.getElementById('c-mp-list');
   const mpTips=tipArr.filter(([k,v])=>v.mpKg>0.01).sort((a,b)=>b[1].mpKg-a[1].mpKg);
   mpL.innerHTML = mpTips.length ? mpTips.map(([t,v])=>`
-    <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:11px;padding:12px 14px;margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div style="font-weight:700;font-size:14px;color:var(--tx)">🥩 ${t}</div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <div style="background:var(--sf);border:1px solid var(--goldb);border-radius:8px;padding:8px;text-align:center">
-          <div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">Kg total</div>
-          <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800;color:var(--gold)">${fN(v.mpKg)}</div>
-        </div>
-        <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:8px;text-align:center">
-          <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:3px">% del total MP</div>
-          <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800;color:var(--goldl)">${totMpKg>0?fN(v.mpKg/totMpKg*100,1):'0,0'}%</div>
+    <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:11px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+      <div style="width:40px;height:40px;border-radius:10px;background:var(--goldd);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🥩</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:14px;color:var(--tx);margin-bottom:4px">${t}</div>
+        <div style="display:flex;align-items:baseline;gap:6px">
+          <span style="font-family:'Inter',sans-serif;font-size:24px;font-weight:800;color:var(--gold)">${fN(v.mpKg)}</span>
+          <span style="font-size:12px;color:var(--txm)">kg disponibles</span>
         </div>
       </div>
     </div>`).join('')
@@ -1160,10 +1154,7 @@ function renderCam(){
           <div style="font-family:'Inter',sans-serif;font-size:20px;font-weight:800;color:var(--green)">${v.ppBols*20}</div>
         </div>
       </div>
-      <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:8px;display:flex;justify-content:space-between;align-items:center">
-        <div style="font-size:11px;color:var(--txm)">Trozos (20 × bolsas)</div>
-        <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:800;color:var(--green)">${v.ppBols*20} trozos</div>
-      </div>
+
     </div>`).join('')
     : '<div class="empty"><div class="ei">📦</div><div class="et">Sin PP en cámara</div></div>';
 
@@ -1378,44 +1369,124 @@ function renderRep(){
 
   const byType = Object.entries(tipos);
   document.getElementById('rep-by-type').innerHTML = byType.length ? byType.map(([t,d])=>{
-    const conf = meatsConf.find(c=>c.name.toLowerCase()===t.toLowerCase());
-    const precio = conf?.price || 0;
-    const pctMerma = (d.proKg+d.merma)>0 ? (d.merma/(d.proKg+d.merma)*100) : 0;
-    const costoMerma = precio>0 ? fCLP(d.merma * precio) : '—';
+    const conf  = meatsConf.find(cc=>cc.name.toLowerCase()===t.toLowerCase());
+    const precio = conf?.price||0;
+
+    // ── KPI 1: Rendimiento (% yield) ──
+    // yield = kg util (bolsas) / kg bruto enviado a produccion
+    const kgBruto = d.proKg + d.merma; // bruto = bolsas + merma
+    const yield_pct = kgBruto>0 ? (d.proKg/kgBruto*100) : 0;
+    const yieldColor = yield_pct>=80?'var(--green)':yield_pct>=70?'var(--orange)':'var(--red)';
+
+    // ── KPI 2: Costo real por kg util ──
+    // costo_real = precio_compra / yield
+    const costoReal = (precio>0 && yield_pct>0) ? (precio / (yield_pct/100)) : 0;
+
+    // ── KPI 3: Valor total en camara (a costo real) ──
+    const stTipo = stockTiposCamara[t]||{mpKg:0,ppKg:0};
+    const valorCamaraMP = costoReal>0 ? stTipo.mpKg * costoReal : (precio>0 ? stTipo.mpKg * precio : 0);
+    const valorCamaraPP = costoReal>0 ? stTipo.ppKg * costoReal : (precio>0 ? stTipo.ppKg * precio : 0);
+    const valorTotal = valorCamaraMP + valorCamaraPP;
+
+    // ── KPI 4: Rotacion de inventario (dias) ──
+    // dias de stock = kg en camara / consumo diario promedio del periodo
+    const range = getDateRange();
+    const diasPeriodo = (() => {
+      try {
+        const from = new Date(range.from); const to = new Date(range.to);
+        const d = Math.max(1, Math.round((to-from)/(1000*60*60*24))+1);
+        return d;
+      } catch { return 1; }
+    })();
+    const consumoDiario = diasPeriodo>0 ? d.desKg/diasPeriodo : 0;
+    const kgTotalCamara = (stTipo.mpKg||0) + (stTipo.ppKg||0);
+    const rotacion = consumoDiario>0 ? (kgTotalCamara/consumoDiario) : null;
+    const rotColor = rotacion===null?'var(--txm)':rotacion<=7?'var(--green)':rotacion<=14?'var(--orange)':'var(--red)';
+    const rotLabel = rotacion===null?'—':fN(rotacion,1)+' dias';
+    const rotAlert = rotacion!==null&&rotacion>10 ? '⚠️ Mas de 10 dias' : '';
+
+    // ── KPI 5: % Merma ──
+    const mermaKgTotal = d.merma;
+    const mermaBase = d.mpIngKg > 0 ? d.mpIngKg : kgBruto;
+    const merma_pct = mermaBase>0 ? (mermaKgTotal/mermaBase*100) : 0;
+    const mermaColor = merma_pct<=10?'var(--green)':merma_pct<=20?'var(--orange)':'var(--red)';
+    const costoMerma = precio>0 ? mermaKgTotal*precio : 0;
+
     return `
-    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:14px;margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div style="font-family:'Inter',sans-serif;font-size:14px;font-weight:800;color:var(--tx)">🥩 ${t}</div>
-        ${precio>0 ? `<span style="font-size:11px;color:var(--gold);font-weight:700">${fCLP(precio)}/kg</span>` : ''}
+    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:14px;margin-bottom:10px">
+
+      <!-- Header producto -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="font-family:'Inter',sans-serif;font-size:15px;font-weight:800;color:var(--tx)">&#x1F969; ${t}</div>
+        ${precio>0?`<span style="font-size:11px;color:var(--gold);font-weight:700;background:var(--goldd);padding:3px 9px;border-radius:6px">${fCLP(precio)}/kg</span>`:''}
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
-        <div style="background:var(--sf2);border-radius:8px;padding:9px;border:1px solid var(--goldb)">
-          <div style="font-size:8px;color:var(--gold);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">Ingresó</div>
-          <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--gold)">${fN(d.mpIngKg)} kg</div>
+
+      <!-- KPI 1: Rendimiento -->
+      <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;padding:11px;margin-bottom:7px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--txm)">&#x1F9EE; 1. Rendimiento (% yield)</div>
+          <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800;color:${yieldColor}">${fN(yield_pct,1)}%</div>
         </div>
-        <div style="background:var(--sf2);border-radius:8px;padding:9px;border:1px solid var(--blueb)">
-          <div style="font-size:8px;color:var(--blue);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">Producido</div>
-          <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--blue)">${fN(d.proKg)} kg</div>
-          <div style="font-size:9px;color:var(--txm)">${fI(d.proBols)} bolsas</div>
+        <div style="background:var(--sf);border-radius:4px;height:5px;overflow:hidden;margin-bottom:6px">
+          <div style="height:100%;border-radius:4px;background:${yieldColor};width:${Math.min(100,yield_pct).toFixed(1)}%;transition:width .6s"></div>
         </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <div style="background:var(--sf2);border-radius:8px;padding:9px;border:1px solid var(--redb)">
-          <div style="font-size:8px;color:var(--red);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">Merma</div>
-          <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--red)">${fN(d.merma)} kg</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap">
-            <span style="background:var(--redd);border:1px solid var(--redb);color:var(--red);border-radius:6px;padding:2px 7px;font-size:11px;font-weight:700">${fN(pctMerma,1)}%</span>
-            ${costoMerma!=='—'?`<span style="background:var(--oranged);border:1px solid var(--orangeb);color:var(--orange);border-radius:6px;padding:2px 7px;font-size:11px;font-weight:700">${costoMerma}</span>`:''}
-          </div>
-        </div>
-        <div style="background:var(--sf2);border-radius:8px;padding:9px;border:1px solid var(--greenb)">
-          <div style="font-size:8px;color:var(--green);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:3px">Despachado</div>
-          <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--green)">${fN(d.desKg)} kg</div>
-          <div style="font-size:9px;color:var(--txm)">${fI(d.desBols)} bols</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;color:var(--txm)">
+          <div>Bruto enviado: <span style="color:var(--tx);font-weight:600">${fN(kgBruto)} kg</span></div>
+          <div>Util (bolsas): <span style="color:var(--green);font-weight:600">${fN(d.proKg)} kg</span></div>
         </div>
       </div>
+
+      <!-- KPI 2: Costo real por kg util -->
+      <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;padding:11px;margin-bottom:7px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--txm)">&#x1F4B8; 2. Costo real por kg util</div>
+          <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--gold)">${costoReal>0?fCLP(costoReal)+'/kg':'—'}</div>
+        </div>
+        ${precio>0&&costoReal>0?`<div style="font-size:10px;color:var(--txm)">Precio compra: <span style="color:var(--txm)">${fCLP(precio)}/kg</span> &rarr; ajustado por merma: <span style="color:var(--orange);font-weight:700">${fCLP(costoReal)}/kg</span></div>`:'<div style="font-size:10px;color:var(--txd)">Configura el precio del corte para ver este KPI</div>'}
+      </div>
+
+      <!-- KPI 3: Valor en camara -->
+      <div style="background:var(--sf2);border:1px solid var(--greenb);border-radius:10px;padding:11px;margin-bottom:7px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--green)">&#x1F4E6; 3. Valor en camara (capital)</div>
+          <div style="font-family:'Inter',sans-serif;font-size:20px;font-weight:800;color:var(--green)">${valorTotal>0?fCLP(valorTotal):'—'}</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;color:var(--txm)">
+          <div>MP: <span style="color:var(--gold);font-weight:600">${fN(stTipo.mpKg)} kg${valorCamaraMP>0?' = '+fCLP(valorCamaraMP):''}</span></div>
+          <div>PP: <span style="color:var(--blue);font-weight:600">${fN(stTipo.ppKg)} kg${valorCamaraPP>0?' = '+fCLP(valorCamaraPP):''}</span></div>
+        </div>
+      </div>
+
+      <!-- KPI 4: Rotacion -->
+      <div style="background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;padding:11px;margin-bottom:7px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--txm)">&#x1F504; 4. Rotacion de inventario</div>
+          <div style="font-family:'Inter',sans-serif;font-size:20px;font-weight:800;color:${rotColor}">${rotLabel}</div>
+        </div>
+        <div style="font-size:10px;color:var(--txm)">
+          Stock actual: <span style="color:var(--tx);font-weight:600">${fN(kgTotalCamara)} kg</span>
+          &nbsp;|&nbsp; Consumo/dia: <span style="color:var(--tx);font-weight:600">${fN(consumoDiario,2)} kg</span>
+          ${rotAlert?`&nbsp;&nbsp;<span style="color:var(--red);font-weight:700">${rotAlert}</span>`:''}
+        </div>
+      </div>
+
+      <!-- KPI 5: % Merma -->
+      <div style="background:var(--sf2);border:1px solid var(--redb);border-radius:10px;padding:11px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--red)">&#x2696;&#xFE0F; 5. % Merma total</div>
+          <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800;color:${mermaColor}">${fN(merma_pct,1)}%</div>
+        </div>
+        <div style="background:var(--sf);border-radius:4px;height:5px;overflow:hidden;margin-bottom:6px">
+          <div style="height:100%;border-radius:4px;background:${mermaColor};width:${Math.min(100,merma_pct).toFixed(1)}%;transition:width .6s"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;color:var(--txm)">
+          <div>Merma: <span style="color:var(--red);font-weight:600">${fN(mermaKgTotal)} kg</span></div>
+          <div>Costo merma: <span style="color:var(--orange);font-weight:600">${costoMerma>0?fCLP(costoMerma):'—'}</span></div>
+        </div>
+      </div>
+
     </div>`;
-  }).join('') : '<div class="empty"><div class="ei">📋</div><div class="et">Sin movimientos</div></div>';
+  }).join('') : '<div class="empty"><div class="ei">&#x1F4CB;</div><div class="et">Sin movimientos en este periodo</div></div>'
 
   // ── Ocupación en cámara por producto ──
   const stockPorTipo={};
