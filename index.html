@@ -360,79 +360,38 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <div id="rep-periodo-label" style="font-size:11px;color:var(--gold);font-weight:600;margin-top:6px"></div>
   </div>
 
-  <!-- STOCK EN CAMARA POR PRODUCTO (primero en dashboard) -->
-  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock en camara por producto</div>
-  <div id="rep-ocupacion" style="margin-bottom:12px"></div>
-
-  <!-- KPIs principales — nuevo orden: Stock camara primero -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-    <div style="background:var(--sf);border:1.5px solid var(--blueb);border-radius:13px;padding:13px">
-      <div style="font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:6px">⚙️ Bolsas producidas</div>
-      <div style="font-family:'Inter',sans-serif;font-size:28px;font-weight:800;color:var(--blue)" id="kpi-pro-bols">0</div>
-      <div style="font-size:11px;color:var(--txm)" id="kpi-pro-kg">0,0 kg netos</div>
-    </div>
-    <div style="background:var(--sf);border:1.5px solid var(--greenb);border-radius:13px;padding:13px">
-      <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:6px">🍽️ Despachado línea</div>
-      <div style="font-family:'Inter',sans-serif;font-size:28px;font-weight:800;color:var(--green)" id="kpi-des-bols">0</div>
-      <div style="font-size:11px;color:var(--txm)" id="kpi-des-kg">0,0 kg · 0 trozos</div>
-    </div>
-  </div>
-  <!-- kpi-ing-kg hidden (still needed for JS calculations) -->
-  <span id="kpi-ing-kg" style="display:none">0</span>
-
-  <!-- MERMA -->
-  <div style="background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:14px;margin-bottom:12px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <div style="font-size:11px;color:var(--txm);font-weight:600;text-transform:uppercase;letter-spacing:.7px">🗑 Merma del proceso</div>
-      <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--red)" id="kpi-merma-pct">0,0%</div>
-    </div>
-    <div style="background:var(--sf2);border-radius:6px;height:8px;overflow:hidden;margin-bottom:8px">
-      <div id="merma-bar" style="height:100%;border-radius:6px;background:var(--red);transition:width .6s;width:0%"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between">
-      <div style="font-size:11px;color:var(--txm)">Total: <span style="color:var(--red);font-weight:600" id="kpi-merma-kg">0,0 kg</span></div>
-      <div style="font-size:11px;color:var(--txm)" id="kpi-merma-costo-label" style="display:none">Costo merma: <span style="color:var(--orange);font-weight:600" id="kpi-merma-costo">—</span></div>
+  <!-- VALOR TOTAL EN CAMARA — único número grande, lo más importante -->
+  <div style="background:var(--sf);border:1.5px solid var(--greenb);border-radius:14px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px">
+    <div style="width:48px;height:48px;border-radius:12px;background:var(--greend);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">💰</div>
+    <div style="flex:1">
+      <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px">Valor total en cámara</div>
+      <div style="font-family:'Inter',sans-serif;font-size:32px;font-weight:800;color:var(--green)" id="kpi-camara-valor">—</div>
+      <div style="font-size:11px;color:var(--txm);margin-top:3px" id="kpi-camara-detalle">— kg en stock</div>
     </div>
   </div>
 
-
-
-  <!-- Botones WhatsApp / Copiar -->  <!-- CONSUMO POR PRODUCTO (primero) -->
-  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">🍽️ Consumo por producto</div>
-  <div id="rep-consumo" style="margin-bottom:12px"></div>
-
-  <!-- STOCK EN CÁMARA + VALOR -->
-  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock actual en cámara</div>
-  <!-- Valor total en cámara -->
-  <div style="background:var(--sf);border:1.5px solid var(--greenb);border-radius:13px;padding:13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-    <div>
-      <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:4px">💰 Valor total en cámara</div>
-      <div style="font-family:'Inter',sans-serif;font-size:26px;font-weight:800;color:var(--green)" id="kpi-camara-valor">—</div>
-    </div>
-    <div style="text-align:right">
-      <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-bottom:4px">Total kg</div>
-      <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--txm)" id="kpi-camara-kg-total">0,0 kg</div>
-    </div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-    <div style="background:var(--sf);border:1.5px solid var(--goldb);border-radius:13px;padding:13px">
-      <div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:6px">🥩 MP</div>
-      <div style="font-family:'Inter',sans-serif;font-size:26px;font-weight:800;color:var(--gold)" id="kpi-mp-kg">0,0</div>
-      <div style="font-size:11px;color:var(--txm)">kg</div>
-      <div style="font-size:12px;font-weight:700;color:var(--goldl);margin-top:5px" id="kpi-mp-valor">—</div>
-    </div>
-    <div style="background:var(--sf);border:1.5px solid var(--blueb);border-radius:13px;padding:13px">
-      <div style="font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:6px">📦 PP</div>
-      <div style="font-family:'Inter',sans-serif;font-size:26px;font-weight:800;color:var(--blue)" id="kpi-pp-bols">0</div>
-      <div style="font-size:11px;color:var(--txm)">bolsas</div>
-      <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:var(--blue);margin-top:4px" id="kpi-pp-kg">0,0 kg</div>
-      <div style="font-size:12px;font-weight:700;color:var(--blue);margin-top:5px" id="kpi-pp-valor">—</div>
-    </div>
-  </div>
-
-  <!-- POR PRODUCTO -->
-  <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">KPIs por producto</div>
+  <!-- KPIs por producto: todo en un solo lugar, sin repetir -->
   <div id="rep-by-type" style="margin-bottom:12px"></div>
+
+  <!-- IDs ocultos para compatibilidad con JS existente -->
+  <span id="kpi-ing-kg" style="display:none">0</span>
+  <span id="kpi-pro-bols" style="display:none">0</span>
+  <span id="kpi-pro-kg" style="display:none">0</span>
+  <span id="kpi-des-bols" style="display:none">0</span>
+  <span id="kpi-des-kg" style="display:none">0</span>
+  <span id="kpi-merma-pct" style="display:none">0</span>
+  <span id="kpi-merma-kg" style="display:none">0</span>
+  <span id="kpi-merma-costo" style="display:none">0</span>
+  <span id="kpi-merma-costo-label" style="display:none">0</span>
+  <span id="merma-bar" style="display:none"></span>
+  <span id="kpi-mp-kg" style="display:none">0</span>
+  <span id="kpi-mp-valor" style="display:none">0</span>
+  <span id="kpi-pp-bols" style="display:none">0</span>
+  <span id="kpi-pp-kg" style="display:none">0</span>
+  <span id="kpi-pp-valor" style="display:none">0</span>
+  <span id="kpi-camara-kg-total" style="display:none">0</span>
+  <span id="rep-ocupacion" style="display:none"></span>
+  <span id="rep-consumo" style="display:none"></span>
 
 
   <div id="repbtns" style="display:none;flex-direction:column;gap:8px;margin-top:4px">
@@ -1333,23 +1292,12 @@ function renderRep(){
     if(precio>0){ valorMpTotal+=d.mpKg*precio; valorPpTotal+=d.ppKg*precio; }
   });
   const valorCamaraTotal = valorMpTotal + valorPpTotal;
-  const elValorTotal = document.getElementById('kpi-camara-valor');
-  const elKgTotal   = document.getElementById('kpi-camara-kg-total');
-  const elMpValor   = document.getElementById('kpi-mp-valor');
-  const elPpValor   = document.getElementById('kpi-pp-valor');
-  if(elValorTotal) elValorTotal.textContent = valorCamaraTotal>0 ? fCLP(valorCamaraTotal) : '—';
-  if(elKgTotal)    elKgTotal.textContent    = fN(stTotal.mpKg + stTotal.ppKg)+' kg';
-  if(elMpValor)    elMpValor.textContent    = valorMpTotal>0 ? fCLP(valorMpTotal) : '—';
-  if(elPpValor)    elPpValor.textContent    = valorPpTotal>0 ? fCLP(valorPpTotal) : '—';
-  let costoMermaTotal = 0;
-  pro.forEach(m=>{
-    const conf = meatsConf.find(c=>c.name.toLowerCase()===(m.tipoCarne||'').toLowerCase());
-    if(conf && conf.price>0) costoMermaTotal += (m.merma||0) * conf.price;
-  });
-  const costoEl = document.getElementById('kpi-merma-costo');
-  const costoLabel = document.getElementById('kpi-merma-costo-label');
-  if(costoEl){ costoEl.textContent = costoMermaTotal>0 ? fCLP(costoMermaTotal) : '—'; }
-  if(costoLabel){ costoLabel.style.display = costoMermaTotal>0 ? '' : 'none'; }
+  // Valor total en camara — unico elemento visible
+  const elValorTotal  = document.getElementById('kpi-camara-valor');
+  const elCamaraDetalle = document.getElementById('kpi-camara-detalle');
+  const kgTotalCamara = (stTotal.mpKg||0) + (stTotal.ppKg||0);
+  if(elValorTotal)    elValorTotal.textContent   = valorCamaraTotal>0 ? fCLP(valorCamaraTotal) : 'Sin precio config.';
+  if(elCamaraDetalle) elCamaraDetalle.textContent = fN(kgTotalCamara)+' kg en stock ('+fN(stTotal.mpKg||0)+' kg MP + '+fI(stTotal.ppBols||0)+' bolsas PP)';
 
   // Variables de cuadre (usadas en texto WA)
   const mpSaldoKg  = Math.max(0, mpIngKg - mpSalKg);
