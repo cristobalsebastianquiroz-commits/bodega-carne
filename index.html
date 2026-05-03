@@ -360,6 +360,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <div id="rep-periodo-label" style="font-size:11px;color:var(--gold);font-weight:600;margin-top:6px"></div>
   </div>
 
+  <div id="repc">
   <!-- VALOR TOTAL EN CAMARA — único número grande, lo más importante -->
   <div style="background:var(--sf);border:1.5px solid var(--greenb);border-radius:14px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px">
     <div style="width:48px;height:48px;border-radius:12px;background:var(--greend);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">💰</div>
@@ -394,6 +395,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   <span id="rep-consumo" style="display:none"></span>
 
 
+</div><!-- /repc -->
   <div id="repbtns" style="display:none;flex-direction:column;gap:8px;margin-top:4px">
     <button class="btn bg-green" onclick="sendWA()">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12.004 2C6.468 2 2 6.478 2 12.004c0 1.773.463 3.521 1.34 5.064L2 22l5.083-1.323A9.924 9.924 0 0012.004 22C17.532 22 22 17.522 22 11.996 22 6.48 17.532 2 12.004 2zm0 18.215a8.18 8.18 0 01-4.162-1.136l-.298-.178-3.097.807.825-3.01-.195-.308A8.23 8.23 0 013.79 12.004c0-4.527 3.686-8.212 8.215-8.212 4.52 0 8.206 3.686 8.206 8.212 0 4.527-3.686 8.211-8.207 8.211z"/></svg>
@@ -1070,11 +1072,9 @@ function renderCam(){
   });
   Object.keys(tipos).forEach(k=>{ const t=tipos[k]; t.mpKg=Math.max(0,t.mpKg); t.ppBols=Math.max(0,t.ppBols); t.ppKg=Math.max(0,t.ppKg); });
   const tipArr=Object.entries(tipos);
+  // totals (used only internally now)
   let totMpKg=0,totPpBols=0,totPpKg=0;
   tipArr.forEach(([k,v])=>{ totMpKg+=v.mpKg; totPpBols+=v.ppBols; totPpKg+=v.ppKg; });
-  document.getElementById('c-mp-kg').textContent=fN(totMpKg)+' kg';
-  document.getElementById('c-pp-bols').textContent=fI(totPpBols);
-  document.getElementById('c-pp-kg').textContent='/ '+fN(totPpKg)+' kg';
 
   const mpL=document.getElementById('c-mp-list');
   const mpTips=tipArr.filter(([k,v])=>v.mpKg>0.01).sort((a,b)=>b[1].mpKg-a[1].mpKg);
@@ -1314,6 +1314,8 @@ function renderRep(){
     if(m.tipo==='proceso'){ d.proKg+=m.kgBolsas||0; d.proBols+=m.bolsas||0; d.merma+=m.merma||0; }
     if(m.tipo==='despacho'){ d.desKg+=m.kg||0; d.desBols+=m.bolsas||0; d.desTrz+=m.trozos||(m.bolsas*20)||0; }
   });
+
+
 
   const byType = Object.entries(tipos);
   document.getElementById('rep-by-type').innerHTML = byType.length ? byType.map(([t,d])=>{
