@@ -338,10 +338,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   <div style="background:var(--sf);border:1px solid var(--bd);border-radius:13px;padding:13px;margin-bottom:14px">
     <div style="font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:8px">Filtro de período</div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
-      <button class="date-btn on" id="btn-hoy" onclick="setRepDate('today')">Hoy</button>
+      <button class="date-btn" id="btn-hoy" onclick="setRepDate('today')">Hoy</button>
       <button class="date-btn" id="btn-semana" onclick="setRepDate('week')">7 días</button>
       <button class="date-btn" id="btn-mes" onclick="setRepDate('month')">Este mes</button>
-      <button class="date-btn" id="btn-todo" onclick="setRepDate('all')">Total</button>
+      <button class="date-btn on" id="btn-todo" onclick="setRepDate('all')">Total</button>
       <button class="date-btn" id="btn-rango" onclick="setRepDate('range')">Rango</button>
     </div>
     <div id="range-inputs" style="display:none">
@@ -591,7 +591,7 @@ const db  = getFirestore(app);
 const MOVS_COL = 'movimientos';
 const CONF_COL = 'config';
 
-let role = null, pbuf = '', hf = 'todo', repFiltro = 'today';
+let role = null, pbuf = '', hf = 'todo', repFiltro = 'all';
 let repDateFrom = '', repDateTo = '';
 let allMovs = [];
 let unsubMovs = null;
@@ -637,7 +637,7 @@ function migrateMeats(){
 }
 migrateMeats();
 
-async function saveMeatsToFirestore(m){
+async async function saveMeatsToFirestore(m){
   try{
     await setDoc(doc(db, CONF_COL, 'meats'), { list: m, updatedAt: new Date().toISOString() });
   }catch(e){ console.warn('No se pudo guardar cortes en Firestore:', e); }
@@ -1301,7 +1301,8 @@ function renderRep(){
 
 
   const byType = Object.entries(tipos);
-  document.getElementById('rep-by-type').innerHTML = byType.length ? byType.map(([t,d])=>{
+  const rbt = document.getElementById('rep-by-type'); if(!rbt) return;
+  rbt.innerHTML = byType.length ? byType.map(([t,d])=>{
     const conf  = meatsConf.find(cc=>cc.name.toLowerCase()===t.toLowerCase());
     const precio = conf?.price||0;
 
@@ -1351,7 +1352,7 @@ function renderRep(){
       <!-- Header producto -->
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
         <div style="font-family:'Inter',sans-serif;font-size:15px;font-weight:800;color:var(--tx)">&#x1F969; ${t}</div>
-        ${precio>0?`<span style="font-size:11px;color:var(--gold);font-weight:700;background:var(--goldd);padding:3px 9px;border-radius:6px">${fCLP(precio)}/kg</span>`:''}
+        ${precio>0?('<span style="font-size:11px;color:var(--gold);font-weight:700;background:var(--goldd);padding:3px 9px;border-radius:6px">'+fCLP(precio)+'/kg</span>'):''}
       </div>
 
       <!-- KPI 1: Rendimiento -->
@@ -1375,7 +1376,7 @@ function renderRep(){
           <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--txm)">&#x1F4B8; 2. Costo real por kg util</div>
           <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--gold)">${costoReal>0?fCLP(costoReal)+'/kg':'—'}</div>
         </div>
-        ${precio>0&&costoReal>0?`<div style="font-size:10px;color:var(--txm)">Precio compra: <span style="color:var(--txm)">${fCLP(precio)}/kg</span> &rarr; ajustado por merma: <span style="color:var(--orange);font-weight:700">${fCLP(costoReal)}/kg</span></div>`:'<div style="font-size:10px;color:var(--txd)">Configura el precio del corte para ver este KPI</div>'}
+        ${precio>0&&costoReal>0?('<div style="font-size:10px;color:var(--txm)">Precio compra: '+fCLP(precio)+'/kg &rarr; ajustado: <span style="color:var(--orange);font-weight:700">'+fCLP(costoReal)+'/kg</span></div>'):'<div style="font-size:10px;color:var(--txd)">Configura el precio para ver este KPI</div>'}
       </div>
 
       <!-- KPI 3: Valor en camara -->
@@ -1399,7 +1400,7 @@ function renderRep(){
         <div style="font-size:10px;color:var(--txm)">
           Stock actual: <span style="color:var(--tx);font-weight:600">${fN(kgTotalCamara)} kg</span>
           &nbsp;|&nbsp; Consumo/dia: <span style="color:var(--tx);font-weight:600">${fN(consumoDiario,2)} kg</span>
-          ${rotAlert?`&nbsp;&nbsp;<span style="color:var(--red);font-weight:700">${rotAlert}</span>`:''}
+          ${rotAlert?('&nbsp;&nbsp;<span style="color:var(--red);font-weight:700">'+rotAlert+'</span>'):''}
         </div>
       </div>
 
