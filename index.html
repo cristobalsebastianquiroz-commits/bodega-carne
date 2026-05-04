@@ -1230,13 +1230,8 @@ function renderRep(){
   const rb = document.getElementById('repbtns');
 
   if(!ms.length){
-    document.getElementById('repc').innerHTML = '<div class="empty"><div class="ei">📊</div><div class="et">Sin datos para este período</div></div>';
-    document.getElementById('rep-by-type').innerHTML = '';
-    document.getElementById('rep-ocupacion').innerHTML = '';
-    document.getElementById('rep-consumo').innerHTML = '';
-    ['kpi-ing-kg','kpi-pro-bols','kpi-pro-kg','kpi-des-bols','kpi-des-kg','kpi-merma-pct','kpi-merma-kg','kpi-mp-kg','kpi-pp-bols','kpi-pp-kg']
-      .forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent='—'; });
-    document.getElementById('merma-bar').style.width='0%';
+    const rc=document.getElementById('repc');
+    if(rc) rc.innerHTML='<div class="empty"><div class="ei">&#x1F4CA;</div><div class="et">Sin datos para este período</div></div>';
     if(rb) rb.style.display='none';
     return;
   }
@@ -1258,19 +1253,7 @@ function renderRep(){
 
   const stTotal = calcStocks(allMovs);
 
-  // KPIs
-  document.getElementById('kpi-ing-kg').textContent  = fN(mpIngKg);
-  document.getElementById('kpi-pro-bols').textContent= fI(ppIngBols);
-  document.getElementById('kpi-pro-kg').textContent  = fN(ppIngKg)+' kg netos';
-  document.getElementById('kpi-des-bols').textContent= fI(ppDesBols);
-  document.getElementById('kpi-des-kg').textContent  = fN(ppDesKg)+' kg · '+fI(ppDesTrz)+' trozos';
-  document.getElementById('kpi-merma-pct').textContent = fN(pctMerma,1)+'%';
-  document.getElementById('kpi-merma-kg').textContent  = fN(mermaKg)+' kg';
-  document.getElementById('merma-bar').style.width     = Math.min(100,pctMerma).toFixed(1)+'%';
-  document.getElementById('merma-bar').style.background = pctMerma>20?'var(--red)':pctMerma>10?'var(--orange)':'var(--green)';
-  document.getElementById('kpi-mp-kg').textContent  = fN(stTotal.mpKg);
-  document.getElementById('kpi-pp-bols').textContent= fI(stTotal.ppBols);
-  document.getElementById('kpi-pp-kg').textContent  = fN(stTotal.ppKg)+' kg';
+  // (KPI elements are now rendered inside rep-by-type cards — no top-level updates needed)
 
   // ── Valor en cámara por tipo ──
   const meatsConf = gMt();
