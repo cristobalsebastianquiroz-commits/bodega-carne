@@ -637,7 +637,7 @@ function migrateMeats(){
 }
 migrateMeats();
 
-async async function saveMeatsToFirestore(m){
+async async async function saveMeatsToFirestore(m){
   try{
     await setDoc(doc(db, CONF_COL, 'meats'), { list: m, updatedAt: new Date().toISOString() });
   }catch(e){ console.warn('No se pudo guardar cortes en Firestore:', e); }
