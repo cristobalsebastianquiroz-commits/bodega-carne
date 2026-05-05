@@ -1323,13 +1323,13 @@ function renderRep(){
     const valorTotal = valorCamaraMP + valorCamaraPP;
 
     // ── KPI 4: Rotacion de inventario (dias) ──
-    // dias de stock = kg en camara / consumo diario promedio del periodo
-    const range = getDateRange();
+    const rangeKpi4 = getDateRange();
     const diasPeriodo = (() => {
+      if(!rangeKpi4.from) return 30; // "todo" → usar 30 dias como base
       try {
-        const from = new Date(range.from); const to = new Date(range.to);
-        const d = Math.max(1, Math.round((to-from)/(1000*60*60*24))+1);
-        return d;
+        const dFrom = new Date(rangeKpi4.from);
+        const dTo   = new Date(rangeKpi4.to);
+        return Math.max(1, Math.round((dTo-dFrom)/(1000*60*60*24))+1);
       } catch { return 1; }
     })();
     const consumoDiario = diasPeriodo>0 ? d.desKg/diasPeriodo : 0;
