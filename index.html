@@ -293,6 +293,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <button onclick="openM('mo-des')" style="background:var(--green);border:none;border-radius:10px;color:#0f1923;font-size:20px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">+</button>
   </div>
 
+  <!-- SALDO LÍNEA -->
+  <div style="background:var(--sf);border:1px solid var(--orangeb);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
+    <div style="width:40px;height:40px;border-radius:10px;background:var(--oranged);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">&#x21A9;&#xFE0F;</div>
+    <div style="flex:1">
+      <div style="font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:4px">Saldo de línea hoy</div>
+      <div id="d-dev-list" style="font-size:12px;color:var(--txm)">Sin registros hoy</div>
+    </div>
+    <button onclick="openM('mo-dev')" style="background:var(--orange);border:none;border-radius:10px;color:#fff;font-size:20px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">+</button>
+  </div>
+
   <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Stock en cámara ahora</div>
   <div id="d-stock-por-producto" style="margin-bottom:14px">
     <div class="loading"><div class="spin"></div><br>Cargando...</div>
@@ -325,6 +335,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <button class="chip" onclick="sf('ingreso',this)">📥 Ingreso MP</button>
     <button class="chip" onclick="sf('proceso',this)">⚙️ Producción</button>
     <button class="chip" onclick="sf('despacho',this)">🍽️ Despacho</button>
+    <button class="chip" onclick="sf('devolucion',this)">↩️ Saldo Línea</button>
   </div>
   <div id="hlist"><div class="loading"><div class="spin"></div><br>Cargando...</div></div>
 </div>
@@ -518,6 +529,36 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 </div>
 
 <!-- MODAL CONFIG ADMIN (con edición de cortes y precios) -->
+<!-- SALDO LÍNEA MODAL -->
+<div class="ovl" id="mo-dev">
+  <div class="modal">
+    <div class="mh"></div>
+    <div class="mt">&#x21A9;&#xFE0F; Saldo de Línea</div>
+    <div class="mt-sub">Registra lo que <strong style="color:var(--orange)">no se vendió</strong> y vuelve desde línea. Queda anotado como saldo pendiente para el día siguiente.</div>
+    <div class="fg">
+      <label class="fl">Tipo de corte</label>
+      <div class="chips" id="dvc"></div>
+      <input class="fi" id="dvti" placeholder="O escribe el tipo..." type="text">
+    </div>
+    <div class="fr">
+      <div class="fg">
+        <label class="fl">Kg que vuelven</label>
+        <input class="fi" id="dvkg" placeholder="Ej: 2,4" type="text" inputmode="decimal">
+      </div>
+      <div class="fg">
+        <label class="fl">N° bolsas (si aplica)</label>
+        <input class="fi" id="dvbols" placeholder="Ej: 1" type="text" inputmode="numeric">
+      </div>
+    </div>
+    <div class="fg">
+      <label class="fl">Observaciones</label>
+      <input class="fi" id="dvnot" placeholder="Ej: sobró del almuerzo..." type="text">
+    </div>
+    <button class="btn bg-gold" id="btn-dev" onclick="doDev()">&#x2713; Registrar saldo</button>
+    <button class="btn bg-ghost" onclick="closeM('mo-dev')">Cancelar</button>
+  </div>
+</div>
+
 <div class="ovl" id="mo-cfg">
   <div class="modal">
     <div class="mh"></div>
@@ -768,7 +809,7 @@ function refreshPage(id){
 }
 
 // ── MODALS ──
-const CMAP = {'mo-ing':['ic','iti'],'mo-pro':['pc','pti'],'mo-des':['dc','dti']};
+const CMAP = {'mo-ing':['ic','iti'],'mo-pro':['pc','pti'],'mo-des':['dc','dti'],'mo-dev':['dvc','dvti']};
 function openM(id){ document.getElementById(id).classList.add('on'); if(CMAP[id]) bldChips(...CMAP[id]); if(id==='mo-cfg') renderCfg(); }
 function closeM(id){ document.getElementById(id).classList.remove('on'); }
 document.querySelectorAll('.ovl').forEach(o => o.addEventListener('click', e=>{ if(e.target===o) closeM(o.id); }));
@@ -906,6 +947,25 @@ function stockPP(tipo){
     if(m.tipo==='despacho'){ bols-=m.bolsas||0; kg-=m.kg||0; }
   });
   return { bols:Math.max(0,bols), kg:Math.max(0,kg) };
+}
+
+// ── Saldo Línea ──
+async function doDev(){
+  const tipo=document.getElementById('dvti').value.trim();
+  const kg=pN(document.getElementById('dvkg').value);
+  const bols=pI(document.getElementById('dvbols').value)||0;
+  const not=document.getElementById('dvnot').value.trim();
+  if(!tipo){toast('Selecciona el tipo de corte','err');return;}
+  if(isNaN(kg)||kg<=0){toast('Ingresa los kg (ej: 2,4)','err');return;}
+  setBtnLoading('btn-dev',true);
+  try{
+    await addMov({tipo:'devolucion',tipoCarne:tipo,kg,bolsas:bols,notas:not});
+    ['dvti','dvkg','dvbols','dvnot'].forEach(i=>document.getElementById(i).value='');
+    document.querySelectorAll('#dvc .mchip').forEach(x=>x.classList.remove('on'));
+    closeM('mo-dev');
+    toast('Saldo '+fN(kg)+' kg de '+tipo+' registrado');
+  }catch(e){toast('Error: '+e.message,'err');}
+  setBtnLoading('btn-dev',false,'Registrar saldo');
 }
 
 function updTrozos(){
@@ -1055,6 +1115,21 @@ function renderDash(){
     }
   }
 
+  // Saldo línea hoy
+  const devHoy = allMovs.filter(m=>m.tipo==='devolucion'&&m.fecha&&m.fecha.startsWith(TK()));
+  const devEl  = document.getElementById('d-dev-list');
+  if(devEl){
+    if(!devHoy.length){
+      devEl.textContent='Sin registros hoy';
+    } else {
+      const gDev={};
+      devHoy.forEach(m=>{ if(!gDev[m.tipoCarne])gDev[m.tipoCarne]=0; gDev[m.tipoCarne]+=m.kg||0; });
+      devEl.innerHTML=Object.entries(gDev).map(([t,k])=>
+        '<span style="color:var(--orange);font-weight:600">'+t+': '+fN(k)+' kg</span>'
+      ).join(' &nbsp;·&nbsp; ');
+    }
+  }
+
   const recent = allMovs.slice(0,8);
   document.getElementById('lmovs').innerHTML = recent.length
     ? recent.map(mCard).join('')
@@ -1166,6 +1241,7 @@ function mCard(m){
   const cfg={
     ingreso:{ico:'📥',cls:'bg-g', lbl:'Ingreso MP', sub:`${fN(m.kg)} kg`},
     proceso:{ico:'⚙️',cls:'bg-b', lbl:'Producción',  sub:`${fN(m.kgBruto)}kg → ${fI(m.bolsas)} bolsas/${fN(m.kgBolsas)}kg · merma ${fN(m.merma)}kg${m.empleado?' · '+m.empleado:''}`},
+    devolucion:{ico:'↩️',cls:'bg-or',lbl:'Saldo Línea',sub:`${fN(m.kg)} kg${m.bolsas?' · '+m.bolsas+' bolsas':''}${m.notas?' — '+m.notas:''}`},
     despacho:{ico:'🍽️',cls:'bg-gn',lbl:'Despacho',   sub:`${fI(m.bolsas)} bolsas · ${fN(m.kg)} kg · ${fI(m.trozos||(m.bolsas*20))} trozos${m.recibe?' → '+m.recibe:''}`}
   };
   const c=cfg[m.tipo]||{ico:'•',cls:'bg-g',lbl:m.tipo,sub:''};
@@ -1608,7 +1684,7 @@ async function clearAll(){
 }
 
 // ── EXPONER FUNCIONES GLOBALES ──
-Object.assign(window,{selRole,pi,pb2,cancelPin,goTo,openM,closeM,selMt,sf,doIng,doPro,doDes,calcN,chkStk,updTrozos,updDesResumen,delM,setRepDate,applyRange,sendWA,copyRep,renderCfg,addMt,rmMt,chgPin,clearAll,logout,openEditCut,saveEditCut});
+Object.assign(window,{selRole,pi,pb2,cancelPin,doDev,goTo,openM,closeM,selMt,sf,doIng,doPro,doDes,calcN,chkStk,updTrozos,updDesResumen,delM,setRepDate,applyRange,sendWA,copyRep,renderCfg,addMt,rmMt,chgPin,clearAll,logout,openEditCut,saveEditCut});
 
 // ── PWA ──
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
