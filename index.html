@@ -251,6 +251,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
     <div class="pgt" id="dashd">—</div>
   </div>
 
+  <!-- BANNER SALDO PENDIENTE (se muestra si hay devoluciones de ayer sin confirmar) -->
+  <div id="banner-saldo" style="display:none;background:var(--oranged);border:1.5px solid var(--orangeb);border-radius:14px;padding:14px;margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div style="font-size:22px">⚠️</div>
+      <div>
+        <div style="font-family:'Inter',sans-serif;font-size:13px;font-weight:800;color:var(--orange)">Saldo pendiente de ayer</div>
+        <div style="font-size:11px;color:var(--txm);margin-top:2px">Confirma que este stock está disponible en cámara</div>
+      </div>
+    </div>
+    <div id="banner-saldo-list" style="margin-bottom:10px"></div>
+    <button class="btn" style="background:var(--orange);color:#fff;padding:11px" onclick="confirmarSaldo()">✓ Confirmar — ya está en cámara</button>
+  </div>
+
   <div style="font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px">Movimientos de hoy</div>
 
   <div style="background:var(--sf);border:1px solid var(--goldb);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px">
@@ -318,6 +331,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
   <div class="pgs">Stock en tiempo real</div>
   <div class="sec-hdr"><span class="sec-pill pill-gold">🥩 Materia Prima</span><div class="sec-line"></div></div>
   <div class="card"><div class="ct">Por tipo de corte</div><div id="c-mp-list"><div class="loading"><div class="spin"></div><br>Cargando...</div></div></div>
+
+  <!-- SALDO PENDIENTE EN CÁMARA (de días anteriores) -->
+  <div id="cam-saldo-section" style="display:none;margin-bottom:12px">
+    <div class="sec-hdr"><span class="sec-pill" style="background:var(--oranged);color:var(--orange);border:1px solid var(--orangeb)">↩️ Saldo Confirmado</span><div class="sec-line"></div></div>
+    <div class="card" style="border-color:var(--orangeb)">
+      <div class="ct" style="color:var(--orange)">Stock confirmado de línea</div>
+      <div id="c-saldo-list"></div>
+    </div>
+  </div>
 
   <div class="sec-hdr"><span class="sec-pill pill-blue">📦 Producto Procesado</span><div class="sec-line"></div></div>
   <div class="card"><div class="ct">Por tipo de corte</div><div id="c-pp-list"><div class="loading"><div class="spin"></div><br>Cargando...</div></div></div>
@@ -704,6 +726,7 @@ function calcStocks(movs){
   movs.forEach(m => {
     if(m.tipo==='ingreso'){ mpKg+=m.kg||0; }
     if(m.tipo==='proceso'){ mpKg-=m.kgBruto||0; ppBols+=m.bolsas||0; ppKg+=m.kgBolsas||0; mermaKg+=m.merma||0; }
+    if(m.tipo==='ingreso_saldo'){ ppBols+=m.bolsas||0; ppKg+=m.kg||0; }
     if(m.tipo==='despacho'){ ppBols-=m.bolsas||0; ppKg-=m.kg||0; }
   });
   return { mpKg:Math.max(0,mpKg), ppBols:Math.max(0,ppBols), ppKg:Math.max(0,ppKg), mermaKg };
@@ -944,6 +967,7 @@ function stockPP(tipo){
   allMovs.forEach(m=>{
     if((m.tipoCarne||'').trim().toLowerCase()!==t) return;
     if(m.tipo==='proceso'){ bols+=m.bolsas||0; kg+=m.kgBolsas||0; }
+    if(m.tipo==='ingreso_saldo'){ bols+=m.bolsas||0; kg+=m.kg||0; }
     if(m.tipo==='despacho'){ bols-=m.bolsas||0; kg-=m.kg||0; }
   });
   return { bols:Math.max(0,bols), kg:Math.max(0,kg) };
@@ -967,6 +991,31 @@ async function doDev(){
   }catch(e){toast('Error: '+e.message,'err');}
   setBtnLoading('btn-dev',false,'Registrar saldo');
 }
+
+// ── Confirmar saldo pendiente de ayer ──
+async function confirmarSaldo(){
+  const ayer=(()=>{const d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);})();
+  const devAyer=allMovs.filter(m=>m.tipo==='devolucion'&&m.fecha&&m.fecha.startsWith(ayer)&&!m.confirmado);
+  if(!devAyer.length){toast('Sin saldo pendiente de ayer','warn');return;}
+  const grupos={};
+  devAyer.forEach(m=>{
+    if(!grupos[m.tipoCarne])grupos[m.tipoCarne]={kg:0,bolsas:0};
+    grupos[m.tipoCarne].kg+=m.kg||0;
+    grupos[m.tipoCarne].bolsas+=m.bolsas||0;
+  });
+  try{
+    for(const[tipo,v]of Object.entries(grupos)){
+      await addMov({tipo:'ingreso_saldo',tipoCarne:tipo,kg:v.kg,bolsas:v.bolsas,notas:'Saldo de linea '+ayer});
+    }
+    // mark confirmed using batch
+    const {doc:fbDoc,updateDoc}=await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    for(const m of devAyer){
+      await updateDoc(fbDoc(db,'movimientos',m.id),{confirmado:true});
+    }
+    toast('Saldo confirmado e ingresado a camara');
+  }catch(e){toast('Error: '+e.message,'err');}
+}
+
 
 function updTrozos(){
   const bo  = pI(document.getElementById('dbo').value)||0;
@@ -1087,6 +1136,7 @@ function renderDash(){
     const d=stTiposDash[t];
     if(m.tipo==='ingreso') d.mpKg+=m.kg||0;
     if(m.tipo==='proceso'){ d.mpKg-=m.kgBruto||0; d.ppBols+=m.bolsas||0; d.ppKg+=m.kgBolsas||0; }
+    if(m.tipo==='ingreso_saldo'){ d.ppBols+=m.bolsas||0; d.ppKg+=m.kg||0; }
     if(m.tipo==='despacho'){ d.ppBols-=m.bolsas||0; d.ppKg-=m.kg||0; }
   });
   Object.keys(stTiposDash).forEach(k=>{ const d=stTiposDash[k]; d.mpKg=Math.max(0,d.mpKg); d.ppBols=Math.max(0,d.ppBols); d.ppKg=Math.max(0,d.ppKg); });
@@ -1116,17 +1166,37 @@ function renderDash(){
   }
 
   // Saldo línea hoy
-  const devHoy = allMovs.filter(m=>m.tipo==='devolucion'&&m.fecha&&m.fecha.startsWith(TK()));
-  const devEl  = document.getElementById('d-dev-list');
+  const devHoy=allMovs.filter(m=>m.tipo==='devolucion'&&m.fecha&&m.fecha.startsWith(TK()));
+  const devEl=document.getElementById('d-dev-list');
   if(devEl){
-    if(!devHoy.length){
-      devEl.textContent='Sin registros hoy';
-    } else {
+    if(!devHoy.length){devEl.textContent='Sin registros hoy';}
+    else{
       const gDev={};
-      devHoy.forEach(m=>{ if(!gDev[m.tipoCarne])gDev[m.tipoCarne]=0; gDev[m.tipoCarne]+=m.kg||0; });
+      devHoy.forEach(m=>{if(!gDev[m.tipoCarne])gDev[m.tipoCarne]=0;gDev[m.tipoCarne]+=m.kg||0;});
       devEl.innerHTML=Object.entries(gDev).map(([t,k])=>
         '<span style="color:var(--orange);font-weight:600">'+t+': '+fN(k)+' kg</span>'
       ).join(' &nbsp;·&nbsp; ');
+    }
+  }
+
+  // Banner: saldo pendiente de ayer sin confirmar
+  const ayer=(()=>{const d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);})();
+  const devAyer=allMovs.filter(m=>m.tipo==='devolucion'&&m.fecha&&m.fecha.startsWith(ayer)&&!m.confirmado);
+  const banner=document.getElementById('banner-saldo');
+  const bannerList=document.getElementById('banner-saldo-list');
+  if(banner&&bannerList){
+    if(devAyer.length){
+      const gAyer={};
+      devAyer.forEach(m=>{if(!gAyer[m.tipoCarne])gAyer[m.tipoCarne]={kg:0,bolsas:0};gAyer[m.tipoCarne].kg+=m.kg||0;gAyer[m.tipoCarne].bolsas+=m.bolsas||0;});
+      bannerList.innerHTML=Object.entries(gAyer).map(([t,v])=>
+        '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(224,154,58,.2)">'+
+        '<span style="font-weight:600;color:var(--tx)">&#x1F969; '+t+'</span>'+
+        '<span style="color:var(--orange);font-weight:700">'+fN(v.kg)+' kg'+( v.bolsas?' · '+v.bolsas+' bolsas':'')+' — pendiente</span>'+
+        '</div>'
+      ).join('');
+      banner.style.display='block';
+    } else {
+      banner.style.display='none';
     }
   }
 
@@ -1143,6 +1213,7 @@ function renderCam(){
     const t=tipos[m.tipoCarne];
     if(m.tipo==='ingreso'){ t.mpKg+=m.kg||0; }
     if(m.tipo==='proceso'){ t.mpKg-=m.kgBruto||0; t.ppBols+=m.bolsas||0; t.ppKg+=m.kgBolsas||0; }
+    if(m.tipo==='ingreso_saldo'){ t.ppBols+=m.bolsas||0; t.ppKg+=m.kg||0; }
     if(m.tipo==='despacho'){ t.ppBols-=m.bolsas||0; t.ppKg-=m.kg||0; }
   });
   Object.keys(tipos).forEach(k=>{ const t=tipos[k]; t.mpKg=Math.max(0,t.mpKg); t.ppBols=Math.max(0,t.ppBols); t.ppKg=Math.max(0,t.ppKg); });
@@ -1165,6 +1236,34 @@ function renderCam(){
       </div>
     </div>`).join('')
     : '<div class="empty"><div class="ei">🥩</div><div class="et">Sin MP en cámara</div></div>';
+
+  // Saldo confirmado (ingreso_saldo) — mostrar separado
+  const saldoItems = allMovs.filter(m=>m.tipo==='ingreso_saldo');
+  const camSaldoSec = document.getElementById('cam-saldo-section');
+  const camSaldoList = document.getElementById('c-saldo-list');
+  if(camSaldoSec && camSaldoList){
+    if(!saldoItems.length){
+      camSaldoSec.style.display='none';
+    } else {
+      const gs={};
+      saldoItems.forEach(m=>{
+        if(!gs[m.tipoCarne])gs[m.tipoCarne]={kg:0,bolsas:0,nota:m.notas||''};
+        gs[m.tipoCarne].kg+=m.kg||0;
+        gs[m.tipoCarne].bolsas+=m.bolsas||0;
+      });
+      camSaldoList.innerHTML=Object.entries(gs).map(([t,v])=>`
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bd3)">
+          <div style="width:36px;height:36px;border-radius:9px;background:var(--oranged);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">&#x21A9;&#xFE0F;</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:13px;color:var(--tx)">${t}</div>
+            <div style="font-size:11px;color:var(--txm);margin-top:2px">${fN(v.kg)} kg${v.bolsas?' · '+v.bolsas+' bolsas':''}</div>
+            ${v.nota?`<div style="font-size:10px;color:var(--txd);margin-top:1px">${v.nota}</div>`:''}
+          </div>
+          <span style="background:var(--oranged);color:var(--orange);border:1px solid var(--orangeb);border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700">${fN(v.kg)} kg</span>
+        </div>`).join('');
+      camSaldoSec.style.display='block';
+    }
+  }
 
   const ppL=document.getElementById('c-pp-list');
   const ppTips=tipArr.filter(([k,v])=>v.ppBols>0||v.ppKg>0.01).sort((a,b)=>b[1].ppBols-a[1].ppBols);
@@ -1241,6 +1340,7 @@ function mCard(m){
   const cfg={
     ingreso:{ico:'📥',cls:'bg-g', lbl:'Ingreso MP', sub:`${fN(m.kg)} kg`},
     proceso:{ico:'⚙️',cls:'bg-b', lbl:'Producción',  sub:`${fN(m.kgBruto)}kg → ${fI(m.bolsas)} bolsas/${fN(m.kgBolsas)}kg · merma ${fN(m.merma)}kg${m.empleado?' · '+m.empleado:''}`},
+    ingreso_saldo:{ico:'✅',cls:'bg-gn',lbl:'Saldo Confirmado',sub:`${fN(m.kg)} kg${m.bolsas?' · '+m.bolsas+' bolsas':''} — ${m.notas||''}`},
     devolucion:{ico:'↩️',cls:'bg-or',lbl:'Saldo Línea',sub:`${fN(m.kg)} kg${m.bolsas?' · '+m.bolsas+' bolsas':''}${m.notas?' — '+m.notas:''}`},
     despacho:{ico:'🍽️',cls:'bg-gn',lbl:'Despacho',   sub:`${fI(m.bolsas)} bolsas · ${fN(m.kg)} kg · ${fI(m.trozos||(m.bolsas*20))} trozos${m.recibe?' → '+m.recibe:''}`}
   };
@@ -1340,6 +1440,7 @@ function renderRep(){
     if(!stockTiposCamara[t]) stockTiposCamara[t]={mpKg:0,ppKg:0};
     if(m.tipo==='ingreso') stockTiposCamara[t].mpKg+=m.kg||0;
     if(m.tipo==='proceso'){ stockTiposCamara[t].mpKg-=m.kgBruto||0; stockTiposCamara[t].ppKg+=m.kgBolsas||0; }
+    if(m.tipo==='ingreso_saldo'){ stockTiposCamara[t].ppKg+=m.kg||0; }
     if(m.tipo==='despacho') stockTiposCamara[t].ppKg-=m.kg||0;
   });
   Object.keys(stockTiposCamara).forEach(k=>{ stockTiposCamara[k].mpKg=Math.max(0,stockTiposCamara[k].mpKg); stockTiposCamara[k].ppKg=Math.max(0,stockTiposCamara[k].ppKg); });
@@ -1371,6 +1472,7 @@ function renderRep(){
     const d = tipos[t];
     if(m.tipo==='ingreso') d.mpIngKg+=m.kg||0;
     if(m.tipo==='proceso'){ d.proKg+=m.kgBolsas||0; d.proBols+=m.bolsas||0; d.merma+=m.merma||0; }
+    if(m.tipo==='ingreso_saldo'){ d.proKg+=m.kg||0; d.proBols+=m.bolsas||0; } // saldo confirmado = PP
     if(m.tipo==='despacho'){ d.desKg+=m.kg||0; d.desBols+=m.bolsas||0; d.desTrz+=m.trozos||(m.bolsas*20)||0; }
   });
 
@@ -1684,7 +1786,7 @@ async function clearAll(){
 }
 
 // ── EXPONER FUNCIONES GLOBALES ──
-Object.assign(window,{selRole,pi,pb2,cancelPin,doDev,goTo,openM,closeM,selMt,sf,doIng,doPro,doDes,calcN,chkStk,updTrozos,updDesResumen,delM,setRepDate,applyRange,sendWA,copyRep,renderCfg,addMt,rmMt,chgPin,clearAll,logout,openEditCut,saveEditCut});
+Object.assign(window,{selRole,pi,pb2,cancelPin,doDev,confirmarSaldo,goTo,openM,closeM,selMt,sf,doIng,doPro,doDes,calcN,chkStk,updTrozos,updDesResumen,delM,setRepDate,applyRange,sendWA,copyRep,renderCfg,addMt,rmMt,chgPin,clearAll,logout,openEditCut,saveEditCut});
 
 // ── PWA ──
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
