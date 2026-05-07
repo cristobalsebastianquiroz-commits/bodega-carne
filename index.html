@@ -994,9 +994,8 @@ async function doDev(){
 
 // ── Confirmar saldo pendiente de ayer ──
 async function confirmarSaldo(){
-  const ayer=(()=>{const d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);})();
-  const devAyer=allMovs.filter(m=>m.tipo==='devolucion'&&m.fecha&&m.fecha.startsWith(ayer)&&!m.confirmado);
-  if(!devAyer.length){toast('Sin saldo pendiente de ayer','warn');return;}
+  const devAyer=allMovs.filter(m=>m.tipo==='devolucion'&&!m.confirmado);
+  if(!devAyer.length){toast('Sin saldo pendiente','warn');return;}
   const grupos={};
   devAyer.forEach(m=>{
     if(!grupos[m.tipoCarne])grupos[m.tipoCarne]={kg:0,bolsas:0};
@@ -1179,19 +1178,25 @@ function renderDash(){
     }
   }
 
-  // Banner: saldo pendiente de ayer sin confirmar
-  const ayer=(()=>{const d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);})();
-  const devAyer=allMovs.filter(m=>m.tipo==='devolucion'&&m.fecha&&m.fecha.startsWith(ayer)&&!m.confirmado);
+  // Banner: cualquier devolucion sin confirmar (de cualquier dia)
+  const devPend=allMovs.filter(m=>m.tipo==='devolucion'&&!m.confirmado);
   const banner=document.getElementById('banner-saldo');
   const bannerList=document.getElementById('banner-saldo-list');
   if(banner&&bannerList){
-    if(devAyer.length){
-      const gAyer={};
-      devAyer.forEach(m=>{if(!gAyer[m.tipoCarne])gAyer[m.tipoCarne]={kg:0,bolsas:0};gAyer[m.tipoCarne].kg+=m.kg||0;gAyer[m.tipoCarne].bolsas+=m.bolsas||0;});
-      bannerList.innerHTML=Object.entries(gAyer).map(([t,v])=>
-        '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(224,154,58,.2)">'+
-        '<span style="font-weight:600;color:var(--tx)">&#x1F969; '+t+'</span>'+
-        '<span style="color:var(--orange);font-weight:700">'+fN(v.kg)+' kg'+( v.bolsas?' · '+v.bolsas+' bolsas':'')+' — pendiente</span>'+
+    if(devPend.length){
+      const gPend={};
+      devPend.forEach(m=>{
+        if(!gPend[m.tipoCarne])gPend[m.tipoCarne]={kg:0,bolsas:0,fecha:m.fecha||''};
+        gPend[m.tipoCarne].kg+=m.kg||0;
+        gPend[m.tipoCarne].bolsas+=m.bolsas||0;
+      });
+      bannerList.innerHTML=Object.entries(gPend).map(([t,v])=>
+        '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(224,154,58,.2)">'+
+        '<div>'+
+        '<span style="font-weight:700;color:var(--tx)">&#x1F969; '+t+'</span>'+
+        '<span style="font-size:10px;color:var(--txm);margin-left:6px">'+fdt(v.fecha)+'</span>'+
+        '</div>'+
+        '<span style="color:var(--orange);font-weight:700">'+fN(v.kg)+' kg'+(v.bolsas?' · '+v.bolsas+' bolsas':'')+'</span>'+
         '</div>'
       ).join('');
       banner.style.display='block';
