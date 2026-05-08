@@ -1794,7 +1794,32 @@ async function clearAll(){
 Object.assign(window,{selRole,pi,pb2,cancelPin,doDev,confirmarSaldo,goTo,openM,closeM,selMt,sf,doIng,doPro,doDes,calcN,chkStk,updTrozos,updDesResumen,delM,setRepDate,applyRange,sendWA,copyRep,renderCfg,addMt,rmMt,chgPin,clearAll,logout,openEditCut,saveEditCut});
 
 // ── PWA ──
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    // Revisar actualizaciones cada vez que se abre la app
+    reg.update();
+
+    // Si hay un nuevo SW esperando, activarlo y recargar
+    reg.addEventListener('updatefound', () => {
+      const newSW = reg.installing;
+      if(!newSW) return;
+      newSW.addEventListener('statechange', () => {
+        if(newSW.state === 'installed' && navigator.serviceWorker.controller){
+          // Hay versión nueva — recargar automáticamente
+          newSW.postMessage('SKIP_WAITING');
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            window.location.reload();
+          });
+        }
+      });
+    });
+  }).catch(()=>{});
+
+  // También recargar si el SW cambia mientras la app está abierta
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
+}
 if(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.navigator.standalone)
   setTimeout(()=>toast('Safari → Compartir → "Añadir al inicio"'), 3000);
 
